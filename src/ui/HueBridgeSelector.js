@@ -1,12 +1,12 @@
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
     activeBridgeId: null,
     onActiveBridgeChange: function() {},
+    onBridgeAuthorizationFailure: function() {},
   }
 
   constructor(props) {
@@ -17,7 +17,7 @@ class HueBridgeSelector extends Component {
     }
   }
 
-  componentDidMount() {
+  updateBridgeList() {
     HueBridgeList.fetch().then((bridgeIds) => {
       const bridges = Array.from(bridgeIds).map((id) => {
         const bridge = HueBridge.getById(id);
@@ -31,62 +31,49 @@ class HueBridgeSelector extends Component {
     });
   }
 
+  componentDidMount() {
+    this.updateBridgeList();
+  }
+
   onButtonClick(e) {
     const selectedBridgeId = e.target.value;
     const bridge = HueBridge.getById(selectedBridgeId);
     if (bridge.properties.username) {
-      this.setState({
-        hasAuthorizationFailure: false,
-      })
       this.props.onActiveBridgeChange(selectedBridgeId);
     } else {
       bridge.connect().then((success) => {
         if (success) {
-          this.setState({
-            hasAuthorizationFailure: false,
-          })
+          this.updateBridgeList();
           this.props.onActiveBridgeChange(selectedBridgeId);
         } else {
-          this.setState({
-            hasAuthorizationFailure: true,
-          });
+          this.props.onBridgeAuthorizationFailure();
         }
       })
     }
   }
 
   render() {
-    let authorizationFailureAlert = null;
-    if (this.state.hasAuthorizationFailure) {
-      authorizationFailureAlert = (
-        <div className="alert alert-danger" role="alert">
-          Please press the link button on the Hue Bridge before trying to connect.
-        </div>
-      );
-    }
     return (
-      <div>
-        {authorizationFailureAlert}
-        <div className="list-group">
-          {this.state.bridges.map((bridgeProperties) => {
-            return (
-              <button
-                type="button"
-                className={
-                  'list-group-item list-group-item-action' +
-                    (bridgeProperties.id === this.props.activeBridgeId ? ' active' : '')
-                }
-                value={bridgeProperties.id}
-                key={bridgeProperties.id}
-                onClick={this.onButtonClick.bind(this)}
-              >
-                {bridgeProperties.host}
-                {bridgeProperties.port === 443 ? '' : `:${bridgeProperties.port}`}
-                {bridgeProperties.username ? ' (authorized)' : ''}
-              </button>
-            );
-          })}
-        </div>
+      <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+        {this.state.bridges.map((bridgeProperties) => {
+          return (
+            <button
+              className={
+                'dropdown-item' +
+                  (bridgeProperties.id === this.props.activeBridgeId ? ' active' : '')
+              }
+              value={bridgeProperties.id}
+              key={bridgeProperties.id}
+              onClick={this.onButtonClick.bind(this)}
+            >
+              {bridgeProperties.host}
+              {bridgeProperties.port === 443 ? '' : `:${bridgeProperties.port}`}
+              {bridgeProperties.username ? ' (authorized)' : ''}
+            </button>
+          );
+        })}
+        <div className="dropdown-divider"></div>
+        <button className="dropdown-item disabled">Add bridge manually</button>
       </div>
     );
   }
