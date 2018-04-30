@@ -1,13 +1,8 @@
-'use strict';
-
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.HueBridgeSelector = factory());
-}(this, (function () { 'use strict';
+import HueBridge from './HueBridge';
+import Storage from './Storage';
 
 const STORAGE_NAME = 'bridges';
-const STORAGE_VERSION = 1;
+const STORAGE_VERSION = 2;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
 const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
@@ -57,7 +52,7 @@ async function fetchBridges() {
   allBridges.forEach((value) => {
     updatedStoredBridges.push({
       ...value,
-      connection: 'stored',
+      stored: true,
     });
   });
   writeStoredBridges(updatedStoredBridges);
@@ -65,11 +60,8 @@ async function fetchBridges() {
   return allBridges;
 }
 
-const HueBridgeSelector = function() {
-
+const HueBridgeList = {
+	fetch: fetchBridges,
 }
 
-HueBridgeSelector.fetchBridges = fetchBridges;
-
-return HueBridgeSelector;
-})));
+export default HueBridgeList;

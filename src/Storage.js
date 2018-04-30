@@ -1,11 +1,3 @@
-'use strict';
-
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Storage = factory());
-}(this, (function () { 'use strict';
-
 function get(key) {
   let value = null;
   try {
@@ -81,5 +73,4 @@ class StorageError extends Error {
 }
 Storage.StorageError = StorageError;
 
-return Storage;
-})));
+export default Storage;
