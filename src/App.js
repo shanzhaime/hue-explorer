@@ -1,9 +1,11 @@
+import HueBridge from './HueBridge';
 import HueBridgeList from './HueBridgeList';
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 window.HueBridgeList = HueBridgeList;
+window.HueBridge = HueBridge;
 
 class App extends Component {
   render() {

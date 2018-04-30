@@ -2,17 +2,16 @@ import HueBridge from './HueBridge';
 import Storage from './Storage';
 
 const STORAGE_NAME = 'bridges';
-const STORAGE_VERSION = 2;
+const STORAGE_VERSION = 3;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
 const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
 
 function readStoredBridges() {
-  return storage.read() || [];
-}
-
-function writeStoredBridges(bridges) {
-  storage.write(bridges);
+  const bridgeIds = storage.read() || [];
+	return bridgeIds.map((id) => {
+		return new HueBridge(id);
+	});
 }
 
 async function fetchRemoteBridges() {
@@ -23,12 +22,11 @@ async function fetchLocalBridges() {
   const response = await fetch(NUPNP_URL);
   const json = await response.json();
   return json.map((item) => {
-    return {
+    return new HueBridge(item.id, {
       host: item.internalipaddress,
       port: 443,
-      id: item.id,
       connection: 'local',
-    };
+    });
   });
 }
 
@@ -43,21 +41,13 @@ async function fetchBridges() {
     fetchLocalBridges(),
   ]);
 
-  const allBridges = new Map();
-  storedBridges.concat(remoteBridges).concat(localBridges).forEach((bridge) => {
-    allBridges.set(bridge.id || `${bridge.host}:${bridge.port}`, bridge);
-  });
+	const storedBridgeIds = storedBridges.map((bridge) => { return bridge.id; });
+	const remoteBridgesIds = remoteBridges.map((bridge) => { return bridge.id; });
+	const localBridgesIds = localBridges.map((bridge) => { return bridge.id; });
+	const allBridgeIds = new Set(storedBridgeIds.concat(remoteBridgesIds).concat(localBridgesIds));
+	storage.write(Array.from(allBridgeIds));
 
-  const updatedStoredBridges = [];
-  allBridges.forEach((value) => {
-    updatedStoredBridges.push({
-      ...value,
-      stored: true,
-    });
-  });
-  writeStoredBridges(updatedStoredBridges);
-
-  return allBridges;
+	return allBridgeIds;
 }
 
 const HueBridgeList = {
