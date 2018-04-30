@@ -1,8 +1,6 @@
 import HueBridgeSelector from './ui/HueBridgeSelector'
 import Storage from './api/Storage';
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.bundle';
 
 const STORAGE_NAME = 'app';
 const STORAGE_VERSION = 1;
@@ -32,7 +30,7 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="#">Hue Explorer</a>
+          <a className="navbar-brand" href="###">Hue Explorer</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -40,7 +38,7 @@ class App extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a className="nav-link dropdown-toggle" href="###" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Bridges
                 </a>
                 {
@@ -52,25 +50,25 @@ class App extends Component {
                 }
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Lights</a>
+                <a className="nav-link" href="###">Lights</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Groups</a>
+                <a className="nav-link" href="###">Groups</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Schedules</a>
+                <a className="nav-link" href="###">Schedules</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Scenes</a>
+                <a className="nav-link" href="###">Scenes</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Sensors</a>
+                <a className="nav-link" href="###">Sensors</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Rules</a>
+                <a className="nav-link" href="###">Rules</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Configuration</a>
+                <a className="nav-link" href="###">Configuration</a>
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">
