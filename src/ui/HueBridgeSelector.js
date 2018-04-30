@@ -56,6 +56,9 @@ class HueBridgeSelector extends Component {
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
         {this.state.bridges.map((bridgeProperties) => {
+          const hidePort =
+            (bridgeProperties.protocol === 'http' && bridgeProperties.port === 80) ||
+            (bridgeProperties.protocol === 'https' && bridgeProperties.port === 443);
           return (
             <button
               className={
@@ -67,7 +70,7 @@ class HueBridgeSelector extends Component {
               onClick={this.onButtonClick.bind(this)}
             >
               {bridgeProperties.host}
-              {bridgeProperties.port === 443 ? '' : `:${bridgeProperties.port}`}
+              {hidePort ? '' : `:${bridgeProperties.port}`}
               {bridgeProperties.username ? ' (authorized)' : ''}
             </button>
           );

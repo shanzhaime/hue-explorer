@@ -23,8 +23,9 @@ async function fetchLocalBridges() {
   const json = await response.json();
   return json.map((item) => {
     return new HueBridge(item.id, {
+			protocol: 'http',
       host: item.internalipaddress,
-      port: 443,
+      port: 80,
       connection: 'local',
     });
   });

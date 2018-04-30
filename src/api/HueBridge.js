@@ -35,9 +35,19 @@ class HueBridge {
 		this.storage.write(this.properties);
 	}
 
+	getApiUrl(withUsername) {
+		const hidePort =
+			(this.properties.protocol === 'http' && this.properties.port === 80) ||
+			(this.properties.protocol === 'https' && this.properties.port === 443);
+		const usernamePath = withUsername ? `/${this.properties.username}` : null;
+		return hidePort ?
+			`${this.properties.protocol}://${this.properties.host}/api${usernamePath}` :
+			`${this.properties.protocol}://${this.properties.host}:${this.properties.port}/api${usernamePath}`;
+	}
+
 	async connect() {
 		if (!this.properties.username) {
-			const response = await fetch(`https://${this.properties.host}:${this.properties.port}/api`, {
+			const response = await fetch(this.getApiUrl(), {
 				method: 'POST',
 				mode: 'cors',
 				headers: {
