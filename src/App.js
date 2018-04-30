@@ -1,23 +1,37 @@
-import HueBridge from './HueBridge';
-import HueBridgeList from './HueBridgeList';
+import HueBridgeSelector from './ui/HueBridgeSelector'
+import Storage from './api/Storage';
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-window.HueBridgeList = HueBridgeList;
-window.HueBridge = HueBridge;
+const STORAGE_NAME = 'app';
+const STORAGE_VERSION = 1;
+const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = storage.read() || {
+      activeBridgeId: null,
+    };
+  }
+
+  onActiveBridgeChange(activeBridgeId) {
+    this.setState({
+      activeBridgeId,
+    }, () => {
+      storage.write(this.state);
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="container-fluid">
+        {this.state.isConnected ?
+          null :
+          <HueBridgeSelector
+            activeBridgeId={this.state.activeBridgeId}
+            onActiveBridgeChange={this.onActiveBridgeChange.bind(this)}
+          />}
       </div>
     );
   }
