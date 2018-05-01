@@ -1,0 +1,7 @@
+.jsonObject > *, .jsonArray > * {
+  padding-left: 20px;
+}
+
+.jsonObject > *::after, .jsonArray > *::after {
+  content: ',';
+}

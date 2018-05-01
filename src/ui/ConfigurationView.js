@@ -1,3 +1,4 @@
+import JsonEditor from './json/JsonEditor'
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
@@ -46,7 +47,7 @@ class ConfigurationView extends Component {
   render() {
     return (
       <div>
-        {JSON.stringify(this.state.json)}
+        <JsonEditor json={this.state.json} />
       </div>
     );
   }
