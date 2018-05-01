@@ -2,7 +2,7 @@
   "name": "hue-explorer",
   "version": "0.2.0",
   "private": true,
-  "homepage": "https://github.com/CatChen/hue-explorer",
+  "homepage": "http://hue-explorer.herokuapp.com/",
   "dependencies": {
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
