@@ -1,6 +1,8 @@
-import HueBridgeSelector from './ui/HueBridgeSelector'
+import ConfigurationView from './ui/ConfigurationView';
+import HueBridgeSelector from './ui/HueBridgeSelector';
 import Storage from './api/Storage';
 import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
 
 const STORAGE_NAME = 'app';
 const STORAGE_VERSION = 1;
@@ -49,27 +51,74 @@ class App extends Component {
                   />
                 }
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Lights</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Groups</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Schedules</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Scenes</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Sensors</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Rules</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="###">Configuration</a>
-              </li>
+              {
+                this.state.activeBridgeId ?
+                <React.Fragment>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/lights/${this.state.activeBridgeId}`}
+                    >
+                      Lights
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/groups/${this.state.activeBridgeId}`}
+                    >
+                      Groups
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/schedules/${this.state.activeBridgeId}`}
+                    >
+                      Schedules
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/scenes/${this.state.activeBridgeId}`}
+                    >
+                      Scenes
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/sensors/${this.state.activeBridgeId}`}
+                    >
+                      Sensors
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/rules/${this.state.activeBridgeId}`}
+                    >
+                      Rules
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      activeClassName="active"
+                      to={`/configuration/${this.state.activeBridgeId}`}
+                    >
+                      Configuration
+                    </NavLink>
+                  </li>
+                </React.Fragment> : null
+              }
             </ul>
             <form className="form-inline my-2 my-lg-0">
               <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
@@ -78,7 +127,7 @@ class App extends Component {
           </div>
         </nav>
         <div className="container-fluid">
-
+          <Route path="/configuration/:id" component={ConfigurationView}></Route>
         </div>
       </div>
     );

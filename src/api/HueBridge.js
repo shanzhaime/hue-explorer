@@ -35,14 +35,23 @@ class HueBridge {
 		this.storage.write(this.properties);
 	}
 
-	getApiUrl(withUsername) {
+  getHostUrl() {
 		const hidePort =
 			(this.properties.protocol === 'http' && this.properties.port === 80) ||
 			(this.properties.protocol === 'https' && this.properties.port === 443);
-		const usernamePath = withUsername ? `/${this.properties.username}` : null;
 		return hidePort ?
-			`${this.properties.protocol}://${this.properties.host}/api${usernamePath}` :
-			`${this.properties.protocol}://${this.properties.host}:${this.properties.port}/api${usernamePath}`;
+			`${this.properties.protocol}://${this.properties.host}` :
+			`${this.properties.protocol}://${this.properties.host}:${this.properties.port}`;
+	}
+
+	getApiUrl() {
+		const hostUrl = this.getHostUrl();
+		return hostUrl + '/api';
+	}
+
+	getUsernameUrl() {
+		const apiUrl = this.getApiUrl();
+		return apiUrl + `/${this.properties.username}`;
 	}
 
 	async connect() {
@@ -68,6 +77,13 @@ class HueBridge {
 				return false;
 			}
 		}
+		return true;
+	}
+
+	async fetch(path, options) {
+		const response = await fetch(this.getUsernameUrl() + path, options);
+		const json = await response.json();
+		return json;
 	}
 
 	static getById(id) {
