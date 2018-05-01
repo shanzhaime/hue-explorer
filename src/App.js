@@ -1,3 +1,9 @@
+import LightsView from './ui/LightsView';
+import GroupsView from './ui/GroupsView';
+import SchedulesView from './ui/SchedulesView';
+import ScenesView from './ui/ScenesView';
+import SensorsView from './ui/SensorsView';
+import RulesView from './ui/RulesView';
 import ConfigurationView from './ui/ConfigurationView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
 import Storage from './api/Storage';
@@ -128,6 +134,12 @@ class App extends Component {
             </div>
           </nav>
           <div className="container-fluid">
+            <Route path="/lights/:id" component={LightsView}></Route>
+            <Route path="/groups/:id" component={GroupsView}></Route>
+            <Route path="/schedules/:id" component={SchedulesView}></Route>
+            <Route path="/scenes/:id" component={ScenesView}></Route>
+            <Route path="/sensors/:id" component={SensorsView}></Route>
+            <Route path="/rules/:id" component={RulesView}></Route>
             <Route path="/configuration/:id" component={ConfigurationView}></Route>
           </div>
         </div>
