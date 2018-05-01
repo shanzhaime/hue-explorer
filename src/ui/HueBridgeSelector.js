@@ -17,6 +17,19 @@ class HueBridgeSelector extends Component {
     }
   }
 
+  loadBridgeList() {
+    const bridgeIds = HueBridgeList.load();
+    const bridges = Array.from(bridgeIds).map((id) => {
+      const bridge = HueBridge.getById(id);
+      return {
+        ...bridge.properties,
+      };
+    });
+    this.setState({
+      bridges,
+    });
+  }
+
   updateBridgeList() {
     HueBridgeList.fetch().then((bridgeIds) => {
       const bridges = Array.from(bridgeIds).map((id) => {
@@ -29,10 +42,6 @@ class HueBridgeSelector extends Component {
         bridges,
       });
     });
-  }
-
-  componentDidMount() {
-    this.updateBridgeList();
   }
 
   onButtonClick(e) {
@@ -50,6 +59,11 @@ class HueBridgeSelector extends Component {
         }
       })
     }
+  }
+
+  componentDidMount() {
+    this.loadBridgeList();
+    this.updateBridgeList();
   }
 
   render() {

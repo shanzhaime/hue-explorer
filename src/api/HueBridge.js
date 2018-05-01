@@ -88,9 +88,20 @@ class HueBridge {
 
 	static getById(id) {
 		if (!bridgePool.has(id)) {
-			throw new Error(`Bridge with id equals to ${id} does not exist`);
+			return null;
 		}
 		return bridgePool.get(id);
+	}
+
+	static getAuthorizedById(id) {
+		if (!bridgePool.has(id)) {
+			return null;
+		}
+		const bridge = bridgePool.get(id);
+		if (!bridge.properties.username) {
+			return null;
+		}
+		return bridge;
 	}
 }
 

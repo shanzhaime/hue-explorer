@@ -31,6 +31,12 @@ async function fetchLocalBridges() {
   });
 }
 
+function loadBridges() {
+  const storedBridges = readStoredBridges();
+  const storedBridgeIds = storedBridges.map((bridge) => { return bridge.id; });
+  return storedBridgeIds;
+}
+
 async function fetchBridges() {
   const [
     storedBridges,
@@ -52,6 +58,7 @@ async function fetchBridges() {
 }
 
 const HueBridgeList = {
+  load: loadBridges,
 	fetch: fetchBridges,
 }
 
