@@ -1,7 +1,10 @@
-export const MAX_BRIGHTNESS = 254;
-export const MIN_BRIGHTNESS = 1;
+const MAX_BRIGHTNESS = 254;
+const MIN_BRIGHTNESS = 1;
 
 const HueColor = {
+  MAX_BRIGHTNESS,
+  MIN_BRIGHTNESS,
+
   fromRgbToHex: function(rgb) {
     const [r, g, b] = rgb;
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;

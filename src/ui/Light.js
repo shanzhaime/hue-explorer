@@ -47,6 +47,8 @@ class LightsView extends Component {
         const hex = HueColor.fromRgbToHex(rgb);
         const grayscale = HueColor.fromColorToGrayscale(rgb);
         const fontColor = grayscale < 128 ? 'white' : 'black';
+        const brightness = json.state.bri / HueColor.MAX_BRIGHTNESS;
+        console.log(`linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness * 100}%, black ${brightness * 100}%, black 100%)`);
         viewContent = (
           <React.Fragment>
             <h5 className="card-title">
@@ -55,39 +57,29 @@ class LightsView extends Component {
             <h6 className="card-subtitle mb-2 text-muted">
               {`${json.productname} (${json.manufacturername} ${json.modelid})`}
             </h6>
-            <div className="btn-toolbar mb-3" role="toolbar" aria-label="Light state">
-              <div className="btn-group mr-2" role="group" aria-label="On/off state">
+            <div className="input-group">
+              <div className="input-group-prepend">
                 <button
                   type="button"
-                  className={'btn btn-light' + (json.state.on ? ' active' : '')}
+                  className={'input-group-text btn btn-light' + (json.state.on ? ' active' : '')}
                 >
-                  On
-                </button>
-                <button
-                  type="button"
-                  className={'btn btn-light' + (json.state.on ? '' : ' active')}
-                >
-                  Off
+                  {json.state.on ? 'On' : 'Off'}
                 </button>
               </div>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <div className="input-group-text" id="btnGroupAddon">Color</div>
-                </div>
-                <input
-                  type="text"
-                  value={hex}
-                  style={{
-                    backgroundColor: hex,
-                    color: fontColor,
-                  }}
-                  className="form-control"
-                  placeholder="#ffffff"
-                  aria-label="Light color"
-                  aria-describedby="btnGroupAddon"
-                  readOnly
-                />
-              </div>
+              <input
+                type="text"
+                value={hex}
+                style={{
+                  backgroundColor: hex,
+                  backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness * 100}%, black ${brightness * 100}%, black 100%)`,
+                  color: fontColor,
+                }}
+                className="form-control"
+                placeholder="#ffffff"
+                aria-label="Light color"
+                aria-describedby="btnGroupAddon"
+                readOnly
+              />
             </div>
           </React.Fragment>
         );
