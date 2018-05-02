@@ -1,4 +1,4 @@
-import JsonEditor from './json/JsonEditor'
+import Light from './Light';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
@@ -47,7 +47,11 @@ class LightsView extends Component {
   render() {
     return (
       <div>
-        <JsonEditor json={this.state.json} />
+        {this.state.json === null ? 'No lights' : Object.keys(this.state.json).map((key) => {
+          return (
+            <Light json={this.state.json[key]} lightId={key} key={key} />
+          );
+        })}
       </div>
     );
   }
