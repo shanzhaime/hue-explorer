@@ -2,6 +2,15 @@ const MAX_BRIGHTNESS = 254;
 const MIN_BRIGHTNESS = 1;
 const RGB_MAX_VALUE = 255;
 
+function padStart(string, length, padding) {
+  if (string.length >= length) {
+    return string;
+  } else {
+    const remainingLength = length - string.length;
+    return padding.repeat(remainingLength / padding.length).slice(0, remainingLength) + string;
+  }
+}
+
 const HueColor = {
   MAX_BRIGHTNESS,
   MIN_BRIGHTNESS,
@@ -9,7 +18,7 @@ const HueColor = {
 
   fromRgbToHex: function(rgb) {
     const [r, g, b] = rgb;
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    return `#${padStart(r.toString(16), 2, '0')}${padStart(g.toString(16), 2, '0')}${padStart(b.toString(16), 2, '0')}`;
   },
 
   fromHexToRgb: function(hex) {

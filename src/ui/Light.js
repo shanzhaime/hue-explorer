@@ -1,4 +1,3 @@
-import JsonEditor from './json/JsonEditor';
 import HueColor from '../api/HueColor';
 import React, { Component } from 'react';
 
@@ -31,7 +30,7 @@ class LightsView extends Component {
     const fontColor = grayscale < 128 ? 'white' : 'black';
     const brightness = json.state.bri / HueColor.MAX_BRIGHTNESS;
     return (
-      <div className="col-sm-3">
+      <div className="col-md-4 col-lg-3">
         <div className="card my-3">
           {/*
           <div className="card-header">
