@@ -1,9 +1,11 @@
 const MAX_BRIGHTNESS = 254;
 const MIN_BRIGHTNESS = 1;
+const RGB_MAX_VALUE = 255;
 
 const HueColor = {
   MAX_BRIGHTNESS,
   MIN_BRIGHTNESS,
+  RGB_MAX_VALUE,
 
   fromRgbToHex: function(rgb) {
     const [r, g, b] = rgb;
@@ -11,7 +13,27 @@ const HueColor = {
   },
 
   fromHexToRgb: function(hex) {
-    throw new Error('Not implemented');
+    const matches = hex.match(/^#(([0-9a-f])([0-9a-f])([0-9a-f])|([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2}))$/i);
+    if (!matches) {
+      throw new Error(`Invalid hex code: ${hex}`);
+    }
+    const [, , r, g, b, rr, gg, bb] = matches;
+    if (r && g && b) {
+      return [
+        parseInt(r, 16) * 17,
+        parseInt(g, 16) * 17,
+        parseInt(b, 16) * 17,
+      ];
+    } else if (rr && gg && bb) {
+      return [
+        parseInt(rr, 16),
+        parseInt(gg, 16),
+        parseInt(bb, 16),
+      ];
+
+    } else {
+      throw new Error(`Invalid hex code: ${hex}`);
+    }
   },
 
   fromColorToGrayscale: function(rgb) {
@@ -66,15 +88,32 @@ const HueColor = {
     }
 
     return [
-      Math.round(r * 255),
-      Math.round(g * 255),
-      Math.round(b * 255),
+      Math.round(r * RGB_MAX_VALUE) + (+0),
+      Math.round(g * RGB_MAX_VALUE) + (+0),
+      Math.round(b * RGB_MAX_VALUE) + (+0),
     ];
   },
 
   // Algorithms: https://developers.meethue.com/documentation/color-conversions-rgb-xy
   fromRgbToXy: function(rgb) {
-    throw new Error('Not implemented');
+    const [r, g, b] = rgb;
+
+    let red = r / RGB_MAX_VALUE;
+    let green = g / RGB_MAX_VALUE;
+    let blue = b / RGB_MAX_VALUE;
+
+    red = (red > 0.04045) ? Math.pow((red + 0.055) / (1 + 0.055), 2.4) : (red / 12.92);
+    green = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+    blue = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
+
+    const X = red * 0.664511 + green * 0.154324 + blue * 0.162028;
+    const Y = red * 0.283881 + green * 0.668433 + blue * 0.047685;
+    const Z = red * 0.000088 + green * 0.072310 + blue * 0.986039;
+
+    const x = X / (X + Y + Z) || 0; // If (X + Y + Z) = 0 then return 0
+    const y = Y / (X + Y + Z) || 0; // If (X + Y + Z) = 0 then return 0
+
+    return [x, y, Y * MAX_BRIGHTNESS];
   },
 };
 

@@ -27,7 +27,11 @@ class LightsView extends Component {
     let viewContent;
     switch (this.state.view) {
       case 'graphics':
-        let rgb = [255, 255, 255];
+        let rgb = [
+          HueColor.RGB_MAX_VALUE,
+          HueColor.RGB_MAX_VALUE,
+          HueColor.RGB_MAX_VALUE,
+        ];
         switch (json.state.colormode) {
           case 'hs':
             // Not yet supported;
@@ -48,7 +52,6 @@ class LightsView extends Component {
         const grayscale = HueColor.fromColorToGrayscale(rgb);
         const fontColor = grayscale < 128 ? 'white' : 'black';
         const brightness = json.state.bri / HueColor.MAX_BRIGHTNESS;
-        console.log(`linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness * 100}%, black ${brightness * 100}%, black 100%)`);
         viewContent = (
           <React.Fragment>
             <h5 className="card-title">
