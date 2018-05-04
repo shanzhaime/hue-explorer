@@ -2,5 +2,18 @@
   "root": "build/",
   "routes": {
     "/**": "index.html"
+  },
+  "proxies": {
+    "/oauth2": {
+      "origin": "https://api.meethue.com"
+    },
+    "/bridge": {
+      "origin": "https://api.meethue.com"
+    }
+  },
+  "headers": {
+    "/**": {
+      "Access-Control-Allow-Origin": "http://hue-explorer.herokuapp.com"
+    }
   }
 }
