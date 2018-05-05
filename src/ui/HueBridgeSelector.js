@@ -1,6 +1,8 @@
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
+import Settings from '../api/Settings';
 import React, { Component } from 'react';
+import deviceId from '../api/deviceId';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
@@ -11,8 +13,11 @@ class HueBridgeSelector extends Component {
 
   constructor(props) {
     super(props);
+    const settings = Settings.read();
     this.state = {
       bridges: [],
+      settings,
+      deviceId: deviceId(),
       hasAuthorizationFailure: false,
     }
   }
@@ -89,6 +94,13 @@ class HueBridgeSelector extends Component {
             </button>
           );
         })}
+        <div className="dropdown-divider"></div>
+        <a
+          className="dropdown-item"
+          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=hue-explorer&deviceId=${this.state.settings.deviceId}&response_type=code&state={this.state.deviceId}`}
+        >
+          Add remote bridges
+        </a>
         <div className="dropdown-divider"></div>
         <button className="dropdown-item disabled">Add bridge manually</button>
       </div>

@@ -1,5 +1,5 @@
 import Storage from './Storage';
-import deviceID from './deviceID';
+import deviceId from './deviceId';
 
 const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 1;
@@ -63,7 +63,7 @@ class HueBridge {
 					'content-type': 'application/json',
 				},
 				body: JSON.stringify({
-					devicetype: `Hue Explorer#${deviceID()}`
+					devicetype: `Hue Explorer#${deviceId()}`
 						.slice(0, 40), // Hue accepts only 40 characters for devicetype
 				}),
 			})

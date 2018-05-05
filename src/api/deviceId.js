@@ -5,7 +5,7 @@ const STORAGE_NAME = 'device_id';
 const STORAGE_VERSION = 1;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
-const deviceID = function() {
+const deviceId = function() {
   const existingID = storage.read();
   if (!existingID) {
     const newID = uuid();
@@ -15,4 +15,4 @@ const deviceID = function() {
   return existingID;
 };
 
-export default deviceID;
+export default deviceId;
