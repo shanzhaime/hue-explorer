@@ -97,7 +97,9 @@ class HueBridgeSelector extends Component {
         <div className="dropdown-divider"></div>
         <a
           className="dropdown-item"
-          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=hue-explorer&deviceId=${this.state.settings.deviceId}&response_type=code&state={this.state.deviceId}`}
+          rel="noopener noreferrer"
+          target="_blank"
+          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=${this.state.settings.appId}&deviceid=${this.state.deviceId}&response_type=code&state=${this.state.deviceId}`}
         >
           Add remote bridges
         </a>

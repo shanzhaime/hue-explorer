@@ -2,7 +2,7 @@ import HueBridge from './HueBridge';
 import Storage from './Storage';
 
 const STORAGE_NAME = 'bridges';
-const STORAGE_VERSION = 3;
+const STORAGE_VERSION = 4;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
 const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
@@ -26,7 +26,7 @@ async function fetchLocalBridges() {
 			protocol: 'http',
       host: item.internalipaddress,
       port: 80,
-      connection: 'local',
+      local: true,
     });
   });
 }
@@ -38,12 +38,11 @@ function loadBridges() {
 }
 
 async function fetchBridges() {
+  const storedBridges = readStoredBridges();
   const [
-    storedBridges,
     remoteBridges,
     localBridges,
   ] = await Promise.all([
-    readStoredBridges(),
     fetchRemoteBridges(),
     fetchLocalBridges(),
   ]);

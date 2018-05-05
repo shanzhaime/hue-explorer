@@ -2,13 +2,13 @@ import Storage from './Storage';
 import deviceId from './deviceId';
 
 const STORAGE_NAME_PREFIX = 'bridge:';
-const STORAGE_VERSION = 1;
+const STORAGE_VERSION = 2;
 
 const bridgePool = new Map();
 
 class HueBridge {
 	constructor(id, properties) {
-		const sameHueBridge = bridgePool.get(id);
+		const sameHueBridge = bridgePool.get(id.toUpperCase());
 		if (sameHueBridge) {
 			sameHueBridge.properties = {
 				...sameHueBridge.properties,
@@ -18,8 +18,8 @@ class HueBridge {
 			return sameHueBridge;
 		}
 
-		bridgePool.set(id, this);
-		this.id = id;
+		bridgePool.set(id.toUpperCase(), this);
+		this.id = id.toUpperCase();
 		this.storage = new Storage(STORAGE_NAME_PREFIX + id, STORAGE_VERSION);
 		const storedProperties = this.storage.read();
 		this.properties = {
@@ -68,7 +68,7 @@ class HueBridge {
 				}),
 			})
 			const json = await response.json();
-			if (json[0].success) {
+			if (json[0] && json[0].success) {
 				this.properties.username = json[0].success.username;
 				this.store();
 				return true;
@@ -87,17 +87,17 @@ class HueBridge {
 	}
 
 	static getById(id) {
-		if (!bridgePool.has(id)) {
+		if (!bridgePool.has(id.toUpperCase())) {
 			return null;
 		}
-		return bridgePool.get(id);
+		return bridgePool.get(id.toUpperCase());
 	}
 
 	static getAuthorizedById(id) {
-		if (!bridgePool.has(id)) {
+		if (!bridgePool.has(id.toUpperCase())) {
 			return null;
 		}
-		const bridge = bridgePool.get(id);
+		const bridge = bridgePool.get(id.toUpperCase());
 		if (!bridge.properties.username) {
 			return null;
 		}
