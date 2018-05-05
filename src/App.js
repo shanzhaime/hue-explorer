@@ -5,6 +5,7 @@ import ScenesView from './ui/ScenesView';
 import SensorsView from './ui/SensorsView';
 import RulesView from './ui/RulesView';
 import ConfigurationView from './ui/ConfigurationView';
+import SettingsView from './ui/SettingsView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
 import Storage from './api/Storage';
 import React, { Component } from 'react';
@@ -126,6 +127,15 @@ class App extends Component {
                     </li>
                   </React.Fragment> : null
                 }
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    activeClassName="active"
+                    to={`/settings`}
+                  >
+                    Settings
+                  </NavLink>
+                </li>
               </ul>
               {/*
               <form className="form-inline my-2 my-lg-0">
@@ -143,6 +153,7 @@ class App extends Component {
             <Route path="/sensors/:id" component={SensorsView}></Route>
             <Route path="/rules/:id" component={RulesView}></Route>
             <Route path="/configuration/:id" component={ConfigurationView}></Route>
+            <Route path="/settings" component={SettingsView}></Route>
           </div>
         </div>
       </BrowserRouter>

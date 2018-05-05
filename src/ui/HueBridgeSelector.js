@@ -44,7 +44,7 @@ class HueBridgeSelector extends Component {
     });
   }
 
-  onButtonClick(e) {
+  onBridgeClick(e) {
     const selectedBridgeId = e.target.value;
     const bridge = HueBridge.getById(selectedBridgeId);
     if (bridge.properties.username) {
@@ -81,7 +81,7 @@ class HueBridgeSelector extends Component {
               }
               value={bridgeProperties.id}
               key={bridgeProperties.id}
-              onClick={this.onButtonClick.bind(this)}
+              onClick={this.onBridgeClick.bind(this)}
             >
               {bridgeProperties.host}
               {hidePort ? '' : `:${bridgeProperties.port}`}
