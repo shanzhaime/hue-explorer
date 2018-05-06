@@ -33,13 +33,13 @@ if (window.location.search) {
     fetch(`/oauth2/token?code=${code}&grant_type=authorization_code`, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${hash}`
-      }
+        Authorization: `Basic ${hash}`,
+      },
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         console.log(json);
         if (json.fault) {
           oauthFailure(state);
@@ -57,14 +57,14 @@ if (window.location.search) {
         return fetch(`/bridge/0/config`, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${settings.accessToken}`
-          }
+            Authorization: `Bearer ${settings.accessToken}`,
+          },
         });
       })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         bridgeId = json.bridgeid;
         if (!bridgeId) {
           oauthFailure(state);
@@ -79,19 +79,19 @@ if (window.location.search) {
           return fetch(`/bridge/0/config`, {
             method: 'PUT',
             body: JSON.stringify({
-              linkbutton: true
+              linkbutton: true,
             }),
             headers: {
               Authorization: `Bearer ${settings.accessToken}`,
-              'content-type': 'application/json'
-            }
+              'content-type': 'application/json',
+            },
           });
         }
       })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         console.log(json);
         if (!json[0] || !json[0].success) {
           oauthFailure(state);
@@ -99,24 +99,24 @@ if (window.location.search) {
         return fetch(`/bridge`, {
           method: 'POST',
           body: JSON.stringify({
-            devicetype: settings.appId
+            devicetype: settings.appId,
           }),
           headers: {
             Authorization: `Bearer ${settings.accessToken}`,
-            'content-type': 'application/json'
-          }
+            'content-type': 'application/json',
+          },
         });
       })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(json => {
+      .then((json) => {
         if (!json[0] || !json[0].success) {
           oauthFailure(state);
         }
         const bridge = new HueBridge(bridgeId, {
           username: json[0].success.username,
-          remote: true
+          remote: true,
         });
         bridge.store();
         HueBridgeList.add(bridgeId);

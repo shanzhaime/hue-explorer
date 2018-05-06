@@ -5,7 +5,7 @@ const STORAGE_VERSION = 42;
 const TEST_OBJECT = {
   x: 1,
   y: ['hello', 'world'],
-  z: false
+  z: false,
 };
 
 let localStorageBackup = null;
@@ -20,7 +20,7 @@ beforeEach(() => {
   const localStorageMock = {
     getItem,
     setItem,
-    removeItem
+    removeItem,
   };
   localStorageBackup = global.localStorage;
   global.localStorage = localStorageMock;
@@ -55,7 +55,7 @@ it('can write object to storage', () => {
 
 it('can read object from storage', () => {
   const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
-  getItem.mockImplementationOnce(key => {
+  getItem.mockImplementationOnce((key) => {
     expect(key).toBe(`${STORAGE_NAME}:${STORAGE_VERSION}`);
     return JSON.stringify(TEST_OBJECT);
   });
@@ -64,7 +64,7 @@ it('can read object from storage', () => {
 });
 
 it('clears storage after version bumping', () => {
-  getItem.mockImplementationOnce(key => {
+  getItem.mockImplementationOnce((key) => {
     expect(key).toBe(STORAGE_NAME);
     return JSON.stringify(STORAGE_VERSION);
   });
@@ -72,6 +72,6 @@ it('clears storage after version bumping', () => {
   expect(removeItem.mock.calls.length).toBe(1);
   expect(removeItem.mock.calls[0].length).toBe(1);
   expect(removeItem.mock.calls[0][0]).toBe(
-    `${STORAGE_NAME}:${STORAGE_VERSION}`
+    `${STORAGE_NAME}:${STORAGE_VERSION}`,
   );
 });

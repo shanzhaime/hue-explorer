@@ -14,7 +14,7 @@ function write(settings) {
 
 const Settings = {
   read,
-  write
+  write,
 };
 
 export default Settings;

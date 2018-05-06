@@ -11,7 +11,7 @@ class SettingsView extends Component {
     const settings = {
       appId: this.appIdInput.value,
       clientId: this.clientIdInput.value,
-      clientSecret: this.clientSecretInput.value
+      clientSecret: this.clientSecretInput.value,
     };
     Settings.write(settings);
     this.setState(settings);
@@ -31,7 +31,7 @@ class SettingsView extends Component {
                   className="form-control"
                   id="appId"
                   placeholder="App ID"
-                  ref={input => {
+                  ref={(input) => {
                     this.appIdInput = input;
                   }}
                 />
@@ -44,7 +44,7 @@ class SettingsView extends Component {
                   className="form-control"
                   id="clientId"
                   placeholder="Client ID"
-                  ref={input => {
+                  ref={(input) => {
                     this.clientIdInput = input;
                   }}
                 />
@@ -57,7 +57,7 @@ class SettingsView extends Component {
                   className="form-control"
                   id="clientSecret"
                   placeholder="Client Secret"
-                  ref={input => {
+                  ref={(input) => {
                     this.clientSecretInput = input;
                   }}
                 />

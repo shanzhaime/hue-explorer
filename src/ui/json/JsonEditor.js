@@ -9,7 +9,7 @@ import JsonNull from './JsonNull';
 
 class JsonEditor extends Component {
   static defaultProps = {
-    json: null
+    json: null,
   };
 
   render() {

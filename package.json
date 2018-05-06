@@ -10,7 +10,9 @@
     }
   },
   "prettier": {
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always"
   },
   "dependencies": {
     "bootstrap": "^4.1.1",

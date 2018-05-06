@@ -27,13 +27,13 @@ const HueColor = {
     return `#${padStart(r.toString(16), 2, '0')}${padStart(
       g.toString(16),
       2,
-      '0'
+      '0',
     )}${padStart(b.toString(16), 2, '0')}`;
   },
 
   fromHexToRgb: function(hex: string): [number, number, number] {
     const matches = hex.match(
-      /^#(([0-9a-f])([0-9a-f])([0-9a-f])|([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2}))$/i
+      /^#(([0-9a-f])([0-9a-f])([0-9a-f])|([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2}))$/i,
     );
     if (!matches) {
       throw new Error(`Invalid hex code: ${hex}`);
@@ -57,7 +57,7 @@ const HueColor = {
   // Algorithms: https://developers.meethue.com/documentation/color-conversions-rgb-xy
   fromXyToRgb: function(
     xy: [number, number],
-    brightness: number = MAX_BRIGHTNESS
+    brightness: number = MAX_BRIGHTNESS,
   ): [number, number, number] {
     const [x, y] = xy;
     const z = 1 - x - y;
@@ -105,13 +105,13 @@ const HueColor = {
     return [
       Math.round(r * RGB_MAX_VALUE) + +0,
       Math.round(g * RGB_MAX_VALUE) + +0,
-      Math.round(b * RGB_MAX_VALUE) + +0
+      Math.round(b * RGB_MAX_VALUE) + +0,
     ];
   },
 
   // Algorithms: https://developers.meethue.com/documentation/color-conversions-rgb-xy
   fromRgbToXy: function(
-    rgb: [number, number, number]
+    rgb: [number, number, number],
   ): [number, number, number] {
     const [r, g, b] = rgb;
 
@@ -138,7 +138,7 @@ const HueColor = {
     const y = Y / (X + Y + Z) || 0; // If (X + Y + Z) = 0 then return 0
 
     return [x, y, Y * MAX_BRIGHTNESS];
-  }
+  },
 };
 
 export default HueColor;

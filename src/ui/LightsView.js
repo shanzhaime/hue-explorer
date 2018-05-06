@@ -8,7 +8,7 @@ class LightsView extends Component {
     super(props);
     this.state = {
       bridge: null,
-      json: null
+      json: null,
     };
   }
 
@@ -34,12 +34,12 @@ class LightsView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge
+      bridge,
     });
-    bridge.fetch('/lights').then(json => {
+    bridge.fetch('/lights').then((json) => {
       console.log(json);
       this.setState({
-        json
+        json,
       });
     });
   }
@@ -49,7 +49,7 @@ class LightsView extends Component {
       <div className="row">
         {this.state.json === null
           ? 'No lights'
-          : Object.keys(this.state.json).map(key => {
+          : Object.keys(this.state.json).map((key) => {
               return (
                 <Light json={this.state.json[key]} lightId={key} key={key} />
               );

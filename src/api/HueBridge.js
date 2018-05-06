@@ -14,7 +14,7 @@ class HueBridge {
     if (sameHueBridge) {
       sameHueBridge.properties = {
         ...sameHueBridge.properties,
-        ...properties
+        ...properties,
       };
       sameHueBridge.store();
       return sameHueBridge;
@@ -25,14 +25,14 @@ class HueBridge {
     this.state = {
       localReachable: false,
       localPingTimer: null,
-      localPingEnabled: false
+      localPingEnabled: false,
     };
     this.storage = new Storage(STORAGE_NAME_PREFIX + id, STORAGE_VERSION);
     const storedProperties = this.storage.read();
     this.properties = {
       ...storedProperties,
       ...properties,
-      id: id
+      id: id,
     };
 
     this.store();
@@ -82,7 +82,7 @@ class HueBridge {
             hostUrl,
             apiUrl,
             usernameUrl,
-            remote
+            remote,
           };
         }
       }
@@ -95,11 +95,11 @@ class HueBridge {
         method: 'POST',
         mode: 'cors',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
         },
         body: JSON.stringify({
-          devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40) // Hue accepts only 40 characters for devicetype
-        })
+          devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40), // Hue accepts only 40 characters for devicetype
+        }),
       });
       const json = await response.json();
       if (json[0] && json[0].success) {
@@ -164,7 +164,7 @@ class HueBridge {
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${settings.accessToken}`,
-          'content-type': 'application/json'
+          'content-type': 'application/json',
         };
       }
 

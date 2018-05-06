@@ -10,7 +10,7 @@ const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
 
 function readStoredBridges() {
   const bridgeIds = storage.read() || [];
-  return bridgeIds.map(id => {
+  return bridgeIds.map((id) => {
     return new HueBridge(id);
   });
 }
@@ -24,12 +24,12 @@ function addBridge(bridgeId) {
 async function discoverLocalBridges() {
   const response = await fetch(NUPNP_URL);
   const json = await response.json();
-  return json.map(item => {
+  return json.map((item) => {
     return new HueBridge(item.id, {
       protocol: 'http',
       host: item.internalipaddress,
       port: 80,
-      local: true
+      local: true,
     });
   });
 }
@@ -37,7 +37,7 @@ async function discoverLocalBridges() {
 function loadBridges() {
   const storedBridges = readStoredBridges();
   ActiveBridge.restore();
-  const storedBridgeIds = storedBridges.map(bridge => {
+  const storedBridgeIds = storedBridges.map((bridge) => {
     return bridge.id;
   });
   return storedBridgeIds;
@@ -47,10 +47,10 @@ async function fetchBridges() {
   const storedBridges = readStoredBridges();
   const localBridges = await discoverLocalBridges();
 
-  const storedBridgeIds = storedBridges.map(bridge => {
+  const storedBridgeIds = storedBridges.map((bridge) => {
     return bridge.id;
   });
-  const localBridgesIds = localBridges.map(bridge => {
+  const localBridgesIds = localBridges.map((bridge) => {
     return bridge.id;
   });
   const allBridgeIds = new Set(storedBridgeIds.concat(localBridgesIds));
@@ -62,7 +62,7 @@ async function fetchBridges() {
 const HueBridgeList = {
   add: addBridge,
   load: loadBridges,
-  fetch: fetchBridges
+  fetch: fetchBridges,
 };
 
 export default HueBridgeList;

@@ -40,7 +40,7 @@ function getActiveBridge(): ?string {
 const ActiveBridge = {
   restore: restoreActiveBridge,
   select: selectActiveBridge,
-  get: getActiveBridge
+  get: getActiveBridge,
 };
 
 export default ActiveBridge;

@@ -14,7 +14,7 @@ import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 class App extends Component {
   onBridgeAuthorizationFailure() {
     alert(
-      'Please press the link button on the Hue Bridge before trying to connect.'
+      'Please press the link button on the Hue Bridge before trying to connect.',
     );
   }
 
@@ -58,7 +58,7 @@ class App extends Component {
                   </a>
                   <HueBridgeSelector
                     onBridgeAuthorizationFailure={this.onBridgeAuthorizationFailure.bind(
-                      this
+                      this,
                     )}
                     key={Math.random()}
                   />

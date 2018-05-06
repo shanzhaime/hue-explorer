@@ -8,7 +8,7 @@ import JsonNull from './JsonNull';
 class JsonArray extends Component {
   static defaultProps = {
     json: null,
-    name: null
+    name: null,
   };
 
   render() {

@@ -8,7 +8,7 @@ class GroupsView extends Component {
     super(props);
     this.state = {
       bridge: null,
-      json: null
+      json: null,
     };
   }
 
@@ -34,12 +34,12 @@ class GroupsView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge
+      bridge,
     });
-    bridge.fetch('/groups').then(json => {
+    bridge.fetch('/groups').then((json) => {
       console.log(json);
       this.setState({
-        json
+        json,
       });
     });
   }

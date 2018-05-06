@@ -8,7 +8,7 @@ class SensorsView extends Component {
     super(props);
     this.state = {
       bridge: null,
-      json: null
+      json: null,
     };
   }
 
@@ -34,12 +34,12 @@ class SensorsView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge
+      bridge,
     });
-    bridge.fetch('/sensors').then(json => {
+    bridge.fetch('/sensors').then((json) => {
       console.log(json);
       this.setState({
-        json
+        json,
       });
     });
   }

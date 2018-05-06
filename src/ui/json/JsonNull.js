@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class JsonNull extends Component {
   static defaultProps = {
     json: null,
-    name: null
+    name: null,
   };
 
   render() {

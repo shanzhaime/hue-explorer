@@ -7,7 +7,7 @@ class LightsView extends Component {
     let rgb = [
       HueColor.RGB_MAX_VALUE,
       HueColor.RGB_MAX_VALUE,
-      HueColor.RGB_MAX_VALUE
+      HueColor.RGB_MAX_VALUE,
     ];
     switch (json.state.colormode) {
       case 'hs':
@@ -60,7 +60,7 @@ class LightsView extends Component {
                   backgroundColor: hex,
                   backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness *
                     100}%, black ${brightness * 100}%, black 100%)`,
-                  color: fontColor
+                  color: fontColor,
                 }}
                 className="form-control"
                 placeholder="#ffffff"

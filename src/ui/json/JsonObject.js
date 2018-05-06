@@ -8,7 +8,7 @@ import JsonNull from './JsonNull';
 class JsonObject extends Component {
   static defaultProps = {
     json: null,
-    name: null
+    name: null,
   };
 
   render() {
@@ -16,7 +16,7 @@ class JsonObject extends Component {
       <div className="jsonObject">
         {this.props.name ? `"${this.props.name}": ` : ''}
         {'{'}
-        {Object.keys(this.props.json).map(key => {
+        {Object.keys(this.props.json).map((key) => {
           const value = this.props.json[key];
           switch (typeof value) {
             case 'object':

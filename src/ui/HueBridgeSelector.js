@@ -7,7 +7,7 @@ import deviceId from '../api/deviceId';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
-    onBridgeAuthorizationFailure: function() {}
+    onBridgeAuthorizationFailure: function() {},
   };
 
   constructor(props) {
@@ -17,27 +17,27 @@ class HueBridgeSelector extends Component {
       bridges: [],
       settings,
       deviceId: deviceId(),
-      hasAuthorizationFailure: false
+      hasAuthorizationFailure: false,
     };
   }
 
   loadBridgeList() {
     const bridgeIds = HueBridgeList.load();
-    const bridges = Array.from(bridgeIds).map(id => {
+    const bridges = Array.from(bridgeIds).map((id) => {
       return HueBridge.getById(id);
     });
     this.setState({
-      bridges
+      bridges,
     });
   }
 
   updateBridgeList() {
-    HueBridgeList.fetch().then(bridgeIds => {
-      const bridges = Array.from(bridgeIds).map(id => {
+    HueBridgeList.fetch().then((bridgeIds) => {
+      const bridges = Array.from(bridgeIds).map((id) => {
         return HueBridge.getById(id);
       });
       this.setState({
-        bridges
+        bridges,
       });
     });
   }
@@ -48,7 +48,7 @@ class HueBridgeSelector extends Component {
     if (bridge.properties.username) {
       ActiveBridge.select(selectedBridgeId);
     } else {
-      bridge.connectLocal().then(success => {
+      bridge.connectLocal().then((success) => {
         if (success) {
           this.updateBridgeList();
           ActiveBridge.select(selectedBridgeId);
@@ -68,7 +68,7 @@ class HueBridgeSelector extends Component {
     const activeBridgeId = ActiveBridge.get();
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-        {this.state.bridges.map(bridge => {
+        {this.state.bridges.map((bridge) => {
           const hidePort =
             (bridge.properties.protocol === 'http' &&
               bridge.properties.port === 80) ||

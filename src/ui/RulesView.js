@@ -8,7 +8,7 @@ class RulesView extends Component {
     super(props);
     this.state = {
       bridge: null,
-      json: null
+      json: null,
     };
   }
 
@@ -34,12 +34,12 @@ class RulesView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge
+      bridge,
     });
-    bridge.fetch('/rules').then(json => {
+    bridge.fetch('/rules').then((json) => {
       console.log(json);
       this.setState({
-        json
+        json,
       });
     });
   }
