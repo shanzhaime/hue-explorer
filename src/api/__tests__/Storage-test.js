@@ -41,7 +41,7 @@ it("stores version number", () => {
   expect(setItem.mock.calls.length).toBe(1);
   expect(setItem.mock.calls[0].length).toBe(2);
   expect(setItem.mock.calls[0][0]).toBe(STORAGE_NAME);
-  expect(setItem.mock.calls[0][1]).toBe(STORAGE_VERSION);
+  expect(setItem.mock.calls[0][1]).toBe(STORAGE_VERSION.toString());
 });
 
 it("can write object to storage", () => {
