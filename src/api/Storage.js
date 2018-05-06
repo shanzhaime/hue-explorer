@@ -1,76 +1,68 @@
-function get(key) {
+// @flow
+
+function get(key: string): ?string {
   let value = null;
   try {
     value = localStorage.getItem(key);
   } catch (error) {
-    const storageError = new StorageError("localStorage not accessible");
-    throw storageError;
+    throw new error("localStorage not accessible");
   }
   return value;
 }
 
-function set(key, value) {
+function set(key: string, value: string) {
   try {
-    value = localStorage.setItem(key, value);
+    localStorage.setItem(key, value);
   } catch (error) {
-    const storageError = new StorageError("localStorage not accessible");
-    throw storageError;
+    throw new error("localStorage not accessible");
   }
 }
 
-function remove(key) {
+function remove(key: string) {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    const storageError = new StorageError("localStorage not accessible");
-    throw storageError;
+    throw new error("localStorage not accessible");
   }
 }
 
 class Storage {
-  constructor(name, version) {
+  name: string;
+  version: number;
+
+  constructor(name: string, version: number) {
     this.name = name;
     this.version = version;
 
     const previousVersion = parseInt(get(name), 10) || 0;
     if (version > previousVersion) {
       remove(`${name}:${previousVersion}`);
-      set(name, version);
+      set(name, version.toString(10));
     }
   }
 
-  read() {
+  read(): any {
     const key = `${this.name}:${this.version}`;
     const jsonString = get(key);
 
     let value = null;
-    try {
-      value = JSON.parse(jsonString);
-    } catch (error) {
-      // Remove corrupted item
-      remove(key);
+    if (jsonString) {
+      try {
+        value = JSON.parse(jsonString);
+      } catch (error) {
+        // Remove corrupted item
+        remove(key);
+      }
     }
 
     return value;
   }
 
-  write(value) {
+  write(value: mixed) {
     const key = `${this.name}:${this.version}`;
     const jsonString = JSON.stringify(value);
     set(key, jsonString);
   }
 }
-
-class StorageError extends Error {
-  constructor(...params) {
-    super(...params);
-
-    // Error stack trace for v8
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, StorageError);
-    }
-  }
-}
-Storage.StorageError = StorageError;
 
 export default Storage;
