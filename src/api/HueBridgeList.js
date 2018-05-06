@@ -1,11 +1,11 @@
-import HueBridge from "./HueBridge";
-import Storage from "./Storage";
+import HueBridge from './HueBridge';
+import Storage from './Storage';
 
-const STORAGE_NAME = "bridges";
+const STORAGE_NAME = 'bridges';
 const STORAGE_VERSION = 4;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
-const NUPNP_URL = "https://www.meethue.com/api/nupnp";
+const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
 
 function readStoredBridges() {
   const bridgeIds = storage.read() || [];
@@ -25,7 +25,7 @@ async function discoverLocalBridges() {
   const json = await response.json();
   return json.map(item => {
     return new HueBridge(item.id, {
-      protocol: "http",
+      protocol: 'http',
       host: item.internalipaddress,
       port: 80,
       local: true

@@ -1,8 +1,8 @@
-import Settings from "./Settings";
-import Storage from "./Storage";
-import deviceId from "./deviceId";
+import Settings from './Settings';
+import Storage from './Storage';
+import deviceId from './deviceId';
 
-const STORAGE_NAME_PREFIX = "bridge:";
+const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 2;
 
 const bridgePool = new Map();
@@ -41,32 +41,32 @@ class HueBridge {
     this.storage.write(this.properties);
   }
 
-  getUrls(priorities = ["local", "remote"]) {
+  getUrls(priorities = ['local', 'remote']) {
     let hostUrl = null;
     let apiUrl = null;
     let usernameUrl = null;
     for (let priority of priorities) {
       if (this.properties[priority] === true) {
         switch (priority) {
-          case "local":
+          case 'local':
             if (!this.state.localReachable) {
               break;
             }
             const hidePort =
-              (this.properties.protocol === "http" &&
+              (this.properties.protocol === 'http' &&
                 this.properties.port === 80) ||
-              (this.properties.protocol === "https" &&
+              (this.properties.protocol === 'https' &&
                 this.properties.port === 443);
             hostUrl = hidePort
               ? `${this.properties.protocol}://${this.properties.host}`
               : `${this.properties.protocol}://${this.properties.host}:${
                   this.properties.port
                 }`;
-            apiUrl = hostUrl + "/api";
+            apiUrl = hostUrl + '/api';
             break;
-          case "remote":
+          case 'remote':
             hostUrl = `${window.location.protocol}//${window.location.host}`;
-            apiUrl = hostUrl + "/bridge";
+            apiUrl = hostUrl + '/bridge';
             break;
           default:
             throw new Error(`Unrecognized priority: ${priority}`);
@@ -88,10 +88,10 @@ class HueBridge {
   async connectLocal() {
     if (!this.properties.username) {
       const response = await fetch(this.getApiUrl(), {
-        method: "POST",
-        mode: "cors",
+        method: 'POST',
+        mode: 'cors',
         headers: {
-          "content-type": "application/json"
+          'content-type': 'application/json'
         },
         body: JSON.stringify({
           devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40) // Hue accepts only 40 characters for devicetype
@@ -114,12 +114,12 @@ class HueBridge {
 
   async startLocalPing() {
     if (this.properties.local) {
-      const urls = this.getUrls(["local"]);
+      const urls = this.getUrls(['local']);
       if (urls && urls.hostUrl) {
         const descriptionUrl = `${urls.hostUrl}/description.xml`;
         const response = await fetch(descriptionUrl);
         const text = await response.text();
-        if (text.indexOf("meethue.com") >= 0) {
+        if (text.indexOf('meethue.com') >= 0) {
           this.state.localReachable = true;
         } else {
           this.state.localReachable = false;
@@ -147,7 +147,7 @@ class HueBridge {
       options.headers = {
         ...options.headers,
         Authorization: `Bearer ${settings.accessToken}`,
-        "content-type": "application/json"
+        'content-type': 'application/json'
       };
 
       const response = await fetch(urls.usernameUrl + path, options);

@@ -1,10 +1,10 @@
-import Storage from "../Storage";
+import Storage from '../Storage';
 
-const STORAGE_NAME = "test_storage";
+const STORAGE_NAME = 'test_storage';
 const STORAGE_VERSION = 42;
 const TEST_OBJECT = {
   x: 1,
-  y: ["hello", "world"],
+  y: ['hello', 'world'],
   z: false
 };
 
@@ -30,13 +30,13 @@ afterEach(() => {
   global.localStorage = localStorageBackup;
 });
 
-it("accepts name and version in constructor", () => {
+it('accepts name and version in constructor', () => {
   const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
   expect(storage.name).toBe(STORAGE_NAME);
   expect(storage.version).toBe(STORAGE_VERSION);
 });
 
-it("stores version number", () => {
+it('stores version number', () => {
   const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
   expect(setItem.mock.calls.length).toBe(1);
   expect(setItem.mock.calls[0].length).toBe(2);
@@ -44,7 +44,7 @@ it("stores version number", () => {
   expect(setItem.mock.calls[0][1]).toBe(STORAGE_VERSION.toString());
 });
 
-it("can write object to storage", () => {
+it('can write object to storage', () => {
   const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
   storage.write(TEST_OBJECT);
   expect(setItem.mock.calls.length).toBe(2);
@@ -53,7 +53,7 @@ it("can write object to storage", () => {
   expect(setItem.mock.calls[1][1]).toBe(JSON.stringify(TEST_OBJECT));
 });
 
-it("can read object from storage", () => {
+it('can read object from storage', () => {
   const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
   getItem.mockImplementationOnce(key => {
     expect(key).toBe(`${STORAGE_NAME}:${STORAGE_VERSION}`);
@@ -63,7 +63,7 @@ it("can read object from storage", () => {
   expect(json).toEqual(TEST_OBJECT);
 });
 
-it("clears storage after version bumping", () => {
+it('clears storage after version bumping', () => {
   getItem.mockImplementationOnce(key => {
     expect(key).toBe(STORAGE_NAME);
     return JSON.stringify(STORAGE_VERSION);

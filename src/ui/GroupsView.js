@@ -1,7 +1,7 @@
-import JsonEditor from "./json/JsonEditor";
-import HueBridge from "../api/HueBridge";
-import HueBridgeList from "../api/HueBridgeList";
-import React, { Component } from "react";
+import JsonEditor from './json/JsonEditor';
+import HueBridge from '../api/HueBridge';
+import HueBridgeList from '../api/HueBridgeList';
+import React, { Component } from 'react';
 
 class GroupsView extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class GroupsView extends Component {
     this.setState({
       bridge
     });
-    bridge.fetch("/groups").then(json => {
+    bridge.fetch('/groups').then(json => {
       console.log(json);
       this.setState({
         json

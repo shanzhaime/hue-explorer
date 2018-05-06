@@ -1,5 +1,5 @@
-import Settings from "../api/Settings";
-import React, { Component } from "react";
+import Settings from '../api/Settings';
+import React, { Component } from 'react';
 
 class SettingsView extends Component {
   constructor(props) {

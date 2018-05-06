@@ -1,5 +1,5 @@
-import HueColor from "../api/HueColor";
-import React, { Component } from "react";
+import HueColor from '../api/HueColor';
+import React, { Component } from 'react';
 
 class LightsView extends Component {
   render() {
@@ -10,13 +10,13 @@ class LightsView extends Component {
       HueColor.RGB_MAX_VALUE
     ];
     switch (json.state.colormode) {
-      case "hs":
+      case 'hs':
         // Not yet supported;
         break;
-      case "xy":
+      case 'xy':
         rgb = HueColor.fromXyToRgb(json.state.xy, json.state.bri);
         break;
-      case "ct":
+      case 'ct':
         // Not yet supported;
         break;
       default:
@@ -27,7 +27,7 @@ class LightsView extends Component {
     }
     const hex = HueColor.fromRgbToHex(rgb);
     const grayscale = HueColor.fromColorToGrayscale(rgb);
-    const fontColor = grayscale < 128 ? "white" : "black";
+    const fontColor = grayscale < 128 ? 'white' : 'black';
     const brightness = json.state.bri / HueColor.MAX_BRIGHTNESS;
     return (
       <div className="col-md-4 col-lg-3">
@@ -46,11 +46,11 @@ class LightsView extends Component {
                 <button
                   type="button"
                   className={
-                    "input-group-text btn btn-light" +
-                    (json.state.on ? " active" : "")
+                    'input-group-text btn btn-light' +
+                    (json.state.on ? ' active' : '')
                   }
                 >
-                  {json.state.on ? "On" : "Off"}
+                  {json.state.on ? 'On' : 'Off'}
                 </button>
               </div>
               <input

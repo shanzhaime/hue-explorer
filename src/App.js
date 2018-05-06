@@ -1,17 +1,17 @@
-import LightsView from "./ui/LightsView";
-import GroupsView from "./ui/GroupsView";
-import SchedulesView from "./ui/SchedulesView";
-import ScenesView from "./ui/ScenesView";
-import SensorsView from "./ui/SensorsView";
-import RulesView from "./ui/RulesView";
-import ConfigurationView from "./ui/ConfigurationView";
-import SettingsView from "./ui/SettingsView";
-import HueBridgeSelector from "./ui/HueBridgeSelector";
-import Storage from "./api/Storage";
-import React, { Component } from "react";
-import { BrowserRouter, NavLink, Route } from "react-router-dom";
+import LightsView from './ui/LightsView';
+import GroupsView from './ui/GroupsView';
+import SchedulesView from './ui/SchedulesView';
+import ScenesView from './ui/ScenesView';
+import SensorsView from './ui/SensorsView';
+import RulesView from './ui/RulesView';
+import ConfigurationView from './ui/ConfigurationView';
+import SettingsView from './ui/SettingsView';
+import HueBridgeSelector from './ui/HueBridgeSelector';
+import Storage from './api/Storage';
+import React, { Component } from 'react';
+import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 
-const STORAGE_NAME = "app";
+const STORAGE_NAME = 'app';
 const STORAGE_VERSION = 1;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
@@ -36,7 +36,7 @@ class App extends Component {
 
   onBridgeAuthorizationFailure() {
     alert(
-      "Please press the link button on the Hue Bridge before trying to connect."
+      'Please press the link button on the Hue Bridge before trying to connect.'
     );
   }
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class JsonBoolean extends Component {
   static defaultProps = {
@@ -9,7 +9,7 @@ class JsonBoolean extends Component {
   render() {
     return (
       <div>
-        {this.props.name ? `"${this.props.name}": ` : ""}
+        {this.props.name ? `"${this.props.name}": ` : ''}
         {this.props.json.toString()}
       </div>
     );

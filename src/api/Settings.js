@@ -1,6 +1,6 @@
-import Storage from "./Storage";
+import Storage from './Storage';
 
-const STORAGE_NAME = "settings";
+const STORAGE_NAME = 'settings';
 const STORAGE_VERSION = 1;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 

@@ -5,7 +5,7 @@ function get(key: string): ?string {
   try {
     value = localStorage.getItem(key);
   } catch (error) {
-    throw new error("localStorage not accessible");
+    throw new error('localStorage not accessible');
   }
   return value;
 }
@@ -14,7 +14,7 @@ function set(key: string, value: string) {
   try {
     localStorage.setItem(key, value);
   } catch (error) {
-    throw new error("localStorage not accessible");
+    throw new error('localStorage not accessible');
   }
 }
 
@@ -22,7 +22,7 @@ function remove(key: string) {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    throw new error("localStorage not accessible");
+    throw new error('localStorage not accessible');
   }
 }
 

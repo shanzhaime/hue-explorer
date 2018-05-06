@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class JsonString extends Component {
   static defaultProps = {
@@ -9,7 +9,7 @@ class JsonString extends Component {
   render() {
     return (
       <div>
-        {this.props.name ? `"${this.props.name}": ` : ""}
+        {this.props.name ? `"${this.props.name}": ` : ''}
         {'"'}
         {this.props.json}
         {'"'}

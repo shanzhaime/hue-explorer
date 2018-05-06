@@ -1,8 +1,8 @@
-import HueBridge from "../api/HueBridge";
-import HueBridgeList from "../api/HueBridgeList";
-import Settings from "../api/Settings";
-import React, { Component } from "react";
-import deviceId from "../api/deviceId";
+import HueBridge from '../api/HueBridge';
+import HueBridgeList from '../api/HueBridgeList';
+import Settings from '../api/Settings';
+import React, { Component } from 'react';
+import deviceId from '../api/deviceId';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
@@ -76,27 +76,27 @@ class HueBridgeSelector extends Component {
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
         {this.state.bridges.map(bridgeProperties => {
           const hidePort =
-            (bridgeProperties.protocol === "http" &&
+            (bridgeProperties.protocol === 'http' &&
               bridgeProperties.port === 80) ||
-            (bridgeProperties.protocol === "https" &&
+            (bridgeProperties.protocol === 'https' &&
               bridgeProperties.port === 443);
           const localName =
             bridgeProperties.host +
-            (hidePort ? "" : `:${bridgeProperties.port}`);
+            (hidePort ? '' : `:${bridgeProperties.port}`);
           return (
             <button
               className={
-                "dropdown-item" +
+                'dropdown-item' +
                 (bridgeProperties.id === this.props.activeBridgeId
-                  ? " active"
-                  : "")
+                  ? ' active'
+                  : '')
               }
               value={bridgeProperties.id}
               key={bridgeProperties.id}
               onClick={this.onBridgeClick.bind(this)}
             >
-              {bridgeProperties.local ? localName : "Remote Bridge"}
-              {bridgeProperties.username ? " (authorized)" : ""}
+              {bridgeProperties.local ? localName : 'Remote Bridge'}
+              {bridgeProperties.username ? ' (authorized)' : ''}
             </button>
           );
         })}

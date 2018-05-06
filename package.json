@@ -9,6 +9,9 @@
       "changeOrigin": true
     }
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "dependencies": {
     "bootstrap": "^4.1.1",
     "flow-bin": "^0.71.0",

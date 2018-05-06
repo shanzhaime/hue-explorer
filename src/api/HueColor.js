@@ -24,11 +24,11 @@ const HueColor = {
 
   fromRgbToHex: function(rgb: [number, number, number]): string {
     const [r, g, b] = rgb;
-    return `#${padStart(r.toString(16), 2, "0")}${padStart(
+    return `#${padStart(r.toString(16), 2, '0')}${padStart(
       g.toString(16),
       2,
-      "0"
-    )}${padStart(b.toString(16), 2, "0")}`;
+      '0'
+    )}${padStart(b.toString(16), 2, '0')}`;
   },
 
   fromHexToRgb: function(hex: string): [number, number, number] {

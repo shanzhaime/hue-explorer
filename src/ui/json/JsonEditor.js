@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import "./JsonEditor.css";
-import JsonObject from "./JsonObject";
-import JsonArray from "./JsonArray";
-import JsonNumber from "./JsonNumber";
-import JsonString from "./JsonString";
-import JsonBoolean from "./JsonBoolean";
-import JsonNull from "./JsonNull";
+import React, { Component } from 'react';
+import './JsonEditor.css';
+import JsonObject from './JsonObject';
+import JsonArray from './JsonArray';
+import JsonNumber from './JsonNumber';
+import JsonString from './JsonString';
+import JsonBoolean from './JsonBoolean';
+import JsonNull from './JsonNull';
 
 class JsonEditor extends Component {
   static defaultProps = {
@@ -15,21 +15,21 @@ class JsonEditor extends Component {
   render() {
     const json = this.props.json;
     switch (typeof json) {
-      case "object":
+      case 'object':
         if (json === null) {
           return <JsonNull />;
         } else if (Array.isArray(json)) {
           return <JsonArray json={json} />;
         }
         return <JsonObject json={json} />;
-      case "number":
+      case 'number':
         return <JsonNumber json={json} />;
-      case "string":
+      case 'string':
         return <JsonString json={json} />;
-      case "boolean":
+      case 'boolean':
         return <JsonBoolean json={json} />;
       default:
-        throw new Error("Invalid json property");
+        throw new Error('Invalid json property');
     }
   }
 }
