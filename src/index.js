@@ -14,9 +14,9 @@ function oauthSuccess(url) {
   debugger;
 }
 
-function oauthFailure() {
+function oauthFailure(url) {
   alert('OAuth failure');
-  window.location.href = '/';
+  window.location.href = url;
   debugger;
   throw new Error('OAuth failure');
 }
@@ -40,7 +40,7 @@ if (window.location.search) {
     }).then((json) => {
       console.log(json);
       if (json.fault) {
-        oauthFailure();
+        oauthFailure(state);
       }
 
       settings.accessToken = json.access_token;
@@ -61,7 +61,7 @@ if (window.location.search) {
     }).then((json) => {
       bridgeId = json.bridgeid;
       if (!bridgeId) {
-        oauthFailure();
+        oauthFailure(state);
       }
       const bridge = HueBridge.getById(bridgeId);
       if (bridge) {
@@ -85,7 +85,7 @@ if (window.location.search) {
     }).then((json) => {
       console.log(json);
       if (!json[0] || !json[0].success) {
-        oauthFailure();
+        oauthFailure(state);
       }
       return fetch(`/bridge`, {
         method: 'POST',
@@ -101,7 +101,7 @@ if (window.location.search) {
       return response.json();
     }).then((json) => {
       if (!json[0] || !json[0].success) {
-        oauthFailure();
+        oauthFailure(state);
       }
       const bridge = new HueBridge(bridgeId, {
         username: json[0].success.username,
