@@ -14,11 +14,13 @@ function readStoredBridges() {
 	});
 }
 
-async function fetchRemoteBridges() {
-  return []; // Not implemented
+function addBridge(bridgeId) {
+  const bridgeIds = storage.read() || [];
+  bridgeIds.push(bridgeId);
+  storage.write(bridgeIds);
 }
 
-async function fetchLocalBridges() {
+async function discoverLocalBridges() {
   const response = await fetch(NUPNP_URL);
   const json = await response.json();
   return json.map((item) => {
@@ -39,24 +41,18 @@ function loadBridges() {
 
 async function fetchBridges() {
   const storedBridges = readStoredBridges();
-  const [
-    remoteBridges,
-    localBridges,
-  ] = await Promise.all([
-    fetchRemoteBridges(),
-    fetchLocalBridges(),
-  ]);
+  const localBridges = await discoverLocalBridges();
 
 	const storedBridgeIds = storedBridges.map((bridge) => { return bridge.id; });
-	const remoteBridgesIds = remoteBridges.map((bridge) => { return bridge.id; });
 	const localBridgesIds = localBridges.map((bridge) => { return bridge.id; });
-	const allBridgeIds = new Set(storedBridgeIds.concat(remoteBridgesIds).concat(localBridgesIds));
+	const allBridgeIds = new Set(storedBridgeIds.concat(localBridgesIds));
 	storage.write(Array.from(allBridgeIds));
 
 	return allBridgeIds;
 }
 
 const HueBridgeList = {
+  add: addBridge,
   load: loadBridges,
 	fetch: fetchBridges,
 }

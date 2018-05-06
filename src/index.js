@@ -1,4 +1,5 @@
 import HueBridge from './api/HueBridge';
+import HueBridgeList from './api/HueBridgeList';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -6,8 +7,12 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './index.css';
 import App from './App';
 import Settings from './api/Settings';
-import deviceId from './api/deviceId';
 import registerServiceWorker from './registerServiceWorker';
+
+function oauthSuccess(url) {
+  window.location.href = url;
+  debugger;
+}
 
 function oauthFailure() {
   alert('OAuth failure');
@@ -20,7 +25,7 @@ if (window.location.search) {
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
-  if (code && state && state === deviceId()) {
+  if (code && state) {
     const settings = Settings.read();
     const hash = btoa(`${settings.clientId}:${settings.clientSecret}`);
     let bridgeId = null;
@@ -41,6 +46,8 @@ if (window.location.search) {
       settings.accessToken = json.access_token;
       settings.refreshToken = json.refresh_token;
       settings.tokenType = json.token_type;
+      settings.accessTokenExpiresAt = Date.now() + parseInt(json.access_token_expires_in, 10);
+      settings.refreshTokenExpiresAt = Date.now() + parseInt(json.refresh_token_expires_in, 10);
       Settings.write(settings);
 
       return fetch(`/bridge/0/config`, {
@@ -60,7 +67,7 @@ if (window.location.search) {
       if (bridge) {
         bridge.properties.remote = true;
         bridge.store();
-        window.location.href = '/';
+        oauthSuccess(state);
       } else {
         return fetch(`/bridge/0/config`, {
           method: 'PUT',
@@ -101,7 +108,8 @@ if (window.location.search) {
         remote: true,
       });
       bridge.store();
-      window.location.href = '/';
+      HueBridgeList.add(bridgeId);
+      oauthSuccess(state);
     });
   }
 }
@@ -110,3 +118,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
 
 window.HueBridge = HueBridge;
+window.HueBridgeList = HueBridgeList;
+window.Settings = Settings;

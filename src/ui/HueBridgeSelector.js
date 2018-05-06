@@ -55,7 +55,7 @@ class HueBridgeSelector extends Component {
     if (bridge.properties.username) {
       this.props.onActiveBridgeChange(selectedBridgeId);
     } else {
-      bridge.connect().then((success) => {
+      bridge.connectLocal().then((success) => {
         if (success) {
           this.updateBridgeList();
           this.props.onActiveBridgeChange(selectedBridgeId);
@@ -78,6 +78,7 @@ class HueBridgeSelector extends Component {
           const hidePort =
             (bridgeProperties.protocol === 'http' && bridgeProperties.port === 80) ||
             (bridgeProperties.protocol === 'https' && bridgeProperties.port === 443);
+          const localName = bridgeProperties.host + (hidePort ? '' : `:${bridgeProperties.port}`);
           return (
             <button
               className={
@@ -88,8 +89,7 @@ class HueBridgeSelector extends Component {
               key={bridgeProperties.id}
               onClick={this.onBridgeClick.bind(this)}
             >
-              {bridgeProperties.host}
-              {hidePort ? '' : `:${bridgeProperties.port}`}
+              {bridgeProperties.local ? localName : 'Remote Bridge'}
               {bridgeProperties.username ? ' (authorized)' : ''}
             </button>
           );
@@ -99,7 +99,7 @@ class HueBridgeSelector extends Component {
           className="dropdown-item"
           rel="noopener noreferrer"
           target="_blank"
-          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=${this.state.settings.appId}&deviceid=${this.state.deviceId}&response_type=code&state=${this.state.deviceId}`}
+          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=${this.state.settings.appId}&deviceid=${this.state.deviceId}&response_type=code&state=${window.location.pathname}`}
         >
           Add remote bridges
         </a>
