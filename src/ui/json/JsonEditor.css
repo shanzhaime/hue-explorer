@@ -1,7 +1,9 @@
-.jsonObject > *, .jsonArray > * {
+.jsonObject > *,
+.jsonArray > * {
   padding-left: 20px;
 }
 
-.jsonObject > *::after, .jsonArray > *::after {
-  content: ',';
+.jsonObject > *::after,
+.jsonArray > *::after {
+  content: ",";
 }
