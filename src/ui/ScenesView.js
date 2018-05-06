@@ -1,15 +1,15 @@
-import JsonEditor from './json/JsonEditor'
-import HueBridge from '../api/HueBridge';
-import HueBridgeList from '../api/HueBridgeList';
-import React, { Component } from 'react';
+import JsonEditor from "./json/JsonEditor";
+import HueBridge from "../api/HueBridge";
+import HueBridgeList from "../api/HueBridgeList";
+import React, { Component } from "react";
 
 class ScenesView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bridge: null,
-      json: null,
-    }
+      json: null
+    };
   }
 
   getActiveBridge() {
@@ -34,12 +34,12 @@ class ScenesView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge,
+      bridge
     });
-    bridge.fetch('/scenes').then((json) => {
+    bridge.fetch("/scenes").then(json => {
       console.log(json);
       this.setState({
-        json,
+        json
       });
     });
   }

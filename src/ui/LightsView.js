@@ -1,15 +1,15 @@
-import Light from './Light';
-import HueBridge from '../api/HueBridge';
-import HueBridgeList from '../api/HueBridgeList';
-import React, { Component } from 'react';
+import Light from "./Light";
+import HueBridge from "../api/HueBridge";
+import HueBridgeList from "../api/HueBridgeList";
+import React, { Component } from "react";
 
 class LightsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bridge: null,
-      json: null,
-    }
+      json: null
+    };
   }
 
   getActiveBridge() {
@@ -34,12 +34,12 @@ class LightsView extends Component {
   componentDidMount() {
     const bridge = this.getActiveBridge();
     this.setState({
-      bridge,
+      bridge
     });
-    bridge.fetch('/lights').then((json) => {
+    bridge.fetch("/lights").then(json => {
       console.log(json);
       this.setState({
-        json,
+        json
       });
     });
   }
@@ -47,11 +47,13 @@ class LightsView extends Component {
   render() {
     return (
       <div className="row">
-        {this.state.json === null ? 'No lights' : Object.keys(this.state.json).map((key) => {
-          return (
-            <Light json={this.state.json[key]} lightId={key} key={key} />
-          );
-        })}
+        {this.state.json === null
+          ? "No lights"
+          : Object.keys(this.state.json).map(key => {
+              return (
+                <Light json={this.state.json[key]} lightId={key} key={key} />
+              );
+            })}
       </div>
     );
   }

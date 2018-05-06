@@ -1,17 +1,17 @@
-import LightsView from './ui/LightsView';
-import GroupsView from './ui/GroupsView';
-import SchedulesView from './ui/SchedulesView';
-import ScenesView from './ui/ScenesView';
-import SensorsView from './ui/SensorsView';
-import RulesView from './ui/RulesView';
-import ConfigurationView from './ui/ConfigurationView';
-import SettingsView from './ui/SettingsView';
-import HueBridgeSelector from './ui/HueBridgeSelector';
-import Storage from './api/Storage';
-import React, { Component } from 'react';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import LightsView from "./ui/LightsView";
+import GroupsView from "./ui/GroupsView";
+import SchedulesView from "./ui/SchedulesView";
+import ScenesView from "./ui/ScenesView";
+import SensorsView from "./ui/SensorsView";
+import RulesView from "./ui/RulesView";
+import ConfigurationView from "./ui/ConfigurationView";
+import SettingsView from "./ui/SettingsView";
+import HueBridgeSelector from "./ui/HueBridgeSelector";
+import Storage from "./api/Storage";
+import React, { Component } from "react";
+import { BrowserRouter, NavLink, Route } from "react-router-dom";
 
-const STORAGE_NAME = 'app';
+const STORAGE_NAME = "app";
 const STORAGE_VERSION = 1;
 const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
@@ -19,20 +19,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = storage.read() || {
-      activeBridgeId: null,
+      activeBridgeId: null
     };
   }
 
   onActiveBridgeChange(activeBridgeId) {
-    this.setState({
-      activeBridgeId,
-    }, () => {
-      storage.write(this.state);
-    })
+    this.setState(
+      {
+        activeBridgeId
+      },
+      () => {
+        storage.write(this.state);
+      }
+    );
   }
 
   onBridgeAuthorizationFailure() {
-    alert('Please press the link button on the Hue Bridge before trying to connect.');
+    alert(
+      "Please press the link button on the Hue Bridge before trying to connect."
+    );
   }
 
   render() {
@@ -40,27 +45,51 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="/">Hue Explorer</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
+            <a className="navbar-brand" href="/">
+              Hue Explorer
+            </a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="###" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="###"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
                     Bridges
                   </a>
                   {
                     <HueBridgeSelector
                       activeBridgeId={this.state.activeBridgeId}
-                      onActiveBridgeChange={this.onActiveBridgeChange.bind(this)}
-                      onBridgeAuthorizationFailure={this.onBridgeAuthorizationFailure.bind(this)}
+                      onActiveBridgeChange={this.onActiveBridgeChange.bind(
+                        this
+                      )}
+                      onBridgeAuthorizationFailure={this.onBridgeAuthorizationFailure.bind(
+                        this
+                      )}
                     />
                   }
                 </li>
-                {
-                  this.state.activeBridgeId ?
+                {this.state.activeBridgeId ? (
                   <React.Fragment>
                     <li className="nav-item">
                       <NavLink
@@ -125,8 +154,8 @@ class App extends Component {
                         Configuration
                       </NavLink>
                     </li>
-                  </React.Fragment> : null
-                }
+                  </React.Fragment>
+                ) : null}
                 <li className="nav-item">
                   <NavLink
                     className="nav-link"
@@ -146,14 +175,14 @@ class App extends Component {
             </div>
           </nav>
           <div className="container-fluid">
-            <Route path="/lights/:id" component={LightsView}></Route>
-            <Route path="/groups/:id" component={GroupsView}></Route>
-            <Route path="/schedules/:id" component={SchedulesView}></Route>
-            <Route path="/scenes/:id" component={ScenesView}></Route>
-            <Route path="/sensors/:id" component={SensorsView}></Route>
-            <Route path="/rules/:id" component={RulesView}></Route>
-            <Route path="/configuration/:id" component={ConfigurationView}></Route>
-            <Route path="/settings" component={SettingsView}></Route>
+            <Route path="/lights/:id" component={LightsView} />
+            <Route path="/groups/:id" component={GroupsView} />
+            <Route path="/schedules/:id" component={SchedulesView} />
+            <Route path="/scenes/:id" component={ScenesView} />
+            <Route path="/sensors/:id" component={SensorsView} />
+            <Route path="/rules/:id" component={RulesView} />
+            <Route path="/configuration/:id" component={ConfigurationView} />
+            <Route path="/settings" component={SettingsView} />
           </div>
         </div>
       </BrowserRouter>

@@ -2,8 +2,8 @@ function get(key) {
   let value = null;
   try {
     value = localStorage.getItem(key);
-  } catch(error) {
-    const storageError = new StorageError('localStorage not accessible');
+  } catch (error) {
+    const storageError = new StorageError("localStorage not accessible");
     throw storageError;
   }
   return value;
@@ -12,8 +12,8 @@ function get(key) {
 function set(key, value) {
   try {
     value = localStorage.setItem(key, value);
-  } catch(error) {
-    const storageError = new StorageError('localStorage not accessible');
+  } catch (error) {
+    const storageError = new StorageError("localStorage not accessible");
     throw storageError;
   }
 }
@@ -21,8 +21,8 @@ function set(key, value) {
 function remove(key) {
   try {
     localStorage.removeItem(key);
-  } catch(error) {
-    const storageError = new StorageError('localStorage not accessible');
+  } catch (error) {
+    const storageError = new StorageError("localStorage not accessible");
     throw storageError;
   }
 }
@@ -46,7 +46,7 @@ class Storage {
     let value = null;
     try {
       value = JSON.parse(jsonString);
-    } catch(error) {
+    } catch (error) {
       // Remove corrupted item
       remove(key);
     }

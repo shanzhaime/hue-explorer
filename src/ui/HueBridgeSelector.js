@@ -1,15 +1,15 @@
-import HueBridge from '../api/HueBridge';
-import HueBridgeList from '../api/HueBridgeList';
-import Settings from '../api/Settings';
-import React, { Component } from 'react';
-import deviceId from '../api/deviceId';
+import HueBridge from "../api/HueBridge";
+import HueBridgeList from "../api/HueBridgeList";
+import Settings from "../api/Settings";
+import React, { Component } from "react";
+import deviceId from "../api/deviceId";
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
     activeBridgeId: null,
     onActiveBridgeChange: function() {},
-    onBridgeAuthorizationFailure: function() {},
-  }
+    onBridgeAuthorizationFailure: function() {}
+  };
 
   constructor(props) {
     super(props);
@@ -18,33 +18,33 @@ class HueBridgeSelector extends Component {
       bridges: [],
       settings,
       deviceId: deviceId(),
-      hasAuthorizationFailure: false,
-    }
+      hasAuthorizationFailure: false
+    };
   }
 
   loadBridgeList() {
     const bridgeIds = HueBridgeList.load();
-    const bridges = Array.from(bridgeIds).map((id) => {
+    const bridges = Array.from(bridgeIds).map(id => {
       const bridge = HueBridge.getById(id);
       return {
-        ...bridge.properties,
+        ...bridge.properties
       };
     });
     this.setState({
-      bridges,
+      bridges
     });
   }
 
   updateBridgeList() {
-    HueBridgeList.fetch().then((bridgeIds) => {
-      const bridges = Array.from(bridgeIds).map((id) => {
+    HueBridgeList.fetch().then(bridgeIds => {
+      const bridges = Array.from(bridgeIds).map(id => {
         const bridge = HueBridge.getById(id);
         return {
-          ...bridge.properties,
+          ...bridge.properties
         };
       });
       this.setState({
-        bridges,
+        bridges
       });
     });
   }
@@ -55,14 +55,14 @@ class HueBridgeSelector extends Component {
     if (bridge.properties.username) {
       this.props.onActiveBridgeChange(selectedBridgeId);
     } else {
-      bridge.connectLocal().then((success) => {
+      bridge.connectLocal().then(success => {
         if (success) {
           this.updateBridgeList();
           this.props.onActiveBridgeChange(selectedBridgeId);
         } else {
           this.props.onBridgeAuthorizationFailure();
         }
-      })
+      });
     }
   }
 
@@ -74,36 +74,46 @@ class HueBridgeSelector extends Component {
   render() {
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-        {this.state.bridges.map((bridgeProperties) => {
+        {this.state.bridges.map(bridgeProperties => {
           const hidePort =
-            (bridgeProperties.protocol === 'http' && bridgeProperties.port === 80) ||
-            (bridgeProperties.protocol === 'https' && bridgeProperties.port === 443);
-          const localName = bridgeProperties.host + (hidePort ? '' : `:${bridgeProperties.port}`);
+            (bridgeProperties.protocol === "http" &&
+              bridgeProperties.port === 80) ||
+            (bridgeProperties.protocol === "https" &&
+              bridgeProperties.port === 443);
+          const localName =
+            bridgeProperties.host +
+            (hidePort ? "" : `:${bridgeProperties.port}`);
           return (
             <button
               className={
-                'dropdown-item' +
-                  (bridgeProperties.id === this.props.activeBridgeId ? ' active' : '')
+                "dropdown-item" +
+                (bridgeProperties.id === this.props.activeBridgeId
+                  ? " active"
+                  : "")
               }
               value={bridgeProperties.id}
               key={bridgeProperties.id}
               onClick={this.onBridgeClick.bind(this)}
             >
-              {bridgeProperties.local ? localName : 'Remote Bridge'}
-              {bridgeProperties.username ? ' (authorized)' : ''}
+              {bridgeProperties.local ? localName : "Remote Bridge"}
+              {bridgeProperties.username ? " (authorized)" : ""}
             </button>
           );
         })}
-        <div className="dropdown-divider"></div>
+        <div className="dropdown-divider" />
         <a
           className="dropdown-item"
           rel="noopener noreferrer"
           target="_blank"
-          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state.settings.clientId}&appid=${this.state.settings.appId}&deviceid=${this.state.deviceId}&response_type=code&state=${window.location.pathname}`}
+          href={`https://api.meethue.com/oauth2/auth?clientid=${
+            this.state.settings.clientId
+          }&appid=${this.state.settings.appId}&deviceid=${
+            this.state.deviceId
+          }&response_type=code&state=${window.location.pathname}`}
         >
           Add remote bridges
         </a>
-        <div className="dropdown-divider"></div>
+        <div className="dropdown-divider" />
         <button className="dropdown-item disabled">Add bridge manually</button>
       </div>
     );
