@@ -1,4 +1,4 @@
-import JsonEditor from './json/JsonEditor';
+import Group from './Group';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
@@ -36,18 +36,34 @@ class GroupsView extends Component {
     this.setState({
       bridge,
     });
-    bridge.fetch('/groups').then((json) => {
-      console.log(json);
-      this.setState({
-        json,
-      });
-    });
+    Promise.all([bridge.fetch('/groups'), bridge.fetch('/lights')]).then(
+      (results) => {
+        const [json, lights] = results;
+        console.log(json);
+        this.setState({
+          json,
+          lights,
+        });
+      },
+      () => {},
+    );
   }
 
   render() {
     return (
-      <div>
-        <JsonEditor json={this.state.json} />
+      <div className="card-columns my-3">
+        {this.state.json === null
+          ? 'No groups'
+          : Object.keys(this.state.json).map((key) => {
+              return (
+                <Group
+                  json={this.state.json[key]}
+                  groupId={key}
+                  lights={this.state.lights}
+                  key={key}
+                />
+              );
+            })}
       </div>
     );
   }

@@ -51,7 +51,12 @@ class LightsView extends Component {
           ? 'No lights'
           : Object.keys(this.state.json).map((key) => {
               return (
-                <Light json={this.state.json[key]} lightId={key} key={key} />
+                <Light
+                  rendering="card"
+                  json={this.state.json[key]}
+                  lightId={key}
+                  key={key}
+                />
               );
             })}
       </div>
