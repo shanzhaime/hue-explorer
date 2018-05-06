@@ -1,3 +1,4 @@
+import ActiveBridge from './ActiveBridge';
 import HueBridge from './HueBridge';
 import Storage from './Storage';
 
@@ -35,6 +36,7 @@ async function discoverLocalBridges() {
 
 function loadBridges() {
   const storedBridges = readStoredBridges();
+  ActiveBridge.restore();
   const storedBridgeIds = storedBridges.map(bridge => {
     return bridge.id;
   });
@@ -53,7 +55,7 @@ async function fetchBridges() {
   });
   const allBridgeIds = new Set(storedBridgeIds.concat(localBridgesIds));
   storage.write(Array.from(allBridgeIds));
-
+  ActiveBridge.restore();
   return allBridgeIds;
 }
 

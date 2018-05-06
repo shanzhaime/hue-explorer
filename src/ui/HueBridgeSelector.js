@@ -1,3 +1,4 @@
+import ActiveBridge from '../api/ActiveBridge';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
@@ -6,8 +7,6 @@ import deviceId from '../api/deviceId';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
-    activeBridgeId: null,
-    onActiveBridgeChange: function() {},
     onBridgeAuthorizationFailure: function() {}
   };
 
@@ -25,10 +24,7 @@ class HueBridgeSelector extends Component {
   loadBridgeList() {
     const bridgeIds = HueBridgeList.load();
     const bridges = Array.from(bridgeIds).map(id => {
-      const bridge = HueBridge.getById(id);
-      return {
-        ...bridge.properties
-      };
+      return HueBridge.getById(id);
     });
     this.setState({
       bridges
@@ -38,10 +34,7 @@ class HueBridgeSelector extends Component {
   updateBridgeList() {
     HueBridgeList.fetch().then(bridgeIds => {
       const bridges = Array.from(bridgeIds).map(id => {
-        const bridge = HueBridge.getById(id);
-        return {
-          ...bridge.properties
-        };
+        return HueBridge.getById(id);
       });
       this.setState({
         bridges
@@ -53,12 +46,12 @@ class HueBridgeSelector extends Component {
     const selectedBridgeId = e.target.value;
     const bridge = HueBridge.getById(selectedBridgeId);
     if (bridge.properties.username) {
-      this.props.onActiveBridgeChange(selectedBridgeId);
+      ActiveBridge.select(selectedBridgeId);
     } else {
       bridge.connectLocal().then(success => {
         if (success) {
           this.updateBridgeList();
-          this.props.onActiveBridgeChange(selectedBridgeId);
+          ActiveBridge.select(selectedBridgeId);
         } else {
           this.props.onBridgeAuthorizationFailure();
         }
@@ -72,31 +65,34 @@ class HueBridgeSelector extends Component {
   }
 
   render() {
+    const activeBridgeId = ActiveBridge.get();
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-        {this.state.bridges.map(bridgeProperties => {
+        {this.state.bridges.map(bridge => {
           const hidePort =
-            (bridgeProperties.protocol === 'http' &&
-              bridgeProperties.port === 80) ||
-            (bridgeProperties.protocol === 'https' &&
-              bridgeProperties.port === 443);
+            (bridge.properties.protocol === 'http' &&
+              bridge.properties.port === 80) ||
+            (bridge.properties.protocol === 'https' &&
+              bridge.properties.port === 443);
           const localName =
-            bridgeProperties.host +
-            (hidePort ? '' : `:${bridgeProperties.port}`);
+            bridge.properties.host +
+            (hidePort ? '' : `:${bridge.properties.port}`);
           return (
             <button
               className={
                 'dropdown-item' +
-                (bridgeProperties.id === this.props.activeBridgeId
-                  ? ' active'
-                  : '')
+                (bridge.properties.id === activeBridgeId ? ' active' : '')
               }
-              value={bridgeProperties.id}
-              key={bridgeProperties.id}
+              value={bridge.properties.id}
+              key={bridge.properties.id}
               onClick={this.onBridgeClick.bind(this)}
             >
-              {bridgeProperties.local ? localName : 'Remote Bridge'}
-              {bridgeProperties.username ? ' (authorized)' : ''}
+              {bridge.properties.local ? localName : 'Remote Bridge'} ({bridge
+                .properties.local && bridge.state.localReachable
+                ? bridge.properties.username
+                  ? 'local connection'
+                  : 'local discovery'
+                : 'remote connection'})
             </button>
           );
         })}

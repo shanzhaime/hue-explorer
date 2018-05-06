@@ -7,33 +7,11 @@ import RulesView from './ui/RulesView';
 import ConfigurationView from './ui/ConfigurationView';
 import SettingsView from './ui/SettingsView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
-import Storage from './api/Storage';
+import ActiveBridge from './api/ActiveBridge';
 import React, { Component } from 'react';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 
-const STORAGE_NAME = 'app';
-const STORAGE_VERSION = 1;
-const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = storage.read() || {
-      activeBridgeId: null
-    };
-  }
-
-  onActiveBridgeChange(activeBridgeId) {
-    this.setState(
-      {
-        activeBridgeId
-      },
-      () => {
-        storage.write(this.state);
-      }
-    );
-  }
-
   onBridgeAuthorizationFailure() {
     alert(
       'Please press the link button on the Hue Bridge before trying to connect.'
@@ -41,6 +19,7 @@ class App extends Component {
   }
 
   render() {
+    const activeBridgeId = ActiveBridge.get();
     return (
       <BrowserRouter>
         <div>
@@ -77,25 +56,20 @@ class App extends Component {
                   >
                     Bridges
                   </a>
-                  {
-                    <HueBridgeSelector
-                      activeBridgeId={this.state.activeBridgeId}
-                      onActiveBridgeChange={this.onActiveBridgeChange.bind(
-                        this
-                      )}
-                      onBridgeAuthorizationFailure={this.onBridgeAuthorizationFailure.bind(
-                        this
-                      )}
-                    />
-                  }
+                  <HueBridgeSelector
+                    onBridgeAuthorizationFailure={this.onBridgeAuthorizationFailure.bind(
+                      this
+                    )}
+                    key={Math.random()}
+                  />
                 </li>
-                {this.state.activeBridgeId ? (
+                {activeBridgeId ? (
                   <React.Fragment>
                     <li className="nav-item">
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/lights/${this.state.activeBridgeId}`}
+                        to={`/lights/${activeBridgeId}`}
                       >
                         Lights
                       </NavLink>
@@ -104,7 +78,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/groups/${this.state.activeBridgeId}`}
+                        to={`/groups/${activeBridgeId}`}
                       >
                         Groups
                       </NavLink>
@@ -113,7 +87,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/schedules/${this.state.activeBridgeId}`}
+                        to={`/schedules/${activeBridgeId}`}
                       >
                         Schedules
                       </NavLink>
@@ -122,7 +96,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/scenes/${this.state.activeBridgeId}`}
+                        to={`/scenes/${activeBridgeId}`}
                       >
                         Scenes
                       </NavLink>
@@ -131,7 +105,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/sensors/${this.state.activeBridgeId}`}
+                        to={`/sensors/${activeBridgeId}`}
                       >
                         Sensors
                       </NavLink>
@@ -140,7 +114,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/rules/${this.state.activeBridgeId}`}
+                        to={`/rules/${activeBridgeId}`}
                       >
                         Rules
                       </NavLink>
@@ -149,7 +123,7 @@ class App extends Component {
                       <NavLink
                         className="nav-link"
                         activeClassName="active"
-                        to={`/configuration/${this.state.activeBridgeId}`}
+                        to={`/configuration/${activeBridgeId}`}
                       >
                         Configuration
                       </NavLink>

@@ -24,7 +24,8 @@ class HueBridge {
     this.id = id.toUpperCase();
     this.state = {
       localReachable: false,
-      localPingTimer: null
+      localPingTimer: null,
+      localPingEnabled: false
     };
     this.storage = new Storage(STORAGE_NAME_PREFIX + id, STORAGE_VERSION);
     const storedProperties = this.storage.read();
@@ -41,15 +42,16 @@ class HueBridge {
     this.storage.write(this.properties);
   }
 
-  getUrls(priorities = ['local', 'remote']) {
+  getUrls(priorities = ['local', 'remote'], ignoreReachability = false) {
     let hostUrl = null;
     let apiUrl = null;
     let usernameUrl = null;
+    let remote = null;
     for (let priority of priorities) {
       if (this.properties[priority] === true) {
         switch (priority) {
           case 'local':
-            if (!this.state.localReachable) {
+            if (!ignoreReachability && !this.state.localReachable) {
               break;
             }
             const hidePort =
@@ -67,6 +69,7 @@ class HueBridge {
           case 'remote':
             hostUrl = `${window.location.protocol}//${window.location.host}`;
             apiUrl = hostUrl + '/bridge';
+            remote = true;
             break;
           default:
             throw new Error(`Unrecognized priority: ${priority}`);
@@ -78,7 +81,8 @@ class HueBridge {
           return {
             hostUrl,
             apiUrl,
-            usernameUrl
+            usernameUrl,
+            remote
           };
         }
       }
@@ -113,28 +117,40 @@ class HueBridge {
   async connectRemote() {}
 
   async startLocalPing() {
-    if (this.properties.local) {
-      const urls = this.getUrls(['local']);
-      if (urls && urls.hostUrl) {
-        const descriptionUrl = `${urls.hostUrl}/description.xml`;
-        const response = await fetch(descriptionUrl);
-        const text = await response.text();
-        if (text.indexOf('meethue.com') >= 0) {
-          this.state.localReachable = true;
+    if (this.state.localPingEnabled) {
+      return;
+    }
+    this.state.localPingEnabled = true;
+    const localPingLooper = async () => {
+      if (this.properties.local) {
+        const urls = this.getUrls(['local'], true);
+        if (urls && urls.apiUrl) {
+          const descriptionUrl = `${urls.apiUrl}/0/config`;
+          try {
+            const response = await fetch(descriptionUrl);
+            const json = await response.json();
+            if (
+              typeof json.bridgeid === 'string' &&
+              json.bridgeid.toUpperCase() === this.id
+            ) {
+              this.state.localReachable = true;
+            } else {
+              this.state.localReachable = false;
+            }
+          } catch (_) {
+            this.state.localReachable = false;
+          }
         } else {
           this.state.localReachable = false;
         }
-      } else {
-        this.state.localReachable = false;
+        this.state.localPingTimer = setTimeout(localPingLooper, 5 * 1000);
       }
-      this.state.localPingTimer = setTimeout(
-        this.startLocalPing.bind(this),
-        60 * 1000
-      );
-    }
+    };
+    localPingLooper();
   }
 
   stopLocalPing() {
+    this.state.localPingEnabled = false;
     if (this.state.localPingTimer) {
       clearTimeout(this.state.localPingTimer);
       this.state.localPingTimer = null;
@@ -144,11 +160,13 @@ class HueBridge {
   async fetch(path, options = {}) {
     const urls = this.getUrls();
     if (urls && urls.usernameUrl) {
-      options.headers = {
-        ...options.headers,
-        Authorization: `Bearer ${settings.accessToken}`,
-        'content-type': 'application/json'
-      };
+      if (urls.remote) {
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${settings.accessToken}`,
+          'content-type': 'application/json'
+        };
+      }
 
       const response = await fetch(urls.usernameUrl + path, options);
       const json = await response.json();
