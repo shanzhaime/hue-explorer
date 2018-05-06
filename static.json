@@ -5,10 +5,10 @@
   },
   "proxies": {
     "/oauth2": {
-      "origin": "https://api.meethue.com"
+      "origin": "https://api.meethue.com/oauth2"
     },
     "/bridge": {
-      "origin": "https://api.meethue.com"
+      "origin": "https://api.meethue.com/bridge"
     }
   },
   "headers": {
