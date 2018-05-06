@@ -63,8 +63,9 @@ if (window.location.search) {
       if (!bridgeId) {
         oauthFailure(state);
       }
+      HueBridgeList.load();
       const bridge = HueBridge.getById(bridgeId);
-      if (bridge) {
+      if (bridge && bridge.properties.username) {
         bridge.properties.remote = true;
         bridge.store();
         oauthSuccess(state);
