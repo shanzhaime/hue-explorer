@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "flow-bin": "^0.71.0",
     "jquery": "^3.3.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -22,8 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged"
+    "flow": "flow",
+    "precommit": "pretty-quick --staged",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "husky": "^0.14.3",
