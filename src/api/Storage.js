@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 function get(key: string): ?string {
   let value = null;
@@ -41,7 +41,7 @@ class Storage {
     }
   }
 
-  read(): any {
+  read(): mixed {
     const key = `${this.name}:${this.version}`;
     const jsonString = get(key);
 

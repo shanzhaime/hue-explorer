@@ -34,7 +34,8 @@ function selectActiveBridge(bridgeId: string): void {
 }
 
 function getActiveBridge(): ?string {
-  return storage.read();
+  const activeBridgeId = storage.read();
+  return typeof activeBridgeId === 'string' ? activeBridgeId : null;
 }
 
 const ActiveBridge = {

@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 const MAX_BRIGHTNESS: number = 254;
 const MIN_BRIGHTNESS: number = 1;
