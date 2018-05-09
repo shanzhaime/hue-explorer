@@ -5,6 +5,8 @@ import ScenesView from './ui/ScenesView';
 import SensorsView from './ui/SensorsView';
 import RulesView from './ui/RulesView';
 import ConfigurationView from './ui/ConfigurationView';
+import ResourceLinksView from './ui/ResourceLinksView';
+import CapabilitiesView from './ui/CapabilitiesView';
 import SettingsView from './ui/SettingsView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
 import ActiveBridge from './api/ActiveBridge';
@@ -128,6 +130,24 @@ class App extends Component {
                         Configuration
                       </NavLink>
                     </li>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        activeClassName="active"
+                        to={`/resourcelinks/${activeBridgeId}`}
+                      >
+                        Resource Links
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        activeClassName="active"
+                        to={`/capabilities/${activeBridgeId}`}
+                      >
+                        Capabilities
+                      </NavLink>
+                    </li>
                   </React.Fragment>
                 ) : null}
                 <li className="nav-item">
@@ -156,6 +176,8 @@ class App extends Component {
             <Route path="/sensors/:id" component={SensorsView} />
             <Route path="/rules/:id" component={RulesView} />
             <Route path="/configuration/:id" component={ConfigurationView} />
+            <Route path="/resourcelinks/:id" component={ResourceLinksView} />
+            <Route path="/capabilities/:id" component={CapabilitiesView} />
             <Route path="/settings" component={SettingsView} />
           </div>
         </div>
