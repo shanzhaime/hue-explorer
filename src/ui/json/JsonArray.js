@@ -1,3 +1,5 @@
+// @flow strict
+
 import React, { Component } from 'react';
 import JsonObject from './JsonObject';
 import JsonNumber from './JsonNumber';
@@ -5,10 +7,13 @@ import JsonString from './JsonString';
 import JsonBoolean from './JsonBoolean';
 import JsonNull from './JsonNull';
 
-class JsonArray extends Component {
+class JsonArray extends Component<{
+  name: ?string,
+  json: Array<mixed>,
+}> {
   static defaultProps = {
-    json: null,
     name: null,
+    json: [],
   };
 
   render() {

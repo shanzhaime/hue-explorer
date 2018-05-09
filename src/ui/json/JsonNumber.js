@@ -1,9 +1,14 @@
+// @flow strict
+
 import React, { Component } from 'react';
 
-class JsonNumber extends Component {
+class JsonNumber extends Component<{
+  name: ?string,
+  json: number,
+}> {
   static defaultProps = {
-    json: null,
     name: null,
+    json: NaN,
   };
 
   render() {

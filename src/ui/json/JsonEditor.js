@@ -1,3 +1,5 @@
+// @flow strict
+
 import React, { Component } from 'react';
 import './JsonEditor.css';
 import JsonObject from './JsonObject';
@@ -7,7 +9,9 @@ import JsonString from './JsonString';
 import JsonBoolean from './JsonBoolean';
 import JsonNull from './JsonNull';
 
-class JsonEditor extends Component {
+class JsonEditor extends Component<{
+  json: mixed,
+}> {
   static defaultProps = {
     json: null,
   };

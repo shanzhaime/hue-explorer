@@ -1,9 +1,14 @@
+// @flow strict
+
 import React, { Component } from 'react';
 
-class JsonString extends Component {
+class JsonString extends Component<{
+  name: ?string,
+  json: string,
+}> {
   static defaultProps = {
-    json: null,
     name: null,
+    json: '',
   };
 
   render() {

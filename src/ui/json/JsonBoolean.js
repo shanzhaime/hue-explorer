@@ -1,9 +1,14 @@
+// @flow strict
+
 import React, { Component } from 'react';
 
-class JsonBoolean extends Component {
+class JsonBoolean extends Component<{
+  name: ?string,
+  json: boolean,
+}> {
   static defaultProps = {
-    json: null,
     name: null,
+    json: false,
   };
 
   render() {
