@@ -1,14 +1,18 @@
 import JsonEditor from './json/JsonEditor';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
+import Settings from '../api/Settings';
 import React, { Component } from 'react';
 
 class ConsoleView extends Component {
   constructor(props) {
     super(props);
+    const settings = Settings.read();
     this.state = {
       bridge: null,
-      method: 'get',
+      method: settings.lastConsoleMethod || 'get',
+      path: settings.lastConsolePath || '/config',
+      body: null,
       json: null,
     };
   }
@@ -33,12 +37,43 @@ class ConsoleView extends Component {
   }
 
   onMethodClick(method) {
+    const settings = Settings.read();
+    settings.lastConsoleMethod = method;
+    Settings.write(settings);
     this.setState({
       method,
     });
   }
 
-  onSendClick() {}
+  onPathChange(event) {
+    const path = event.target.value;
+    const settings = Settings.read();
+    settings.lastConsolePath = path;
+    Settings.write(settings);
+    this.setState({
+      path,
+    });
+  }
+
+  onBodyChange(event) {
+    this.setState({
+      body: event.target.value,
+    });
+  }
+
+  onSendClick() {
+    this.state.bridge
+      .fetch(this.state.path, {
+        method: this.state.method.toUpperCase(),
+        body: this.state.body,
+      })
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          json,
+        });
+      });
+  }
 
   componentDidMount() {
     const bridge = this.getActiveBridge();
@@ -49,81 +84,100 @@ class ConsoleView extends Component {
 
   render() {
     return (
-      <div className="card my-3">
-        <div className="card-body">
-          <div className="form-inline">
-            <div
-              className="input-group mb-2 mr-sm-2"
-              style={{
-                flex: '1 1 auto',
-              }}
-            >
-              <div className="input-group-prepend">
-                <button
-                  id="method"
-                  type="button"
-                  className="input-group-text btn btn-light dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {this.state.method.toUpperCase()}
-                </button>
-                <div className="dropdown-menu" aria-labelledby="method">
+      <div>
+        <div className="card my-3">
+          <div className="card-body">
+            <div className="form-inline">
+              <div className="input-group mb-2 mr-sm-2 flex-fill">
+                <div className="input-group-prepend">
                   <button
-                    className={
-                      'dropdown-item' +
-                      (this.state.method === 'get' ? ' active' : '')
-                    }
-                    onClick={this.onMethodClick.bind(this, 'get')}
+                    id="method"
+                    type="button"
+                    className="input-group-text btn btn-light dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
-                    GET
+                    {this.state.method.toUpperCase()}
                   </button>
-                  <button
-                    className={
-                      'dropdown-item' +
-                      (this.state.method === 'post' ? ' active' : '')
-                    }
-                    onClick={this.onMethodClick.bind(this, 'post')}
-                  >
-                    POST
-                  </button>
-                  <button
-                    className={
-                      'dropdown-item' +
-                      (this.state.method === 'put' ? ' active' : '')
-                    }
-                    onClick={this.onMethodClick.bind(this, 'put')}
-                  >
-                    PUT
-                  </button>
-                  <button
-                    className={
-                      'dropdown-item' +
-                      (this.state.method === 'delete' ? ' active' : '')
-                    }
-                    onClick={this.onMethodClick.bind(this, 'delete')}
-                  >
-                    DELETE
-                  </button>
+                  <div className="dropdown-menu" aria-labelledby="method">
+                    <button
+                      className={
+                        'dropdown-item' +
+                        (this.state.method === 'get' ? ' active' : '')
+                      }
+                      onClick={this.onMethodClick.bind(this, 'get')}
+                    >
+                      GET
+                    </button>
+                    <button
+                      className={
+                        'dropdown-item' +
+                        (this.state.method === 'post' ? ' active' : '')
+                      }
+                      onClick={this.onMethodClick.bind(this, 'post')}
+                    >
+                      POST
+                    </button>
+                    <button
+                      className={
+                        'dropdown-item' +
+                        (this.state.method === 'put' ? ' active' : '')
+                      }
+                      onClick={this.onMethodClick.bind(this, 'put')}
+                    >
+                      PUT
+                    </button>
+                    <button
+                      className={
+                        'dropdown-item' +
+                        (this.state.method === 'delete' ? ' active' : '')
+                      }
+                      onClick={this.onMethodClick.bind(this, 'delete')}
+                    >
+                      DELETE
+                    </button>
+                  </div>
                 </div>
+                <label className="sr-only" htmlFor="path">
+                  Path
+                </label>
+                <input
+                  type="text"
+                  defaultValue={this.state.path}
+                  onChange={this.onPathChange.bind(this)}
+                  className="form-control"
+                  placeholder="/config"
+                  aria-label="Path"
+                />
               </div>
-              <label className="sr-only" htmlFor="path">
-                Path
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="/config"
-                aria-label="Path"
-              />
+              <button
+                className="btn btn-primary mb-2"
+                onClick={this.onSendClick.bind(this)}
+              >
+                Send
+              </button>
             </div>
-            <button
-              className="btn btn-primary mb-2"
-              onClick={this.onSendClick.bind(this)}
-            >
-              Send
-            </button>
+            {this.state.method !== 'get' ? (
+              <div class="form-inline">
+                <label for="body" class="sr-only">
+                  Body
+                </label>
+                <textarea
+                  id="body"
+                  onChange={this.onBodyChange.bind(this)}
+                  class="form-control flex-fill"
+                  rows="3"
+                  placeholder="{ body: 'in json' }"
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+        <div className="card my-3">
+          <div className="card-header">Response</div>
+          <div className="card-body">
+            <JsonEditor json={this.state.json} />
           </div>
         </div>
       </div>

@@ -42,8 +42,8 @@ class HueBridgeSelector extends Component {
     });
   }
 
-  onBridgeClick(e) {
-    const selectedBridgeId = e.target.value;
+  onBridgeClick(event) {
+    const selectedBridgeId = event.target.value;
     const bridge = HueBridge.getById(selectedBridgeId);
     if (bridge.properties.username) {
       ActiveBridge.select(selectedBridgeId);
