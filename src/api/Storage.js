@@ -63,6 +63,10 @@ class Storage {
     const jsonString = JSON.stringify(value);
     set(key, jsonString);
   }
+
+  static reset(): void {
+    localStorage.clear();
+  }
 }
 
 export default Storage;

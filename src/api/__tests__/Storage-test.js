@@ -12,15 +12,18 @@ let localStorageBackup = null;
 let getItem = jest.fn();
 let setItem = jest.fn();
 let removeItem = jest.fn();
+let clear = jest.fn();
 
 beforeEach(() => {
   getItem = jest.fn();
   setItem = jest.fn();
   removeItem = jest.fn();
+  clear = jest.fn();
   const localStorageMock = {
     getItem,
     setItem,
     removeItem,
+    clear,
   };
   localStorageBackup = global.localStorage;
   global.localStorage = localStorageMock;
@@ -74,4 +77,9 @@ it('clears storage after version bumping', () => {
   expect(removeItem.mock.calls[0][0]).toBe(
     `${STORAGE_NAME}:${STORAGE_VERSION}`,
   );
+});
+
+it('can can reset everything', () => {
+  Storage.reset();
+  expect(clear.mock.calls.length).toBe(1);
 });
