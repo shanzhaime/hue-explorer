@@ -17,11 +17,28 @@ class SettingsView extends Component {
     this.setState(settings);
   }
 
+  onResetClick() {
+    const resetConfirmed = window.confirm(
+      'This will remove all authorized bridges and delete all settings. Are you sure about this?',
+    );
+    if (resetConfirmed) {
+      Storage.reset();
+    }
+  }
+
   render() {
-    return (
-      <div className="row justify-content-md-center">
-        <div className="col col-md-6 col-lg-4">
-          <div className="card my-3">
+    const dialog =
+      this.props &&
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.dialog;
+
+    let dialogBody = null;
+    switch (dialog) {
+      case 'oauth':
+        dialogBody = (
+          <React.Fragment>
+            <h5 className="card-header">OAuth Settings</h5>
             <div className="card-body">
               <div className="form-group">
                 <label htmlFor="appId">App ID</label>
@@ -69,7 +86,32 @@ class SettingsView extends Component {
                 Save
               </button>
             </div>
-          </div>
+          </React.Fragment>
+        );
+        break;
+      case 'reset':
+        dialogBody = (
+          <React.Fragment>
+            <h5 className="card-header">Reset Hue Explorer</h5>
+            <div className="card-body">
+              <button
+                id="reset"
+                className="btn btn-danger"
+                onClick={this.onResetClick.bind(this)}
+              >
+                Reset
+              </button>
+            </div>
+          </React.Fragment>
+        );
+        break;
+      default:
+        throw new Error(`Unsupported settings dialog: ${dialog}`);
+    }
+    return (
+      <div className="row justify-content-md-center">
+        <div className="col col-md-6 col-lg-4">
+          <div className="card my-3">{dialogBody}</div>
         </div>
       </div>
     );

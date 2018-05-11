@@ -160,14 +160,37 @@ class App extends Component {
                     </li>
                   </React.Fragment>
                 ) : null}
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    activeClassName="active"
-                    to={`/settings`}
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="###"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
                     Settings
-                  </NavLink>
+                  </a>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <NavLink
+                      className="dropdown-item"
+                      activeClassName="active"
+                      to="/settings/oauth"
+                    >
+                      OAuth
+                    </NavLink>
+                    <NavLink
+                      className="dropdown-item"
+                      activeClassName="active"
+                      to="/settings/reset"
+                    >
+                      Reset
+                    </NavLink>
+                  </div>
                 </li>
               </ul>
               {/*
@@ -189,7 +212,7 @@ class App extends Component {
             <Route path="/resourcelinks/:id" component={ResourceLinksView} />
             <Route path="/capabilities/:id" component={CapabilitiesView} />
             <Route path="/console/:id" component={ConsoleView} />
-            <Route path="/settings" component={SettingsView} />
+            <Route path="/settings/:dialog" component={SettingsView} />
           </div>
         </div>
       </BrowserRouter>
