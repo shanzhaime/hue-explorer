@@ -13,9 +13,9 @@ type PropsType = {
 };
 
 type StateType = {
-  appId: ?string,
-  clientId: ?string,
-  clientSecret: ?string,
+  appId?: string,
+  clientId?: string,
+  clientSecret?: string,
 };
 
 class SettingsView extends Component<PropsType, StateType> {
@@ -25,22 +25,27 @@ class SettingsView extends Component<PropsType, StateType> {
 
   constructor(props: PropsType) {
     super(props);
-    this.state = {
-      appId: null,
-      clientId: null,
-      clientSecret: null,
-      ...Settings.read(),
-    };
+    this.state = Settings.read();
   }
 
   onSaveClick() {
+    const appId = (this.appIdInput && this.appIdInput.value) || '';
+    const clientId = (this.clientIdInput && this.clientIdInput.value) || '';
+    const clientSecret =
+      (this.clientSecretInput && this.clientSecretInput.value) || '';
+
     const settings = {
-      appId: this.appIdInput && this.appIdInput.value,
-      clientId: this.clientIdInput && this.clientIdInput.value,
-      clientSecret: this.clientSecretInput && this.clientSecretInput.value,
+      ...Settings.read(),
+      appId,
+      clientId,
+      clientSecret,
     };
     Settings.write(settings);
-    this.setState(settings);
+    this.setState({
+      appId,
+      clientId,
+      clientSecret,
+    });
   }
 
   onResetClick() {
