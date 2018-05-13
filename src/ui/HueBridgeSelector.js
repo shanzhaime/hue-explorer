@@ -33,7 +33,7 @@ class HueBridgeSelector extends Component {
 
   updateBridgeList() {
     HueBridgeList.fetch().then((bridgeIds) => {
-      const bridges = Array.from(bridgeIds).map((id) => {
+      const bridges = bridgeIds.map((id) => {
         return HueBridge.getById(id);
       });
       this.setState({
