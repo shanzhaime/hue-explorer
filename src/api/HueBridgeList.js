@@ -6,7 +6,10 @@ import Storage from './Storage';
 
 const STORAGE_NAME = 'bridges';
 const STORAGE_VERSION = 4;
-const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
+const storage: Storage<Array<string>> = new Storage(
+  STORAGE_NAME,
+  STORAGE_VERSION,
+);
 
 const NUPNP_URL = 'https://www.meethue.com/api/nupnp';
 

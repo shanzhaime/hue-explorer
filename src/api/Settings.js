@@ -22,7 +22,10 @@ type SettingsType = {
 
 const STORAGE_NAME = 'settings';
 const STORAGE_VERSION = 1;
-const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
+const storage: Storage<SettingsType> = new Storage(
+  STORAGE_NAME,
+  STORAGE_VERSION,
+);
 
 function read(): SettingsType {
   const settings = storage.read();
