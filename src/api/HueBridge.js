@@ -1,3 +1,5 @@
+// @flow strict
+
 import Settings from './Settings';
 import Storage from './Storage';
 import deviceId from './deviceId';
@@ -8,8 +10,28 @@ const STORAGE_VERSION = 2;
 const bridgePool = new Map();
 const settings = Settings.read();
 
+type PropertiesType = {
+  username?: string,
+  local?: boolean,
+  remote?: boolean,
+  protocol?: 'http' | 'https',
+  host?: string,
+  port?: number,
+};
+
+type StateType = {
+  localReachable: boolean,
+  localPingTimer: ?TimeoutID,
+  localPingEnabled: boolean,
+};
+
 class HueBridge {
-  constructor(id, properties) {
+  id: string;
+  properties: PropertiesType;
+  state: StateType;
+  storage: Storage<PropertiesType>;
+
+  constructor(id: string, properties: {} = {}) {
     const sameHueBridge = bridgePool.get(id.toUpperCase());
     if (sameHueBridge) {
       sameHueBridge.properties = {
@@ -38,15 +60,23 @@ class HueBridge {
     this.store();
   }
 
-  store() {
+  store(): void {
     this.storage.write(this.properties);
   }
 
-  getUrls(priorities = ['local', 'remote'], ignoreReachability = false) {
+  getUrls(
+    priorities: Array<'local' | 'remote'> = ['local', 'remote'],
+    ignoreReachability: boolean = false,
+  ): ?{
+    hostUrl: string,
+    apiUrl: string,
+    usernameUrl: ?string,
+    remote: boolean,
+  } {
     let hostUrl = null;
     let apiUrl = null;
     let usernameUrl = null;
-    let remote = null;
+    let remote = false;
     for (let priority of priorities) {
       if (this.properties[priority] === true) {
         switch (priority) {
@@ -54,16 +84,21 @@ class HueBridge {
             if (!ignoreReachability && !this.state.localReachable) {
               break;
             }
+            const protocol = this.properties.protocol;
+            const host = this.properties.host;
+            const port = this.properties.port;
+            if (protocol !== 'http' && protocol !== 'https') {
+              break;
+            }
+            if (!host || !port) {
+              break;
+            }
             const hidePort =
-              (this.properties.protocol === 'http' &&
-                this.properties.port === 80) ||
-              (this.properties.protocol === 'https' &&
-                this.properties.port === 443);
+              (protocol === 'http' && port === 80) ||
+              (protocol === 'https' && port === 443);
             hostUrl = hidePort
-              ? `${this.properties.protocol}://${this.properties.host}`
-              : `${this.properties.protocol}://${this.properties.host}:${
-                  this.properties.port
-                }`;
+              ? `${protocol}://${host}`
+              : `${protocol}://${host}:${port}`;
             apiUrl = hostUrl + '/api';
             break;
           case 'remote':
@@ -89,34 +124,41 @@ class HueBridge {
     }
   }
 
-  async connectLocal() {
+  async connectLocal(): Promise<boolean> {
     if (!this.properties.username) {
-      const response = await fetch(this.getApiUrl(), {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40), // Hue accepts only 40 characters for devicetype
-        }),
-      });
-      const json = await response.json();
-      if (json[0] && json[0].success) {
-        this.properties.username = json[0].success.username;
-        this.store();
-        return true;
+      const urls = this.getUrls(['local']);
+      if (urls && urls.apiUrl) {
+        const response = await fetch(urls.apiUrl, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40), // Hue accepts only 40 characters for devicetype
+          }),
+        });
+        const json = await response.json();
+        if (json[0] && json[0].success) {
+          this.properties.username = json[0].success.username;
+          this.store();
+          return true;
+        } else {
+          // json[0].error.type === 101: link button not pressed
+          return false;
+        }
       } else {
-        // json[0].error.type === 101: link button not pressed
         return false;
       }
     }
     return true;
   }
 
-  async connectRemote() {}
+  async connectRemote(): Promise<boolean> {
+    throw new Error('Not yet implemented');
+  }
 
-  async startLocalPing() {
+  async startLocalPing(): Promise<void> {
     if (this.state.localPingEnabled) {
       return;
     }
@@ -149,7 +191,7 @@ class HueBridge {
     localPingLooper();
   }
 
-  stopLocalPing() {
+  stopLocalPing(): void {
     this.state.localPingEnabled = false;
     if (this.state.localPingTimer) {
       clearTimeout(this.state.localPingTimer);
@@ -157,15 +199,21 @@ class HueBridge {
     }
   }
 
-  async fetch(path, options = {}) {
+  async fetch(path: string, options: RequestOptions = {}): {} {
     const urls = this.getUrls();
     if (urls && urls.usernameUrl) {
       if (urls.remote) {
-        options.headers = {
-          ...options.headers,
-          Authorization: `Bearer ${settings.accessToken}`,
-          'content-type': 'application/json',
-        };
+        if (!settings.accessToken) {
+          throw new Error(
+            `Bridge has no access token for remote fetching: ${this.id}`,
+          );
+        }
+        if (!(options.headers instanceof Headers)) {
+          options.headers = new Headers(options.headers);
+        }
+        const headers = options.headers;
+        headers.set('Authorization', `Bearer ${settings.accessToken}`);
+        headers.set('Content-Type', 'application/json');
       }
 
       const response = await fetch(urls.usernameUrl + path, options);
@@ -175,22 +223,22 @@ class HueBridge {
       }
       return json;
     }
-    throw new Error(`Bridge has no URL for fetching: ${this.id}`);
+    new Error(`Bridge has no URL with username for fetching: ${this.id}`);
   }
 
-  static getById(id) {
+  static getById(id: string): ?HueBridge {
     if (!bridgePool.has(id.toUpperCase())) {
       return null;
     }
     return bridgePool.get(id.toUpperCase());
   }
 
-  static getAuthorizedById(id) {
+  static getAuthorizedById(id: string): ?HueBridge {
     if (!bridgePool.has(id.toUpperCase())) {
       return null;
     }
     const bridge = bridgePool.get(id.toUpperCase());
-    if (!bridge.properties.username) {
+    if (!bridge || !bridge.properties.username) {
       return null;
     }
     return bridge;
