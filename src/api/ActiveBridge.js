@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import HueBridge from './HueBridge';
 import Storage from './Storage';
