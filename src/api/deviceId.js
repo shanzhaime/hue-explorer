@@ -1,14 +1,16 @@
+// @flow strict
+
 import uuid from 'uuid';
 import Storage from './Storage';
 
 const STORAGE_NAME = 'device_id';
 const STORAGE_VERSION = 1;
-const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
+const storage: Storage<string> = new Storage(STORAGE_NAME, STORAGE_VERSION);
 
-const deviceId = function() {
-  const existingID = storage.read();
+const deviceId = function(): string {
+  const existingID = String(storage.read());
   if (!existingID) {
-    const newID = uuid();
+    const newID: string = uuid();
     storage.write(newID);
     return newID;
   }

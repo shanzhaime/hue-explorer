@@ -1,20 +1,51 @@
+// @flow strict
+
 import Settings from '../api/Settings';
+import Storage from '../api/Storage';
 import React, { Component } from 'react';
 
-class SettingsView extends Component {
-  constructor(props) {
+type PropsType = {
+  match: {
+    params: {
+      dialog: string,
+    },
+  },
+};
+
+type StateType = {
+  appId?: string,
+  clientId?: string,
+  clientSecret?: string,
+};
+
+class SettingsView extends Component<PropsType, StateType> {
+  appIdInput: ?HTMLInputElement;
+  clientIdInput: ?HTMLInputElement;
+  clientSecretInput: ?HTMLInputElement;
+
+  constructor(props: PropsType) {
     super(props);
     this.state = Settings.read();
   }
 
   onSaveClick() {
+    const appId = (this.appIdInput && this.appIdInput.value) || '';
+    const clientId = (this.clientIdInput && this.clientIdInput.value) || '';
+    const clientSecret =
+      (this.clientSecretInput && this.clientSecretInput.value) || '';
+
     const settings = {
-      appId: this.appIdInput.value,
-      clientId: this.clientIdInput.value,
-      clientSecret: this.clientSecretInput.value,
+      ...Settings.read(),
+      appId,
+      clientId,
+      clientSecret,
     };
     Settings.write(settings);
-    this.setState(settings);
+    this.setState({
+      appId,
+      clientId,
+      clientSecret,
+    });
   }
 
   onResetClick() {

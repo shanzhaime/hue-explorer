@@ -26,7 +26,7 @@ function remove(key: string) {
   }
 }
 
-class Storage {
+class Storage<T> {
   name: string;
   version: number;
 
@@ -41,11 +41,11 @@ class Storage {
     }
   }
 
-  read(): mixed {
+  read(): ?T {
     const key = `${this.name}:${this.version}`;
     const jsonString = get(key);
 
-    let value = null;
+    let value: ?T = null;
     if (jsonString) {
       try {
         value = JSON.parse(jsonString);
@@ -58,7 +58,7 @@ class Storage {
     return value;
   }
 
-  write(value: mixed) {
+  write(value: T) {
     const key = `${this.name}:${this.version}`;
     const jsonString = JSON.stringify(value);
     set(key, jsonString);
