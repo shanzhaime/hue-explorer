@@ -4,12 +4,12 @@ import Storage from '../Storage';
 jest.mock('../Storage');
 
 beforeEach(() => {
-  let storedId = null;
-  Storage.mock.instances[0].write = jest.fn().mockImplementation((id) => {
-    storedId = id;
+  let storedSettings = null;
+  Storage.mock.instances[0].write = jest.fn().mockImplementation((settings) => {
+    storedSettings = settings;
   });
   Storage.mock.instances[0].read = jest.fn().mockImplementation(() => {
-    return storedId;
+    return storedSettings;
   });
 });
 
