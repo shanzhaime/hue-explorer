@@ -1,6 +1,7 @@
 import JsonEditor from './json/JsonEditor';
 import HueColor from '../api/HueColor';
 import React, { Component } from 'react';
+import './Light.css';
 
 class Light extends Component {
   render() {
@@ -74,6 +75,22 @@ class Light extends Component {
           >
             {json.name}
           </li>
+        );
+      case 'circle':
+        return (
+          <div className="light" style={this.props.locations}>
+            <div className="lightSquare">
+              <div
+                className="lightCircle"
+                style={{
+                  backgroundColor: hex,
+                  backgroundImage: `radial-gradient(circle, ${hex} 0%, ${hex} ${brightness *
+                    100}%, black ${brightness * 100}%, ${hex} 100%)`,
+                  color: fontColor,
+                }}
+              />
+            </div>
+          </div>
         );
       default:
         return <JsonEditor json={json} />;
