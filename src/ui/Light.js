@@ -4,6 +4,19 @@ import React, { Component } from 'react';
 import './Light.css';
 
 class Light extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showJson: false,
+    };
+  }
+
+  onJsonToggleClick(showJson) {
+    this.setState({
+      showJson,
+    });
+  }
+
   render() {
     const json = this.props.json;
     let rgb = [
@@ -31,34 +44,54 @@ class Light extends Component {
     const grayscale = HueColor.fromColorToGrayscale(rgb);
     const fontColor = grayscale < 128 ? 'white' : 'black';
     const brightness = json.state.bri / HueColor.MAX_BRIGHTNESS;
+
     switch (this.props.rendering) {
       case 'card':
+        const cardBody = this.state.showJson ? (
+          <div className="card-body">
+            <JsonEditor json={json} />
+          </div>
+        ) : (
+          <ul className="list-group list-group-flush">
+            <li
+              className="list-group-item"
+              style={{
+                backgroundColor: hex,
+                backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness *
+                  100}%, black ${brightness * 100}%, black 100%)`,
+                color: fontColor,
+              }}
+            >
+              {json.state.on
+                ? `On (${hex.toUpperCase()} @ ${Math.round(brightness * 100)}%)`
+                : 'Off'}
+            </li>
+          </ul>
+        );
         return (
-          <div className="col-md-4 col-lg-3">
-            <div className="card my-3">
-              <div className="card-header">{json.name}</div>
-              <ul className="list-group list-group-flush">
-                <li
-                  className="list-group-item"
-                  style={{
-                    backgroundColor: hex,
-                    backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness *
-                      100}%, black ${brightness * 100}%, black 100%)`,
-                    color: fontColor,
-                  }}
-                >
-                  {json.state.on
-                    ? `On (${hex.toUpperCase()} @ ${Math.round(
-                        brightness * 100,
-                      )}%)`
-                    : 'Off'}
-                </li>
-              </ul>
-              <div className="card-footer text-muted">
-                {`${json.productname} (${json.manufacturername} ${
-                  json.modelid
-                })`}
-              </div>
+          <div className="card">
+            <h5 className="card-header">
+              {json.name}
+              <button
+                type="button"
+                className={
+                  'btn btn-secondary float-right px-2 py-0' +
+                  (this.state.showJson ? ' active' : '')
+                }
+                data-toggle="button"
+                aria-pressed="false"
+                autoComplete="off"
+                onClick={this.onJsonToggleClick.bind(
+                  this,
+                  !this.state.showJson,
+                )}
+              >
+                <small>JSON</small>
+              </button>
+            </h5>
+            {cardBody}
+            <div className="card-footer text-muted">
+              {`${json.productname} (${json.manufacturername} ${json.modelid})`}
             </div>
           </div>
         );
@@ -93,7 +126,7 @@ class Light extends Component {
           </div>
         );
       default:
-        return <JsonEditor json={json} />;
+        throw new Error(`Unsupported rendering: ${this.props.rendering}`);
     }
   }
 }
