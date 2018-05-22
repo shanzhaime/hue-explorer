@@ -46,7 +46,7 @@ class LightsView extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="card-columns my-3">
         {this.state.json === null
           ? 'No lights'
           : Object.keys(this.state.json).map((key) => {

@@ -1,15 +1,35 @@
+import JsonEditor from './json/JsonEditor';
 import Light from './Light';
 import React, { Component } from 'react';
 import './Group.css';
 
 class Group extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showJson: false,
+    };
+  }
+
+  onJsonToggleClick(showJson) {
+    this.setState({
+      showJson,
+    });
+  }
+
   render() {
     const json = this.props.json;
-    switch (json.type) {
-      case 'Entertainment':
-        return (
-          <div className="card">
-            <div className="card-header">{json.name}</div>
+    let cardBody;
+    if (this.state.showJson) {
+      cardBody = (
+        <div className="card-body">
+          <JsonEditor json={json} />
+        </div>
+      );
+    } else {
+      switch (json.type) {
+        case 'Entertainment':
+          cardBody = (
             <div className="groupSquare">
               <div className="groupEntertainmentArea">
                 {json.lights.map((key) => {
@@ -31,16 +51,10 @@ class Group extends Component {
                 })}
               </div>
             </div>
-            <div className="card-footer text-muted">
-              {json.type}
-              {typeof json.class === 'string' ? `: ${json.class}` : ''}
-            </div>
-          </div>
-        );
-      default:
-        return (
-          <div className="card">
-            <div className="card-header">{json.name}</div>
+          );
+          break;
+        default:
+          cardBody = (
             <ul className="list-group list-group-flush">
               {json.lights.map((key) => {
                 return (
@@ -53,13 +67,35 @@ class Group extends Component {
                 );
               })}
             </ul>
-            <div className="card-footer text-muted">
-              {json.type}
-              {typeof json.class === 'string' ? `: ${json.class}` : ''}
-            </div>
-          </div>
-        );
+          );
+          break;
+      }
     }
+    return (
+      <div className="card">
+        <h5 className="card-header">
+          {json.name}
+          <button
+            type="button"
+            className={
+              'btn btn-secondary float-right px-2 py-0' +
+              (this.state.showJson ? ' active' : '')
+            }
+            data-toggle="button"
+            aria-pressed="false"
+            autoComplete="off"
+            onClick={this.onJsonToggleClick.bind(this, !this.state.showJson)}
+          >
+            <small>JSON</small>
+          </button>
+        </h5>
+        {cardBody}
+        <div className="card-footer text-muted">
+          {json.type}
+          {typeof json.class === 'string' ? `: ${json.class}` : ''}
+        </div>
+      </div>
+    );
   }
 }
 
