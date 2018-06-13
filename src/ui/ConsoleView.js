@@ -159,14 +159,14 @@ class ConsoleView extends Component {
               </button>
             </div>
             {this.state.method !== 'get' ? (
-              <div class="form-inline">
-                <label for="body" class="sr-only">
+              <div className="form-inline">
+                <label for="body" className="sr-only">
                   Body
                 </label>
                 <textarea
                   id="body"
                   onChange={this.onBodyChange.bind(this)}
-                  class="form-control flex-fill"
+                  className="form-control flex-fill"
                   rows="3"
                   placeholder="{ body: 'in json' }"
                 />
