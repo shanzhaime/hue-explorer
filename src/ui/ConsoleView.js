@@ -160,7 +160,7 @@ class ConsoleView extends Component {
             </div>
             {this.state.method !== 'get' ? (
               <div className="form-inline">
-                <label for="body" className="sr-only">
+                <label htmlFor="body" className="sr-only">
                   Body
                 </label>
                 <textarea
