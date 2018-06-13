@@ -32,7 +32,8 @@ class HueBridge {
   storage: Storage<PropertiesType>;
 
   constructor(id: string, properties: {} = {}) {
-    const sameHueBridge = bridgePool.get(id.toUpperCase());
+    const canonicalId = id.toUpperCase();
+    const sameHueBridge = bridgePool.get(canonicalId);
     if (sameHueBridge) {
       sameHueBridge.properties = {
         ...sameHueBridge.properties,
@@ -42,14 +43,17 @@ class HueBridge {
       return sameHueBridge;
     }
 
-    bridgePool.set(id.toUpperCase(), this);
-    this.id = id.toUpperCase();
+    bridgePool.set(canonicalId, this);
+    this.id = canonicalId;
     this.state = {
       localReachable: false,
       localPingTimer: null,
       localPingEnabled: false,
     };
-    this.storage = new Storage(STORAGE_NAME_PREFIX + id, STORAGE_VERSION);
+    this.storage = new Storage(
+      STORAGE_NAME_PREFIX + canonicalId,
+      STORAGE_VERSION,
+    );
     const storedProperties = this.storage.read();
     this.properties = {
       ...storedProperties,
