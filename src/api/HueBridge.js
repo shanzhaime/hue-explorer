@@ -203,7 +203,7 @@ class HueBridge {
     }
   }
 
-  async fetch(path: string, options: RequestOptions = {}): {} {
+  async fetch(path: string, options: RequestOptions = {}): Promise<?{}> {
     const urls = this.getUrls();
     if (urls && urls.usernameUrl) {
       if (urls.remote) {
