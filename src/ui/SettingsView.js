@@ -1,5 +1,6 @@
 // @flow strict
 
+import CenterCard from './CenterCard';
 import Settings from '../api/Settings';
 import Storage from '../api/Storage';
 import React, { Component } from 'react';
@@ -139,13 +140,7 @@ class SettingsView extends Component<PropsType, StateType> {
       default:
         throw new Error(`Unsupported settings dialog: ${dialog}`);
     }
-    return (
-      <div className="row justify-content-md-center">
-        <div className="col col-md-6 col-lg-4">
-          <div className="card my-3">{dialogBody}</div>
-        </div>
-      </div>
-    );
+    return <CenterCard>{dialogBody}</CenterCard>;
   }
 }
 
