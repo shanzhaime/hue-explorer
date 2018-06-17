@@ -1,4 +1,6 @@
+import CenterCard from './CenterCard';
 import Group from './Group';
+import LoadingIndicator from './LoadingIndicator';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
@@ -9,6 +11,7 @@ class GroupsView extends Component {
     this.state = {
       bridge: null,
       json: null,
+      loading: false,
     };
   }
 
@@ -35,6 +38,7 @@ class GroupsView extends Component {
     const bridge = this.getActiveBridge();
     this.setState({
       bridge,
+      loading: true,
     });
     Promise.all([bridge.fetch('/groups'), bridge.fetch('/lights')]).then(
       (results) => {
@@ -43,6 +47,7 @@ class GroupsView extends Component {
         this.setState({
           json,
           lights,
+          loading: false,
         });
       },
       () => {},
@@ -50,22 +55,40 @@ class GroupsView extends Component {
   }
 
   render() {
-    return (
-      <div className="card-columns my-3">
-        {this.state.json === null
-          ? 'No groups'
-          : Object.keys(this.state.json).map((key) => {
-              return (
-                <Group
-                  json={this.state.json[key]}
-                  groupId={key}
-                  lights={this.state.lights}
-                  key={key}
-                />
-              );
-            })}
-      </div>
-    );
+    if (this.state.loading) {
+      return (
+        <CenterCard>
+          <h5 className="card-header">Loading...</h5>
+          <div className="card-body">
+            <LoadingIndicator />
+          </div>
+        </CenterCard>
+      );
+    } else if (
+      this.state.json === null ||
+      Object.keys(this.state.json).length === 0
+    ) {
+      return (
+        <div className="alert alert-info my-3" role="alert">
+          No groups.
+        </div>
+      );
+    } else {
+      return (
+        <div className="card-columns my-3">
+          {Object.keys(this.state.json).map((key) => {
+            return (
+              <Group
+                json={this.state.json[key]}
+                groupId={key}
+                lights={this.state.lights}
+                key={key}
+              />
+            );
+          })}
+        </div>
+      );
+    }
   }
 }
 
