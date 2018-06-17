@@ -21,7 +21,7 @@ type StateType = {
   path: string,
   body: ?string,
   json: ?{},
-  network: null | 'loading' | 'loaded',
+  network: 'unsent' | 'loading' | 'done',
 };
 
 class ConsoleView extends Component<PropsType, StateType> {
@@ -34,7 +34,7 @@ class ConsoleView extends Component<PropsType, StateType> {
       path: settings.lastConsolePath || '/config',
       body: null,
       json: null,
-      network: null,
+      network: 'unsent',
     };
   }
 
@@ -97,7 +97,7 @@ class ConsoleView extends Component<PropsType, StateType> {
           console.log(json);
           this.setState({
             json,
-            network: 'loaded',
+            network: 'done',
           });
         });
     }
@@ -208,7 +208,7 @@ class ConsoleView extends Component<PropsType, StateType> {
           <div className="card-body">
             {this.state.network === 'loading' ? (
               <LoadingIndicator />
-            ) : this.state.network === 'loaded' ? (
+            ) : this.state.network === 'done' ? (
               <JsonEditor json={this.state.json} />
             ) : (
               <div className="alert alert-info mb-0" role="alert">
