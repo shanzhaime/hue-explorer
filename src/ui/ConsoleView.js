@@ -21,8 +21,7 @@ type StateType = {
   path: string,
   body: ?string,
   json: ?{},
-  loading: boolean,
-  loaded: boolean,
+  network: null | 'loading' | 'loaded',
 };
 
 class ConsoleView extends Component<PropsType, StateType> {
@@ -35,8 +34,7 @@ class ConsoleView extends Component<PropsType, StateType> {
       path: settings.lastConsolePath || '/config',
       body: null,
       json: null,
-      loading: false,
-      loaded: false,
+      network: null,
     };
   }
 
@@ -88,7 +86,7 @@ class ConsoleView extends Component<PropsType, StateType> {
     const bridge = this.state.bridge;
     if (bridge) {
       this.setState({
-        loading: true,
+        network: 'loading',
       });
       bridge
         .fetch(this.state.path, {
@@ -99,8 +97,7 @@ class ConsoleView extends Component<PropsType, StateType> {
           console.log(json);
           this.setState({
             json,
-            loading: false,
-            loaded: true,
+            network: 'loaded',
           });
         });
     }
@@ -119,7 +116,7 @@ class ConsoleView extends Component<PropsType, StateType> {
         <div className="card my-3">
           <div className="card-body">
             <div className="form-inline">
-              <div className="input-group mb-2 mr-sm-2 flex-fill">
+              <div className="input-group mb-2 mb-sm-0 mr-sm-2 flex-fill">
                 <div className="input-group-prepend">
                   <button
                     id="method"
@@ -183,8 +180,8 @@ class ConsoleView extends Component<PropsType, StateType> {
                 />
               </div>
               <button
-                className="btn btn-primary mb-2"
-                disabled={this.state.loading}
+                className="btn btn-primary"
+                disabled={this.state.network === 'loading'}
                 onClick={this.onSendClick.bind(this)}
               >
                 Send
@@ -209,11 +206,15 @@ class ConsoleView extends Component<PropsType, StateType> {
         <div className="card my-3">
           <div className="card-header">Response</div>
           <div className="card-body">
-            {this.state.loading ? (
+            {this.state.network === 'loading' ? (
               <LoadingIndicator />
-            ) : this.state.loaded ? (
+            ) : this.state.network === 'loaded' ? (
               <JsonEditor json={this.state.json} />
-            ) : null}
+            ) : (
+              <div className="alert alert-info mb-0" role="alert">
+                Send a request to see the response.
+              </div>
+            )}
           </div>
         </div>
       </div>
