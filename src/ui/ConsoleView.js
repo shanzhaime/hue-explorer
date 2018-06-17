@@ -1,11 +1,29 @@
+// @flow strict
+
 import JsonEditor from './json/JsonEditor';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
 import React, { Component } from 'react';
 
-class ConsoleView extends Component {
-  constructor(props) {
+type PropsType = {
+  match: {
+    params: {
+      id: string,
+    },
+  },
+};
+
+type StateType = {
+  bridge: ?HueBridge,
+  method: string,
+  path: string,
+  body: ?string,
+  json: ?{},
+};
+
+class ConsoleView extends Component<PropsType, StateType> {
+  constructor(props: PropsType) {
     super(props);
     const settings = Settings.read();
     this.state = {
@@ -36,7 +54,7 @@ class ConsoleView extends Component {
     }
   }
 
-  onMethodClick(method) {
+  onMethodClick(method: string) {
     const settings = Settings.read();
     settings.lastConsoleMethod = method;
     Settings.write(settings);
@@ -45,7 +63,7 @@ class ConsoleView extends Component {
     });
   }
 
-  onPathChange(event) {
+  onPathChange(event: SyntheticInputEvent<HTMLInputElement>) {
     const path = event.target.value;
     const settings = Settings.read();
     settings.lastConsolePath = path;
@@ -55,24 +73,26 @@ class ConsoleView extends Component {
     });
   }
 
-  onBodyChange(event) {
+  onBodyChange(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState({
       body: event.target.value,
     });
   }
 
   onSendClick() {
-    this.state.bridge
-      .fetch(this.state.path, {
-        method: this.state.method.toUpperCase(),
-        body: this.state.body,
-      })
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          json,
+    if (this.state.bridge) {
+      this.state.bridge
+        .fetch(this.state.path, {
+          method: this.state.method.toUpperCase(),
+          body: this.state.body,
+        })
+        .then((json) => {
+          console.log(json);
+          this.setState({
+            json,
+          });
         });
-      });
+    }
   }
 
   componentDidMount() {
