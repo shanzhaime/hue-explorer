@@ -1,6 +1,7 @@
 // @flow strict
 
 import JsonEditor from './json/JsonEditor';
+import LoadingIndicator from './LoadingIndicator';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
@@ -20,6 +21,8 @@ type StateType = {
   path: string,
   body: ?string,
   json: ?{},
+  loading: boolean,
+  loaded: boolean,
 };
 
 class ConsoleView extends Component<PropsType, StateType> {
@@ -32,6 +35,8 @@ class ConsoleView extends Component<PropsType, StateType> {
       path: settings.lastConsolePath || '/config',
       body: null,
       json: null,
+      loading: false,
+      loaded: false,
     };
   }
 
@@ -80,8 +85,12 @@ class ConsoleView extends Component<PropsType, StateType> {
   }
 
   onSendClick() {
-    if (this.state.bridge) {
-      this.state.bridge
+    const bridge = this.state.bridge;
+    if (bridge) {
+      this.setState({
+        loading: true,
+      });
+      bridge
         .fetch(this.state.path, {
           method: this.state.method.toUpperCase(),
           body: this.state.body,
@@ -90,6 +99,8 @@ class ConsoleView extends Component<PropsType, StateType> {
           console.log(json);
           this.setState({
             json,
+            loading: false,
+            loaded: true,
           });
         });
     }
@@ -173,6 +184,7 @@ class ConsoleView extends Component<PropsType, StateType> {
               </div>
               <button
                 className="btn btn-primary mb-2"
+                disabled={this.state.loading}
                 onClick={this.onSendClick.bind(this)}
               >
                 Send
@@ -197,7 +209,11 @@ class ConsoleView extends Component<PropsType, StateType> {
         <div className="card my-3">
           <div className="card-header">Response</div>
           <div className="card-body">
-            <JsonEditor json={this.state.json} />
+            {this.state.loading ? (
+              <LoadingIndicator />
+            ) : this.state.loaded ? (
+              <JsonEditor json={this.state.json} />
+            ) : null}
           </div>
         </div>
       </div>
