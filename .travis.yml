@@ -9,5 +9,5 @@ cache:
 script:
   - yarn run build
   - yarn flow
-  - yarn test -- --coverage
+  - yarn test --coverage
   - codecov
