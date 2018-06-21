@@ -79,7 +79,45 @@ it('clears storage after version bumping', () => {
   );
 });
 
+it('clears storage if data is corrupted', () => {
+  const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
+  getItem.mockImplementationOnce((key) => {
+    expect(key).toBe(`${STORAGE_NAME}:${STORAGE_VERSION}`);
+    return '**' + JSON.stringify(STORAGE_VERSION) + '**';
+  });
+  removeItem.mockClear();
+  const object = storage.read();
+  expect(object).toBeNull();
+  expect(removeItem.mock.calls.length).toBe(1);
+  expect(removeItem.mock.calls[0].length).toBe(1);
+  expect(removeItem.mock.calls[0][0]).toBe(
+    `${STORAGE_NAME}:${STORAGE_VERSION}`,
+  );
+});
+
 it('can can reset everything', () => {
   Storage.reset();
   expect(clear.mock.calls.length).toBe(1);
+});
+
+it('will throw if localStorage throws', () => {
+  getItem.mockImplementation(() => {
+    throw new Error();
+  });
+  setItem.mockImplementation(() => {
+    throw new Error();
+  });
+  removeItem.mockImplementation(() => {
+    throw new Error();
+  });
+  clear.mockImplementation(() => {
+    throw new Error();
+  });
+
+  expect(() => {
+    new Storage(STORAGE_NAME, STORAGE_VERSION);
+  }).toThrow();
+  expect(() => {
+    Storage.reset();
+  }).toThrow();
 });

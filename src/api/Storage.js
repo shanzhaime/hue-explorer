@@ -3,26 +3,34 @@
 function get(key: string): ?string {
   let value = null;
   try {
-    value = localStorage.getItem(key);
+    value = global.localStorage.getItem(key);
   } catch (error) {
-    throw new error('localStorage not accessible');
+    throw new Error('localStorage not accessible');
   }
   return value;
 }
 
-function set(key: string, value: string) {
+function set(key: string, value: string): void {
   try {
-    localStorage.setItem(key, value);
+    global.localStorage.setItem(key, value);
   } catch (error) {
-    throw new error('localStorage not accessible');
+    throw new Error('localStorage not accessible');
   }
 }
 
-function remove(key: string) {
+function remove(key: string): void {
   try {
-    localStorage.removeItem(key);
+    global.localStorage.removeItem(key);
   } catch (error) {
-    throw new error('localStorage not accessible');
+    throw new Error('localStorage not accessible');
+  }
+}
+
+function clear(): void {
+  try {
+    global.localStorage.clear();
+  } catch (error) {
+    throw new Error('localStorage not accessible');
   }
 }
 
@@ -58,14 +66,14 @@ class Storage<T> {
     return value;
   }
 
-  write(value: T) {
+  write(value: T): void {
     const key = `${this.name}:${this.version}`;
     const jsonString = JSON.stringify(value);
     set(key, jsonString);
   }
 
   static reset(): void {
-    localStorage.clear();
+    clear();
   }
 }
 
