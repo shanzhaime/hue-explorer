@@ -1,9 +1,6 @@
-.jsonObject > *,
-.jsonArray > * {
-  padding-left: 20px;
-}
-
-.jsonObject > *::after,
-.jsonArray > *::after {
-  content: ",";
+.jsonObject > ul,
+.jsonArray > ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
 }

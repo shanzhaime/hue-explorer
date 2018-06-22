@@ -2,20 +2,11 @@
 
 import React, { Component } from 'react';
 
-class JsonNull extends Component<{
-  name: ?string,
-}> {
-  static defaultProps = {
-    name: null,
-  };
+class JsonNull extends Component<{}> {
+  static defaultProps = {};
 
   render() {
-    return (
-      <div>
-        {this.props.name ? `"${this.props.name}": ` : ''}
-        null
-      </div>
-    );
+    return <span>null</span>;
   }
 }
 
