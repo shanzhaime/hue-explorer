@@ -18,23 +18,31 @@ class JsonEditor extends Component<{
 
   render() {
     const json = this.props.json;
+    let jsonContent;
     switch (typeof json) {
       case 'object':
         if (json === null) {
-          return <JsonNull />;
+          jsonContent = <JsonNull />;
+          break;
         } else if (Array.isArray(json)) {
-          return <JsonArray json={json} />;
+          jsonContent = <JsonArray json={json} />;
+          break;
         }
-        return <JsonObject json={json} />;
+        jsonContent = <JsonObject json={json} />;
+        break;
       case 'number':
-        return <JsonNumber json={json} />;
+        jsonContent = <JsonNumber json={json} />;
+        break;
       case 'string':
-        return <JsonString json={json} />;
+        jsonContent = <JsonString json={json} />;
+        break;
       case 'boolean':
-        return <JsonBoolean json={json} />;
+        jsonContent = <JsonBoolean json={json} />;
+        break;
       default:
         throw new Error('Invalid json property');
     }
+    return <div className="text-monospace">{jsonContent}</div>;
   }
 }
 

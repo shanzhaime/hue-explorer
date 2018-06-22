@@ -3,21 +3,14 @@
 import React, { Component } from 'react';
 
 class JsonBoolean extends Component<{
-  name: ?string,
   json: boolean,
 }> {
   static defaultProps = {
-    name: null,
     json: false,
   };
 
   render() {
-    return (
-      <div>
-        {this.props.name ? `"${this.props.name}": ` : ''}
-        {this.props.json.toString()}
-      </div>
-    );
+    return <span>{this.props.json.toString()}</span>;
   }
 }
 

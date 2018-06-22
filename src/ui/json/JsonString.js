@@ -3,22 +3,19 @@
 import React, { Component } from 'react';
 
 class JsonString extends Component<{
-  name: ?string,
   json: string,
 }> {
   static defaultProps = {
-    name: null,
     json: '',
   };
 
   render() {
     return (
-      <div>
-        {this.props.name ? `"${this.props.name}": ` : ''}
+      <span>
         {'"'}
-        {this.props.json}
+        {this.props.json.replace(/"/g, '\\"')}
         {'"'}
-      </div>
+      </span>
     );
   }
 }
