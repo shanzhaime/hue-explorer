@@ -18,21 +18,21 @@ class JsonObject extends Component<{
 
   render() {
     const currentIndentation = (
-      <React.Fragment>
-        {Array.from(new Array(this.props.depth).keys()).map((_) => {
-          return <React.Fragment>&nbsp; </React.Fragment>;
-        })}
-      </React.Fragment>
+      <pre
+        dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth) }}
+      />
     );
     const nextIndentation = (
-      <React.Fragment>&nbsp; {currentIndentation}</React.Fragment>
+      <pre
+        dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth + 1) }}
+      />
     );
     return (
       <span className="jsonObject">
         {'{'}
         {Object.keys(this.props.json).length === 0 ? null : (
           <ul>
-            {Object.keys(this.props.json).map((key) => {
+            {Object.keys(this.props.json).map((key, index, keys) => {
               const value = this.props.json[key];
               let jsonContent;
               switch (typeof value) {
@@ -67,7 +67,7 @@ class JsonObject extends Component<{
                   {nextIndentation}
                   {`"${key.replace(/"/g, '\\"')}": `}
                   {jsonContent}
-                  {','}
+                  {index < keys.length - 1 ? ',' : null}
                 </li>
               );
             })}

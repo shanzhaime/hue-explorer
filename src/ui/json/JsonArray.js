@@ -18,21 +18,22 @@ class JsonArray extends Component<{
 
   render() {
     const currentIndentation = (
-      <React.Fragment>
-        {Array.from(new Array(this.props.depth).keys()).map((_) => {
-          return <React.Fragment>&nbsp; </React.Fragment>;
-        })}
-      </React.Fragment>
+      <pre
+        dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth) }}
+      />
     );
     const nextIndentation = (
-      <React.Fragment>&nbsp; {currentIndentation}</React.Fragment>
+      <pre
+        dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth + 1) }}
+      />
     );
+
     return (
       <span className="jsonArray">
         {'['}
         {this.props.json.length === 0 ? null : (
           <ul>
-            {this.props.json.map((value, index) => {
+            {this.props.json.map((value, index, values) => {
               let jsonContent;
               switch (typeof value) {
                 case 'object':
@@ -65,7 +66,7 @@ class JsonArray extends Component<{
                 <li key={index}>
                   {nextIndentation}
                   {jsonContent}
-                  {','}
+                  {index < values.length - 1 ? ',' : null}
                 </li>
               );
             })}
