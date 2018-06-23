@@ -10,7 +10,7 @@ class JsonNumber extends Component<{
   };
 
   render() {
-    return <span>{this.props.json.toString()}</span>;
+    return <span>{this.props.json.toString(10)}</span>;
   }
 }
 
