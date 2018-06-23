@@ -4,3 +4,9 @@
   margin-bottom: 0;
   padding-left: 0;
 }
+
+.jsonObject pre,
+.jsonArray pre {
+  display: inline;
+  font-size: medium;
+}
