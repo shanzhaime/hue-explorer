@@ -1,6 +1,6 @@
 language: node_js
 install:
-  - npm install -g codecov
+  - yarn install
 node_js:
   - 6
 cache:
@@ -10,4 +10,4 @@ script:
   - yarn run build
   - yarn flow
   - yarn test --coverage
-  - codecov
+  - yarn run codecov
