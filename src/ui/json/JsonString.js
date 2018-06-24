@@ -10,13 +10,7 @@ class JsonString extends Component<{
   };
 
   render() {
-    return (
-      <span>
-        {'"'}
-        {this.props.json.replace(/"/g, '\\"')}
-        {'"'}
-      </span>
-    );
+    return <span>{JSON.stringify(this.props.json)}</span>;
   }
 }
 
