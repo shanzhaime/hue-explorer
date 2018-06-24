@@ -124,3 +124,9 @@ it('should render value in mixed types', () => {
     ']'
   ].join(''));
 });
+
+it('should not render other types', () => {
+  expect(() => {
+    mount(<JsonArray json={[function() {}]} />);
+  }).toThrow();
+});
