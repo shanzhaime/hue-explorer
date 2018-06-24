@@ -21,3 +21,8 @@ it('should render string value with double quote', () => {
   const wrapper = shallow(<JsonString json={'alert("Hello")'} />);
   expect(wrapper.text()).toBe('"alert(\\"Hello\\")"');
 });
+
+it('should render string value with control characters', () => {
+  const wrapper = shallow(<JsonString json={'Hello, \\/\b\f\n\r\t'} />);
+  expect(wrapper.text()).toBe('"Hello, \\\\/\\b\\f\\n\\r\\t"');
+});
