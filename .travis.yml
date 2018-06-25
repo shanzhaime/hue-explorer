@@ -2,8 +2,9 @@ language: node_js
 install:
   - yarn install
 node_js:
-  - 6
+  - stable
 cache:
+  yarn: true
   directories:
     - node_modules
 script:
