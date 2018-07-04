@@ -29,7 +29,7 @@ if (window.location.search) {
     const settings = Settings.read();
     const hash = btoa(`${settings.clientId}:${settings.clientSecret}`);
     let bridgeId = null;
-    let additionalBridgeProperties = {};
+    let bridgeOAuthProperties;
 
     fetch(`/oauth2/token?code=${code}&grant_type=authorization_code`, {
       method: 'POST',
@@ -46,18 +46,20 @@ if (window.location.search) {
           oauthFailure(state);
         }
 
-        additionalBridgeProperties.accessToken = json.access_token;
-        additionalBridgeProperties.refreshToken = json.refresh_token;
-        additionalBridgeProperties.tokenType = json.token_type;
-        additionalBridgeProperties.accessTokenExpiresAt =
-          Date.now() + parseInt(json.access_token_expires_in, 10);
-        additionalBridgeProperties.refreshTokenExpiresAt =
-          Date.now() + parseInt(json.refresh_token_expires_in, 10);
+        bridgeOAuthProperties = {
+          accessToken: json.access_token,
+          refreshToken: json.refresh_token,
+          tokenType: json.token_type,
+          accessTokenExpiresAt:
+            Date.now() + parseInt(json.access_token_expires_in, 10),
+          refreshTokenExpiresAt:
+            Date.now() + parseInt(json.refresh_token_expires_in, 10),
+        };
 
         return fetch(`/bridge/0/config`, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${additionalBridgeProperties.accessToken}`,
+            Authorization: `Bearer ${bridgeOAuthProperties.accessToken}`,
           },
         });
       })
@@ -75,7 +77,7 @@ if (window.location.search) {
           // If the bridge was authorized before, e.g. locally, add remote properties.
           bridge.properties = {
             ...bridge.properties,
-            ...additionalBridgeProperties,
+            ...bridgeOAuthProperties,
             remote: true,
           };
           bridge.store();
@@ -88,7 +90,7 @@ if (window.location.search) {
               linkbutton: true,
             }),
             headers: {
-              Authorization: `Bearer ${additionalBridgeProperties.accessToken}`,
+              Authorization: `Bearer ${bridgeOAuthProperties.accessToken}`,
               'content-type': 'application/json',
             },
           })
@@ -103,12 +105,10 @@ if (window.location.search) {
               return fetch(`/bridge`, {
                 method: 'POST',
                 body: JSON.stringify({
-                  devicetype: additionalBridgeProperties.appId,
+                  devicetype: bridgeOAuthProperties.appId,
                 }),
                 headers: {
-                  Authorization: `Bearer ${
-                    additionalBridgeProperties.accessToken
-                  }`,
+                  Authorization: `Bearer ${bridgeOAuthProperties.accessToken}`,
                   'content-type': 'application/json',
                 },
               });
