@@ -29,6 +29,7 @@ if (window.location.search) {
     const settings = Settings.read();
     const hash = btoa(`${settings.clientId}:${settings.clientSecret}`);
     let bridgeId = null;
+    let additionalBridgeProperties = {};
 
     fetch(`/oauth2/token?code=${code}&grant_type=authorization_code`, {
       method: 'POST',
@@ -45,19 +46,18 @@ if (window.location.search) {
           oauthFailure(state);
         }
 
-        settings.accessToken = json.access_token;
-        settings.refreshToken = json.refresh_token;
-        settings.tokenType = json.token_type;
-        settings.accessTokenExpiresAt =
+        additionalBridgeProperties.accessToken = json.access_token;
+        additionalBridgeProperties.refreshToken = json.refresh_token;
+        additionalBridgeProperties.tokenType = json.token_type;
+        additionalBridgeProperties.accessTokenExpiresAt =
           Date.now() + parseInt(json.access_token_expires_in, 10);
-        settings.refreshTokenExpiresAt =
+        additionalBridgeProperties.refreshTokenExpiresAt =
           Date.now() + parseInt(json.refresh_token_expires_in, 10);
-        Settings.write(settings);
 
         return fetch(`/bridge/0/config`, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${settings.accessToken}`,
+            Authorization: `Bearer ${additionalBridgeProperties.accessToken}`,
           },
         });
       })
@@ -72,55 +72,63 @@ if (window.location.search) {
         HueBridgeList.load();
         const bridge = HueBridge.getById(bridgeId);
         if (bridge && bridge.properties.username) {
-          bridge.properties.remote = true;
+          // If the bridge was authorized before, e.g. locally, add remote properties.
+          bridge.properties = {
+            ...bridge.properties,
+            ...additionalBridgeProperties,
+            remote: true,
+          };
           bridge.store();
           oauthSuccess(state);
         } else {
-          return fetch(`/bridge/0/config`, {
+          // If the bridge was never seen before, authorize through remote API.
+          fetch(`/bridge/0/config`, {
             method: 'PUT',
             body: JSON.stringify({
               linkbutton: true,
             }),
             headers: {
-              Authorization: `Bearer ${settings.accessToken}`,
+              Authorization: `Bearer ${additionalBridgeProperties.accessToken}`,
               'content-type': 'application/json',
             },
-          });
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((json) => {
+              console.log(json);
+              if (!json[0] || !json[0].success) {
+                oauthFailure(state);
+              }
+              return fetch(`/bridge`, {
+                method: 'POST',
+                body: JSON.stringify({
+                  devicetype: additionalBridgeProperties.appId,
+                }),
+                headers: {
+                  Authorization: `Bearer ${
+                    additionalBridgeProperties.accessToken
+                  }`,
+                  'content-type': 'application/json',
+                },
+              });
+            })
+            .then((response) => {
+              return response.json();
+            })
+            .then((json) => {
+              if (!json[0] || !json[0].success) {
+                oauthFailure(state);
+              }
+              const bridge = new HueBridge(bridgeId, {
+                username: json[0].success.username,
+                remote: true,
+              });
+              bridge.store();
+              HueBridgeList.add(bridgeId);
+              oauthSuccess(state);
+            });
         }
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        console.log(json);
-        if (!json[0] || !json[0].success) {
-          oauthFailure(state);
-        }
-        return fetch(`/bridge`, {
-          method: 'POST',
-          body: JSON.stringify({
-            devicetype: settings.appId,
-          }),
-          headers: {
-            Authorization: `Bearer ${settings.accessToken}`,
-            'content-type': 'application/json',
-          },
-        });
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        if (!json[0] || !json[0].success) {
-          oauthFailure(state);
-        }
-        const bridge = new HueBridge(bridgeId, {
-          username: json[0].success.username,
-          remote: true,
-        });
-        bridge.store();
-        HueBridgeList.add(bridgeId);
-        oauthSuccess(state);
       });
   }
 }
