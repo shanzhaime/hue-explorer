@@ -1,6 +1,5 @@
 // @flow strict
 
-import Settings from './Settings';
 import Storage from './Storage';
 import deviceId from './deviceId';
 
@@ -8,7 +7,6 @@ const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 2;
 
 const bridgePool = new Map();
-const settings = Settings.read();
 
 type PropertiesType = {
   username?: string,
@@ -17,6 +15,13 @@ type PropertiesType = {
   protocol?: 'http' | 'https',
   host?: string,
   port?: number,
+
+  // OAuth tokens
+  tokenType?: string,
+  refreshToken?: string,
+  refreshTokenExpiresAt?: number,
+  accessToken?: string,
+  accessTokenExpiresAt?: number,
 };
 
 type StateType = {
@@ -207,7 +212,7 @@ class HueBridge {
     const urls = this.getUrls();
     if (urls && urls.usernameUrl) {
       if (urls.remote) {
-        if (!settings.accessToken) {
+        if (!this.properties.accessToken) {
           throw new Error(
             `Bridge has no access token for remote fetching: ${this.id}`,
           );
@@ -216,7 +221,7 @@ class HueBridge {
           options.headers = new Headers(options.headers);
         }
         const headers = options.headers;
-        headers.set('Authorization', `Bearer ${settings.accessToken}`);
+        headers.set('Authorization', `Bearer ${this.properties.accessToken}`);
         headers.set('Content-Type', 'application/json');
       }
 

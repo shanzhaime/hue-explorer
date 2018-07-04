@@ -8,13 +8,6 @@ type SettingsType = {
   clientId?: string,
   clientSecret?: string,
 
-  // OAuth tokens
-  tokenType?: string,
-  refreshToken?: string,
-  refreshTokenExpiresAt?: number,
-  accessToken?: string,
-  accessTokenExpiresAt?: number,
-
   // Console last state
   lastConsoleMethod?: string,
   lastConsolePath?: string,
