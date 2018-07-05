@@ -7,7 +7,7 @@
     "/oauth2": {
       "origin": "https://api.meethue.com/oauth2",
       "headers": {
-        "Authorization": "Basic ${OAUTH_ID_SECRET_HASH}"
+        "Authorization": "Basic ${OAUTH_CLIENT_ID_SECRET_HASH}"
       }
     },
     "/bridge": {

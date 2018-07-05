@@ -101,9 +101,10 @@ class HueBridgeSelector extends Component {
           className="dropdown-item"
           rel="noopener noreferrer"
           target="_blank"
-          href={`https://api.meethue.com/oauth2/auth?clientid=${
-            this.state.settings.clientId
-          }&appid=${this.state.settings.appId}&deviceid=${
+          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state
+            .settings.clientId ||
+            process.env.REACT_APP_OAUTH_CLIENT_ID}&appid=${this.state.settings
+            .appId || process.env.REACT_APP_OAUTH_APP_ID}&deviceid=${
             this.state.deviceId
           }&response_type=code&state=${window.location.pathname}`}
         >
