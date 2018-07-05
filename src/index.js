@@ -27,14 +27,17 @@ if (window.location.search) {
   const state = url.searchParams.get('state');
   if (code && state) {
     const settings = Settings.read();
-    const hash = btoa(`${settings.clientId}:${settings.clientSecret}`);
+    const hash =
+      settings.clientId && settings.clientSecret
+        ? btoa(`${settings.clientId}:${settings.clientSecret}`)
+        : null;
     let bridgeId = null;
     let bridgeOAuthProperties;
 
     fetch(`/oauth2/token?code=${code}&grant_type=authorization_code`, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${hash}`,
+        Authorization: hash ? `Basic ${hash}` : null,
       },
     })
       .then((response) => {
@@ -105,7 +108,7 @@ if (window.location.search) {
               return fetch(`/bridge`, {
                 method: 'POST',
                 body: JSON.stringify({
-                  devicetype: bridgeOAuthProperties.appId,
+                  devicetype: process.env.REACT_APP_OAUTH_APP_ID,
                 }),
                 headers: {
                   Authorization: `Bearer ${bridgeOAuthProperties.accessToken}`,
@@ -136,6 +139,7 @@ if (window.location.search) {
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
 
+console.log('NODE_ENV', process.env.NODE_ENV);
 window.HueBridge = HueBridge;
 window.HueBridgeList = HueBridgeList;
 window.Settings = Settings;
