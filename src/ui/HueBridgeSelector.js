@@ -66,6 +66,19 @@ class HueBridgeSelector extends Component {
 
   render() {
     const activeBridgeId = ActiveBridge.get();
+    const oauthURL = new URL('https://api.meethue.com/oauth2/auth');
+    oauthURL.searchParams.append(
+      'clientid',
+      this.state.settings.clientId || process.env.REACT_APP_OAUTH_CLIENT_ID,
+    );
+    oauthURL.searchParams.append(
+      'appid',
+      this.state.settings.appId || process.env.REACT_APP_OAUTH_APP_ID,
+    );
+    oauthURL.searchParams.append('deviceid', this.state.deviceId);
+    oauthURL.searchParams.append('response_type', 'code');
+    oauthURL.searchParams.append('state', window.location.href);
+
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
         {this.state.bridges.map((bridge) => {
@@ -101,12 +114,7 @@ class HueBridgeSelector extends Component {
           className="dropdown-item"
           rel="noopener noreferrer"
           target="_blank"
-          href={`https://api.meethue.com/oauth2/auth?clientid=${this.state
-            .settings.clientId ||
-            process.env.REACT_APP_OAUTH_CLIENT_ID}&appid=${this.state.settings
-            .appId || process.env.REACT_APP_OAUTH_APP_ID}&deviceid=${
-            this.state.deviceId
-          }&response_type=code&state=${window.location.pathname}`}
+          href={oauthURL.toString()}
         >
           Add remote bridges
         </a>
