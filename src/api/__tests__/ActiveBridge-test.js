@@ -5,12 +5,20 @@ import Storage from '../Storage';
 jest.mock('../HueBridge');
 jest.mock('../Storage');
 
-const TEST_BRIDGE_ID = '0123456789ABCDEF';
-const TEST_BRIDGE = new HueBridge();
+const TEST_BRIDGE_1_ID = '0123456789ABCDEF';
+const TEST_BRIDGE_1 = new HueBridge();
+const TEST_BRIDGE_2_ID = '1234567890FEDCBA';
+const TEST_BRIDGE_2 = new HueBridge();
+const NON_EXISTENT_BRIDGE_ID = '1357924680FFFFFF';
 
 HueBridge.getById = jest.fn().mockImplementation((id) => {
-  if (id === TEST_BRIDGE_ID) {
-    return TEST_BRIDGE;
+  switch (id) {
+    case TEST_BRIDGE_1_ID:
+      return TEST_BRIDGE_1;
+    case TEST_BRIDGE_2_ID:
+      return TEST_BRIDGE_2;
+    default:
+      return null;
   }
 });
 
@@ -25,30 +33,48 @@ beforeEach(() => {
 });
 
 it('can store selected active bridge', () => {
-  ActiveBridge.select(TEST_BRIDGE_ID);
+  ActiveBridge.select(TEST_BRIDGE_1_ID);
   expect(Storage.mock.instances).toHaveLength(1);
   const storageInstance = Storage.mock.instances[0];
   expect(storageInstance.write).toHaveBeenCalledTimes(1);
-  expect(storageInstance.write).toHaveBeenCalledWith(TEST_BRIDGE_ID);
+  expect(storageInstance.write).toHaveBeenCalledWith(TEST_BRIDGE_1_ID);
 });
 
 it('can get stored active bridge', () => {
   expect(ActiveBridge.get()).toBe(null);
 
-  ActiveBridge.select(TEST_BRIDGE_ID);
+  ActiveBridge.select(TEST_BRIDGE_1_ID);
   expect(Storage.mock.instances).toHaveLength(1);
   const storageInstance = Storage.mock.instances[0];
 
   storageInstance.read.mockClear();
   const activeBridgeId = ActiveBridge.get();
   expect(storageInstance.read).toHaveBeenCalledTimes(1);
-  expect(activeBridgeId).toBe(TEST_BRIDGE_ID);
+  expect(activeBridgeId).toBe(TEST_BRIDGE_1_ID);
 });
 
-it('can start active bridge local ping', () => {
-  ActiveBridge.select(TEST_BRIDGE_ID);
+it('can start active bridge local ping at selection time', () => {
+  TEST_BRIDGE_1.startLocalPing.mockClear();
+  ActiveBridge.select(TEST_BRIDGE_1_ID);
+  expect(TEST_BRIDGE_1.startLocalPing).toHaveBeenCalledTimes(1);
+});
 
-  TEST_BRIDGE.startLocalPing.mockClear();
+it('can start active bridge local ping at restoration time', () => {
+  ActiveBridge.select(TEST_BRIDGE_1_ID);
+
+  TEST_BRIDGE_1.startLocalPing.mockClear();
   ActiveBridge.restore();
-  expect(TEST_BRIDGE.startLocalPing).toHaveBeenCalledTimes(1);
+  expect(TEST_BRIDGE_1.startLocalPing).toHaveBeenCalledTimes(1);
+});
+
+it('can stop previous active bridge ping at selection change', () => {
+  ActiveBridge.select(TEST_BRIDGE_1_ID);
+  ActiveBridge.select(TEST_BRIDGE_2_ID);
+  expect(TEST_BRIDGE_1.stopLocalPing).toHaveBeenCalledTimes(1);
+});
+
+it('throws if bridge does not exist', () => {
+  expect(() => {
+    ActiveBridge.select(NON_EXISTENT_BRIDGE_ID);
+  }).toThrow();
 });
