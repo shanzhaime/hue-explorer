@@ -1,6 +1,15 @@
 codecov:
   notify:
     require_ci_to_pass: yes
+  status:
+    project:
+      default: off
+      ui:
+        flags: ui
+        target: 20%
+      api:
+        flags: api
+        target: 75%
 
 coverage:
   precision: 2
