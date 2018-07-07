@@ -101,22 +101,35 @@ it('can can reset everything', () => {
 });
 
 it('will throw if localStorage throws', () => {
-  getItem.mockImplementation(() => {
-    throw new Error();
-  });
+  const storage = new Storage(STORAGE_NAME, STORAGE_VERSION);
+
   setItem.mockImplementation(() => {
     throw new Error();
   });
+  expect(() => {
+    storage.write(TEST_OBJECT);
+  }).toThrow();
+
   removeItem.mockImplementation(() => {
     throw new Error();
   });
-  clear.mockImplementation(() => {
+  expect(() => {
+    new Storage(STORAGE_NAME, STORAGE_VERSION + 1);
+  }).toThrow();
+
+  getItem.mockImplementation(() => {
     throw new Error();
   });
-
+  expect(() => {
+    storage.read();
+  }).toThrow();
   expect(() => {
     new Storage(STORAGE_NAME, STORAGE_VERSION);
   }).toThrow();
+
+  clear.mockImplementation(() => {
+    throw new Error();
+  });
   expect(() => {
     Storage.reset();
   }).toThrow();
