@@ -84,6 +84,20 @@ it('converts hex code to rgb color', () => {
   expect(HueColor.fromHexToRgb('#00f')).toEqual([0, 0, 255]);
 });
 
+it('throws if given invalid hex code', () => {
+  expect(() => {
+    HueColor.fromHexToRgb('');
+  }).toThrow();
+
+  expect(() => {
+    HueColor.fromHexToRgb('#hahaha');
+  }).toThrow();
+
+  expect(() => {
+    HueColor.fromHexToRgb('#0f0f');
+  }).toThrow();
+});
+
 it('converts rgb color to grayscale', () => {
   expect(HueColor.fromColorToGrayscale([255, 255, 255])).toBe(255);
   expect(HueColor.fromColorToGrayscale([0, 0, 0])).toBe(0);
