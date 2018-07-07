@@ -19,3 +19,22 @@ const fetchMock = jest.fn().mockImplementation(() => {
   };
 });
 global.fetch = fetchMock;
+
+const urlMock = jest.fn().mockImplementation(() => {
+  return {
+    searchParams: {
+      append: jest.fn(),
+      delete: jest.fn(),
+      entries: jest.fn(),
+      get: jest.fn(),
+      getAll: jest.fn(),
+      has: jest.fn(),
+      keys: jest.fn(),
+      set: jest.fn(),
+      sort: jest.fn(),
+      toString: jest.fn(),
+      values: jest.fn(),
+    },
+  };
+});
+global.URL = urlMock;

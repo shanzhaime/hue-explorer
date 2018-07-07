@@ -67,17 +67,17 @@ class HueBridgeSelector extends Component {
   render() {
     const activeBridgeId = ActiveBridge.get();
     const oauthURL = new URL('https://api.meethue.com/oauth2/auth');
-    oauthURL.searchParams.append(
+    oauthURL.searchParams.set(
       'clientid',
       this.state.settings.clientId || process.env.REACT_APP_OAUTH_CLIENT_ID,
     );
-    oauthURL.searchParams.append(
+    oauthURL.searchParams.set(
       'appid',
       this.state.settings.appId || process.env.REACT_APP_OAUTH_APP_ID,
     );
-    oauthURL.searchParams.append('deviceid', this.state.deviceId);
-    oauthURL.searchParams.append('response_type', 'code');
-    oauthURL.searchParams.append('state', window.location.href);
+    oauthURL.searchParams.set('deviceid', this.state.deviceId);
+    oauthURL.searchParams.set('response_type', 'code');
+    oauthURL.searchParams.set('state', window.location.href);
 
     return (
       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
