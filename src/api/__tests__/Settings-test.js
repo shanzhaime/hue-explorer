@@ -50,3 +50,7 @@ it('reads settings previously written', () => {
   expect(Settings.read()).toEqual(thirdSettings);
   expect(storageInstance.read).toHaveBeenCalledTimes(3);
 });
+
+it('returns blank state if not written before', () => {
+  expect(Settings.read()).toEqual({});
+});
