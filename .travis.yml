@@ -8,7 +8,8 @@ cache:
   directories:
     - node_modules
 script:
-  - yarn run build
+  - yarn build
   - yarn flow
-  - yarn test --coverage
-  - yarn run codecov
+  - yarn test src/ui --coverage --collectCoverageFrom=src/ui/** && yarn codecov -C -F ui
+  - yarn test src/api --coverage --collectCoverageFrom=src/api/** && yarn codecov -C -F api
+  - yarn test --testPathIgnorePatterns="src/(ui|api)" --coverage && yarn codecov -C -F app
