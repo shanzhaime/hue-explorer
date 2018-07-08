@@ -73,7 +73,7 @@ class JsonObject extends Component<{
             })}
           </ul>
         )}
-        {currentIndentation}
+        {Object.keys(this.props.json).length === 0 ? null : currentIndentation}
         {'}'}
       </span>
     );

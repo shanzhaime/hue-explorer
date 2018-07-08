@@ -62,8 +62,7 @@ it('should render value with array', () => {
   // prettier-ignore
   expect(wrapper.text()).toBe([
     '[',
-    '  [',
-    '  ],',
+    '  [],',
     '  [',
     '    42',
     '  ],',
@@ -88,8 +87,7 @@ it('should render value with object', () => {
     '    "y": 0,',
     '    "z": -42',
     '  },',
-    '  {',
-    '  },',
+    '  {},',
     '  {',
     '    "x": {',
     '      "y": {',
