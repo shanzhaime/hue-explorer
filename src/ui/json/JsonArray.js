@@ -72,7 +72,7 @@ class JsonArray extends Component<{
             })}
           </ul>
         )}
-        {currentIndentation}
+        {this.props.json.length === 0 ? null : currentIndentation}
         {']'}
       </span>
     );

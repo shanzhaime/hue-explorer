@@ -18,7 +18,7 @@ it('should render value in mixed types', () => {
         e: NaN,
         f: 'Let\'s say "yes".',
         g: [3.14, 2.22],
-        h: { x: { y: { z: 42 } } },
+        h: { x: { y: { z: 42, w: {} } } },
       }}
     />,
   );
@@ -38,7 +38,8 @@ it('should render value in mixed types', () => {
     '  "h": {',
     '    "x": {',
     '      "y": {',
-    '        "z": 42',
+    '        "z": 42,',
+    '        "w": {}',
     '      }',
     '    }',
     '  }',
