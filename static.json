@@ -15,8 +15,11 @@
     }
   },
   "headers": {
-    "/**": {
-      "Access-Control-Allow-Origin": "http://hue-explorer.herokuapp.com"
+    "/oauth2/**": {
+      "Access-Control-Allow-Origin": "https://hueexplorer.app/"
+    },
+    "/bridge/**": {
+      "Access-Control-Allow-Origin": "https://hueexplorer.app/"
     }
   }
 }
