@@ -1,8 +1,8 @@
 {
   "name": "hue-explorer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "homepage": "http://hue-explorer.herokuapp.com/",
+  "homepage": "https://hueexplorer.app/",
   "proxy": {
     "/(oauth2|bridge)": {
       "target": "https://api.meethue.com",
