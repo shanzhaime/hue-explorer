@@ -144,6 +144,7 @@ if (window.location.search) {
                 const bridge = new HueBridge(bridgeId, {
                   username: json[0].success.username,
                   remote: true,
+                  ...bridgeOAuthProperties,
                 });
                 bridge.store();
                 HueBridgeList.add(bridgeId);
