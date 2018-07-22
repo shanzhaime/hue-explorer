@@ -72,6 +72,12 @@ class SettingsView extends Component<PropsType, StateType> {
           <React.Fragment>
             <h5 className="card-header">OAuth Settings</h5>
             <div className="card-body">
+              {process.env.NODE_ENV === 'production' ? (
+                <div className="alert alert-danger mb-0" role="alert">
+                  Do <span className="font-weight-bold">NOT</span> override
+                  these settings. Leave them blank.
+                </div>
+              ) : null}
               <div className="form-group">
                 <label htmlFor="appId">App ID</label>
                 <input
