@@ -1,24 +1,24 @@
 // @flow strict
 
-type Date = {|
+export type Date = {|
   year: number,
   month: number,
   day: number,
 |};
 
-type Time = {|
+export type Time = {|
   hour: number,
   minute: number,
   second: number,
 |};
 
-type TimeInterval = {|
+export type TimeInterval = {|
   start: Time,
   end: Time,
   randomized: boolean,
 |};
 
-type RecurringDays = [
+export type RecurringDays = [
   boolean, // Monday
   boolean, // Tuesday
   boolean, // Wednesday
@@ -28,7 +28,7 @@ type RecurringDays = [
   boolean, // Sunday
 ];
 
-type TimePattern = {|
+export type TimePattern = {|
   date?: Date,
   recurringTimes?: number,
   recurringDays?: RecurringDays,
