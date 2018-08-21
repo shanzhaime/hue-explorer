@@ -176,13 +176,15 @@ class App extends Component {
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
                   >
-                    <NavLink
-                      className="dropdown-item"
-                      activeClassName="active"
-                      to="/settings/oauth"
-                    >
-                      OAuth
-                    </NavLink>
+                    {process.env.NODE_ENV === 'production' ? null : (
+                      <NavLink
+                        className="dropdown-item"
+                        activeClassName="active"
+                        to="/settings/oauth"
+                      >
+                        OAuth
+                      </NavLink>
+                    )}
                     <NavLink
                       className="dropdown-item"
                       activeClassName="active"
