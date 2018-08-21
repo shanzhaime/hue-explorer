@@ -1,17 +1,8 @@
-import LightsView from './ui/LightsView';
-import GroupsView from './ui/GroupsView';
-import SchedulesView from './ui/SchedulesView';
-import ScenesView from './ui/ScenesView';
-import SensorsView from './ui/SensorsView';
-import RulesView from './ui/RulesView';
-import ConfigurationView from './ui/ConfigurationView';
-import ResourceLinksView from './ui/ResourceLinksView';
-import CapabilitiesView from './ui/CapabilitiesView';
-import ConsoleView from './ui/ConsoleView';
-import SettingsView from './ui/SettingsView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
+import LoadingCard from './ui/LoadingCard';
 import ActiveBridge from './api/ActiveBridge';
 import React, { Component } from 'react';
+import Loadable from 'react-loadable';
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -203,17 +194,83 @@ class App extends Component {
           </nav>
           <div className="container-fluid">
             <Switch>
-              <Route path="/lights/:id" component={LightsView} />
-              <Route path="/groups/:id" component={GroupsView} />
-              <Route path="/schedules/:id" component={SchedulesView} />
-              <Route path="/scenes/:id" component={ScenesView} />
-              <Route path="/sensors/:id" component={SensorsView} />
-              <Route path="/rules/:id" component={RulesView} />
-              <Route path="/configuration/:id" component={ConfigurationView} />
-              <Route path="/resourcelinks/:id" component={ResourceLinksView} />
-              <Route path="/capabilities/:id" component={CapabilitiesView} />
-              <Route path="/console/:id" component={ConsoleView} />
-              <Route path="/settings/:dialog" component={SettingsView} />
+              <Route
+                path="/lights/:id"
+                component={Loadable({
+                  loader: () => import('./ui/LightsView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/groups/:id"
+                component={Loadable({
+                  loader: () => import('./ui/GroupsView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/schedules/:id"
+                component={Loadable({
+                  loader: () => import('./ui/SchedulesView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/scenes/:id"
+                component={Loadable({
+                  loader: () => import('./ui/ScenesView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/sensors/:id"
+                component={Loadable({
+                  loader: () => import('./ui/SensorsView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/rules/:id"
+                component={Loadable({
+                  loader: () => import('./ui/RulesView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/configuration/:id"
+                component={Loadable({
+                  loader: () => import('./ui/ConfigurationView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/resourcelinks/:id"
+                component={Loadable({
+                  loader: () => import('./ui/ResourceLinksView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/capabilities/:id"
+                component={Loadable({
+                  loader: () => import('./ui/CapabilitiesView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/console/:id"
+                component={Loadable({
+                  loader: () => import('./ui/ConsoleView'),
+                  loading: LoadingCard,
+                })}
+              />
+              <Route
+                path="/settings/:dialog"
+                component={Loadable({
+                  loader: () => import('./ui/SettingsView'),
+                  loading: LoadingCard,
+                })}
+              />
             </Switch>
           </div>
         </div>
