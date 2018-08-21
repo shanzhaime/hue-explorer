@@ -22,6 +22,8 @@ HueBridge.getById = jest.fn().mockImplementation((id) => {
   }
 });
 
+HueBridge.isLocalSupported = true;
+
 beforeEach(() => {
   let storedId = null;
   Storage.mock.instances[0].write = jest.fn().mockImplementation((id) => {
