@@ -90,11 +90,15 @@ class HueBridgeSelector extends Component {
           const localName =
             bridge.properties.host +
             (hidePort ? '' : `:${bridge.properties.port}`);
+          const isUnreachable =
+            !bridge.properties.remote && !HueBridge.isLocalSupported;
+          const isActive = bridge.properties.id === activeBridgeId;
           return (
             <button
               className={
                 'dropdown-item' +
-                (bridge.properties.id === activeBridgeId ? ' active' : '')
+                (isUnreachable ? ' disabled' : '') +
+                (isActive ? ' active' : '')
               }
               value={bridge.properties.id}
               key={bridge.properties.id}
