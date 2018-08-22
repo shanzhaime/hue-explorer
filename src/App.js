@@ -12,7 +12,7 @@ import SettingsView from './ui/SettingsView';
 import HueBridgeSelector from './ui/HueBridgeSelector';
 import ActiveBridge from './api/ActiveBridge';
 import React, { Component } from 'react';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   onBridgeAuthorizationFailure() {
@@ -204,17 +204,19 @@ class App extends Component {
             </div>
           </nav>
           <div className="container-fluid">
-            <Route path="/lights/:id" component={LightsView} />
-            <Route path="/groups/:id" component={GroupsView} />
-            <Route path="/schedules/:id" component={SchedulesView} />
-            <Route path="/scenes/:id" component={ScenesView} />
-            <Route path="/sensors/:id" component={SensorsView} />
-            <Route path="/rules/:id" component={RulesView} />
-            <Route path="/configuration/:id" component={ConfigurationView} />
-            <Route path="/resourcelinks/:id" component={ResourceLinksView} />
-            <Route path="/capabilities/:id" component={CapabilitiesView} />
-            <Route path="/console/:id" component={ConsoleView} />
-            <Route path="/settings/:dialog" component={SettingsView} />
+            <Switch>
+              <Route path="/lights/:id" component={LightsView} />
+              <Route path="/groups/:id" component={GroupsView} />
+              <Route path="/schedules/:id" component={SchedulesView} />
+              <Route path="/scenes/:id" component={ScenesView} />
+              <Route path="/sensors/:id" component={SensorsView} />
+              <Route path="/rules/:id" component={RulesView} />
+              <Route path="/configuration/:id" component={ConfigurationView} />
+              <Route path="/resourcelinks/:id" component={ResourceLinksView} />
+              <Route path="/capabilities/:id" component={CapabilitiesView} />
+              <Route path="/console/:id" component={ConsoleView} />
+              <Route path="/settings/:dialog" component={SettingsView} />
+            </Switch>
           </div>
         </div>
       </BrowserRouter>

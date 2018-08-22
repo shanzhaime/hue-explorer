@@ -1,5 +1,4 @@
-import CenterCard from './CenterCard';
-import LoadingIndicator from './LoadingIndicator';
+import LoadingCard from './LoadingCard';
 import Schedule from './Schedule';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
@@ -51,14 +50,7 @@ class SchedulesView extends Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <CenterCard>
-          <h5 className="card-header">Loading...</h5>
-          <div className="card-body">
-            <LoadingIndicator />
-          </div>
-        </CenterCard>
-      );
+      return <LoadingCard />;
     } else if (
       this.state.json === null ||
       Object.keys(this.state.json).length === 0

@@ -1,8 +1,8 @@
 // @flow strict
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class LoadingIndicator extends Component<{}> {
+class LoadingIndicator extends PureComponent<{}> {
   render() {
     return (
       <div className="progress">

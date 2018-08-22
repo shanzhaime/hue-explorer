@@ -1,6 +1,5 @@
-import CenterCard from './CenterCard';
+import LoadingCard from './LoadingCard';
 import Group from './Group';
-import LoadingIndicator from './LoadingIndicator';
 import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import React, { Component } from 'react';
@@ -56,14 +55,7 @@ class GroupsView extends Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <CenterCard>
-          <h5 className="card-header">Loading...</h5>
-          <div className="card-body">
-            <LoadingIndicator />
-          </div>
-        </CenterCard>
-      );
+      return <LoadingCard />;
     } else if (
       this.state.json === null ||
       Object.keys(this.state.json).length === 0
