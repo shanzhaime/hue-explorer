@@ -7,6 +7,7 @@ const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 2;
 
 const bridgePool = new Map();
+const isLocalSupported = window.location.protocol === 'http:';
 
 type PropertiesType = {
   username?: string,
@@ -251,6 +252,13 @@ class HueBridge {
       return null;
     }
     return bridge;
+  }
+
+  // Local connection isn't support when the web page is served over HTTPS,
+  // because Hue Bridge's own server doesn't serve HTTPS with valid certificate.
+  // This readonly static property provides a cached value for that purpose.
+  static get isLocalSupported(): boolean {
+    return isLocalSupported;
   }
 }
 

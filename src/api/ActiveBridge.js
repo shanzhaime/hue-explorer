@@ -11,7 +11,7 @@ function restoreActiveBridge(): void {
   const activeBridgeId = getActiveBridge();
   if (activeBridgeId) {
     const activeBridge = HueBridge.getById(activeBridgeId);
-    if (activeBridge) {
+    if (activeBridge && HueBridge.isLocalSupported) {
       activeBridge.startLocalPing();
     }
   }
@@ -22,14 +22,16 @@ function selectActiveBridge(bridgeId: string): void {
   if (!activeBridge) {
     throw new Error(`Cannot set active bridge: ${bridgeId}`);
   }
-  const previousActiveBridgeId = getActiveBridge();
-  if (previousActiveBridgeId) {
-    const previousActiveBridge = HueBridge.getById(previousActiveBridgeId);
-    if (previousActiveBridge) {
-      previousActiveBridge.stopLocalPing();
+  if (HueBridge.isLocalSupported) {
+    const previousActiveBridgeId = getActiveBridge();
+    if (previousActiveBridgeId) {
+      const previousActiveBridge = HueBridge.getById(previousActiveBridgeId);
+      if (previousActiveBridge) {
+        previousActiveBridge.stopLocalPing();
+      }
     }
+    activeBridge.startLocalPing();
   }
-  activeBridge.startLocalPing();
   storage.write(bridgeId);
 }
 
