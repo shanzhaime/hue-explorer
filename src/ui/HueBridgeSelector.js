@@ -113,7 +113,9 @@ class HueBridgeSelector extends Component {
             </button>
           );
         })}
-        <div className="dropdown-divider" />
+        {this.state.bridges.length > 0 ? (
+          <div className="dropdown-divider" />
+        ) : null}
         <a
           className="dropdown-item"
           rel="noopener noreferrer"
