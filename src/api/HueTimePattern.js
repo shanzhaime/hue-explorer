@@ -56,16 +56,12 @@ function parseDate(string: string): Date {
     throw new Error(`Invalid date: ${string}`);
   }
 
-  const [whole, year, month, day] = matches;
+  const [year, month, day] = matches.slice(1);
   return {
     year: parseInt(year, 10),
     month: parseInt(month, 10),
     day: parseInt(day, 10),
   };
-}
-
-function dateToString(date: Date): string {
-  throw new Error('Not yet implemented');
 }
 
 function parseRecurringDays(string: string): RecurringDays {
@@ -74,7 +70,7 @@ function parseRecurringDays(string: string): RecurringDays {
     throw new Error(`Invalid recurring days: ${string}`);
   }
 
-  const [whole, bitmaskString] = matches;
+  const bitmaskString = matches[1];
   let bitmask = parseInt(bitmaskString, 10);
   const sunday = !!(bitmask % 2);
   const saturday = !!((bitmask >>= 1) % 2);
@@ -86,26 +82,18 @@ function parseRecurringDays(string: string): RecurringDays {
   return [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
 }
 
-function recurringDaysToString(recurringDays: RecurringDays): string {
-  throw new Error('Not yet implemented');
-}
-
 function parseRecurringTimes(string: string): number {
   const matches = recurringTimesRegExp.exec(string);
   if (!matches) {
     throw new Error(`Invalid recurring days: ${string}`);
   }
 
-  const [whole, times] = matches;
+  const times = matches[1];
   if (times) {
     return parseInt(times, 10);
   } else {
     return Infinity;
   }
-}
-
-function recurringTimesToString(recurringTimes: number): string {
-  throw new Error('Not yet implemented');
 }
 
 function parseTime(string: string): Time {
@@ -114,16 +102,12 @@ function parseTime(string: string): Time {
     throw new Error(`Invalid recurring days: ${string}`);
   }
 
-  const [whole, hour, minute, second] = matches;
+  const [hour, minute, second] = matches.slice(1);
   return {
     hour: parseInt(hour, 10),
     minute: parseInt(minute, 10),
     second: parseInt(second, 10),
   };
-}
-
-function timeToString(time: Time): string {
-  throw new Error('Not yet implemented');
 }
 
 const HueTimePattern = {
@@ -133,20 +117,13 @@ const HueTimePattern = {
       throw new Error(`Invalid time pattern: ${string}`);
     }
 
-    const [
-      whole,
-      _$1,
-      dateString,
-      _$3,
-      recurringDaysString,
-      recurringTimesString,
-      _$6,
-      timerString,
-      startTimeString,
-      _$9,
-      randomizedString,
-      endTimeString,
-    ] = matches;
+    const dateString = matches[2];
+    const recurringDaysString = matches[4];
+    const recurringTimesString = matches[5];
+    const timerString = matches[7];
+    const startTimeString = matches[8];
+    const randomizedString = matches[10];
+    const endTimeString = matches[11];
 
     let result: TimePattern = {
       time: endTimeString
@@ -169,10 +146,6 @@ const HueTimePattern = {
     }
 
     return result;
-  },
-
-  toString: function(timePattern: TimePattern): string {
-    throw new Error('Not yet implemented');
   },
 };
 

@@ -1,5 +1,7 @@
 import JsonEditor from './json/JsonEditor';
+import HueTimePattern from '../api/HueTimePattern';
 import React, { Component } from 'react';
+import TimePatternEditor from './time/TimePatternEditor';
 
 class Schedule extends Component {
   constructor(props) {
@@ -27,7 +29,12 @@ class Schedule extends Component {
     } else {
       cardBody = (
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">Time Pattern: {json.localtime}</li>
+          <li className="list-group-item">
+            Time:{' '}
+            <TimePatternEditor
+              timePattern={HueTimePattern.parse(json.localtime)}
+            />
+          </li>
           <li className="list-group-item">Status: {json.status}</li>
           <li className="list-group-item">
             Command:
