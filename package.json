@@ -3,12 +3,6 @@
   "version": "0.3.0",
   "private": true,
   "homepage": "https://hueexplorer.app/",
-  "proxy": {
-    "/(oauth2|bridge)": {
-      "target": "https://api.meethue.com",
-      "changeOrigin": true
-    }
-  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all",
@@ -16,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.3",
+    "http-proxy-middleware": "^0.19.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4",
     "react": "^16.4.1",
