@@ -26,6 +26,9 @@ beforeEach(() => {
     clear,
   };
   localStorageBackup = global.localStorage;
+  Object.defineProperty(global, 'localStorage', {
+    writable: true,
+  });
   global.localStorage = localStorageMock;
 });
 
