@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './index.css';
 import App from './App';
 import Settings from './api/Settings';
+import ActiveBridge from './api/ActiveBridge';
 import registerServiceWorker from './registerServiceWorker';
 
 function oauthSuccess(url) {
@@ -100,6 +101,7 @@ if (window.location.search) {
               remote: true,
             };
             bridge.store();
+            ActiveBridge.select(bridgeId);
             oauthSuccess(state);
           } else {
             // If the bridge was never seen before, authorize through remote API.
@@ -124,7 +126,8 @@ if (window.location.search) {
                 return fetch(`/bridge`, {
                   method: 'POST',
                   body: JSON.stringify({
-                    devicetype: process.env.REACT_APP_OAUTH_APP_ID,
+                    devicetype:
+                      settings.appId || process.env.REACT_APP_OAUTH_APP_ID,
                   }),
                   headers: {
                     Authorization: `Bearer ${
@@ -148,6 +151,7 @@ if (window.location.search) {
                 });
                 bridge.store();
                 HueBridgeList.add(bridgeId);
+                ActiveBridge.select(bridgeId);
                 oauthSuccess(state);
               });
           }
