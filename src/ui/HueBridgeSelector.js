@@ -105,11 +105,11 @@ class HueBridgeSelector extends Component {
               onClick={this.onBridgeClick.bind(this)}
             >
               {bridge.properties.local ? localName : 'Remote Bridge'} ({bridge
-                .properties.local && bridge.state.localReachable
-                ? bridge.properties.username
+                .properties.username
+                ? bridge.properties.local && bridge.state.localReachable
                   ? 'local connection'
-                  : 'local discovery'
-                : 'remote connection'})
+                  : 'remote connection'
+                : 'local discovery'})
             </button>
           );
         })}
