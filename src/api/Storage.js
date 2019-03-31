@@ -69,7 +69,11 @@ class Storage<T> {
   write(value: T): void {
     const key = `${this.name}:${this.version}`;
     const jsonString = JSON.stringify(value);
-    set(key, jsonString);
+    if (jsonString === undefined) {
+      remove(key);
+    } else {
+      set(key, jsonString);
+    }
   }
 
   static reset(): void {
