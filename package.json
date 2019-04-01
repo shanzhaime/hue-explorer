@@ -9,7 +9,7 @@
     "arrowParens": "always"
   },
   "dependencies": {
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "http-proxy-middleware": "^0.19.1",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
