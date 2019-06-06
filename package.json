@@ -37,7 +37,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "flow-bin": "^0.100.0",
-    "husky": "^2.3.0",
+    "husky": "^2.4.0",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0"
   },
