@@ -33,7 +33,7 @@
     }
   },
   "devDependencies": {
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "flow-bin": "^0.108.0",
