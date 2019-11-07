@@ -37,7 +37,7 @@ class HueBridge {
   state: StateType;
   storage: Storage<PropertiesType>;
 
-  constructor(id: string, properties: {} = {}) {
+  constructor(id: string, properties: PropertiesType = {}) {
     const canonicalId = id.toUpperCase();
     const sameHueBridge = bridgePool.get(canonicalId);
     if (sameHueBridge) {
