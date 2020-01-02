@@ -1,7 +1,7 @@
 // @flow strict
 
 import HueBridge from './HueBridge';
-import Storage from './Storage';
+import Storage from 'versioned-storage';
 
 const STORAGE_NAME = 'active_bridge';
 const STORAGE_VERSION = 1;

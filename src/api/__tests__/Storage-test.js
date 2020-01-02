@@ -1,4 +1,4 @@
-import Storage from '../Storage';
+import Storage from 'versioned-storage';
 
 const STORAGE_NAME = 'test_storage';
 const STORAGE_VERSION = 42;

@@ -2,7 +2,7 @@
 
 import CenterCard from './CenterCard';
 import Settings from '../api/Settings';
-import Storage from '../api/Storage';
+import Storage from 'versioned-storage';
 import React, { Component } from 'react';
 
 type PropsType = {

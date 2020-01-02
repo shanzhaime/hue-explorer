@@ -1,7 +1,7 @@
 import deviceId from '../deviceId';
-import Storage from '../Storage';
+import Storage from 'versioned-storage';
 
-jest.mock('../Storage');
+jest.mock('versioned-storage');
 jest.dontMock('uuid');
 
 beforeEach(() => {

@@ -2,7 +2,7 @@
 
 import ActiveBridge from './ActiveBridge';
 import HueBridge from './HueBridge';
-import Storage from './Storage';
+import Storage from 'versioned-storage';
 
 const STORAGE_NAME = 'bridges';
 const STORAGE_VERSION = 4;

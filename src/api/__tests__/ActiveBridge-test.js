@@ -1,9 +1,9 @@
 import ActiveBridge from '../ActiveBridge';
 import HueBridge from '../HueBridge';
-import Storage from '../Storage';
+import Storage from 'versioned-storage';
 
 jest.mock('../HueBridge');
-jest.mock('../Storage');
+jest.mock('versioned-storage');
 
 const TEST_BRIDGE_1_ID = '0123456789ABCDEF';
 const TEST_BRIDGE_1 = new HueBridge();

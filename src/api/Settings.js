@@ -1,6 +1,6 @@
 // @flow strict
 
-import Storage from './Storage';
+import Storage from 'versioned-storage';
 
 type SettingsType = {
   // OAuth settings

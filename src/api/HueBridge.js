@@ -1,6 +1,6 @@
 // @flow strict
 
-import Storage from './Storage';
+import Storage from 'versioned-storage';
 import deviceId from './deviceId';
 
 const STORAGE_NAME_PREFIX = 'bridge:';

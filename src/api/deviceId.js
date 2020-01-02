@@ -1,7 +1,7 @@
 // @flow strict
 
 import uuid from 'uuid';
-import Storage from './Storage';
+import Storage from 'versioned-storage';
 
 const STORAGE_NAME = 'device_id';
 const STORAGE_VERSION = 1;
