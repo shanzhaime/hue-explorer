@@ -1,4 +1,4 @@
-import deviceId from '../deviceId';
+import browserId from 'browser-id';
 import Storage from 'versioned-storage';
 
 jest.mock('versioned-storage');
@@ -18,17 +18,17 @@ it('returns the same device id no matter how many times it is called', () => {
   expect(Storage.mock.instances).toHaveLength(1);
   const storageInstance = Storage.mock.instances[0];
 
-  const firstDeviceId = deviceId();
+  const firstBrowserId = browserId();
   expect(storageInstance.read).toHaveBeenCalledTimes(1);
   expect(storageInstance.write).toHaveBeenCalledTimes(1);
 
-  const secondDeviceId = deviceId();
+  const secondBrowserId = browserId();
   expect(storageInstance.read).toHaveBeenCalledTimes(2);
   expect(storageInstance.write).toHaveBeenCalledTimes(1);
-  expect(secondDeviceId).toBe(firstDeviceId);
+  expect(secondBrowserId).toBe(firstBrowserId);
 
-  const thirdDeviceId = deviceId();
+  const thirdBrowserId = browserId();
   expect(storageInstance.read).toHaveBeenCalledTimes(3);
   expect(storageInstance.write).toHaveBeenCalledTimes(1);
-  expect(thirdDeviceId).toBe(firstDeviceId);
+  expect(thirdBrowserId).toBe(firstBrowserId);
 });
