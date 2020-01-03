@@ -3,7 +3,7 @@ import HueBridge from '../api/HueBridge';
 import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
 import React, { Component } from 'react';
-import deviceId from '../api/deviceId';
+import browserId from 'browser-id';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
@@ -16,7 +16,7 @@ class HueBridgeSelector extends Component {
     this.state = {
       bridges: [],
       settings,
-      deviceId: deviceId(),
+      browserId: browserId(),
       hasAuthorizationFailure: false,
     };
   }
@@ -75,7 +75,7 @@ class HueBridgeSelector extends Component {
       'appid',
       this.state.settings.appId || process.env.REACT_APP_OAUTH_APP_ID,
     );
-    oauthURL.searchParams.set('deviceid', this.state.deviceId);
+    oauthURL.searchParams.set('deviceid', this.state.browserId);
     oauthURL.searchParams.set('response_type', 'code');
     oauthURL.searchParams.set('state', window.location.href);
 
@@ -104,12 +104,13 @@ class HueBridgeSelector extends Component {
               key={bridge.properties.id}
               onClick={this.onBridgeClick.bind(this)}
             >
-              {bridge.properties.local ? localName : 'Remote Bridge'} ({bridge
-                .properties.username
+              {bridge.properties.local ? localName : 'Remote Bridge'} (
+              {bridge.properties.username
                 ? bridge.properties.local && bridge.state.localReachable
                   ? 'local connection'
                   : 'remote connection'
-                : 'local discovery'})
+                : 'local discovery'}
+              )
             </button>
           );
         })}

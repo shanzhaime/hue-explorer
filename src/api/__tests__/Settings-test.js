@@ -1,7 +1,7 @@
 import Settings from '../Settings';
-import Storage from '../Storage';
+import Storage from 'versioned-storage';
 
-jest.mock('../Storage');
+jest.mock('versioned-storage');
 
 beforeEach(() => {
   let storedSettings = null;

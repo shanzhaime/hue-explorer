@@ -1,7 +1,7 @@
 // @flow strict
 
-import Storage from './Storage';
-import deviceId from './deviceId';
+import Storage from 'versioned-storage';
+import browserId from 'browser-id';
 
 const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 2;
@@ -145,7 +145,7 @@ class HueBridge {
             'content-type': 'application/json',
           },
           body: JSON.stringify({
-            devicetype: `Hue Explorer#${deviceId()}`.slice(0, 40), // Hue accepts only 40 characters for devicetype
+            devicetype: `Hue Explorer#${browserId()}`.slice(0, 40), // Hue accepts only 40 characters for devicetype
           }),
         });
         const json = await response.json();

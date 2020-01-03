@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "browser-id": "^1.1.0",
     "http-proxy-middleware": "^0.20.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
@@ -18,7 +19,8 @@
     "react-router-dom": "^5.1.2",
     "react-script": "^2.0.5",
     "react-scripts": "3.3.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "versioned-storage": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

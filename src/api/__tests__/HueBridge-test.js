@@ -1,9 +1,9 @@
 let HueBridge = require('../HueBridge').default;
 import Settings from '../Settings';
-import Storage from '../Storage';
+import Storage from 'versioned-storage';
 
 jest.mock('../Settings');
-jest.mock('../Storage');
+jest.mock('versioned-storage');
 
 const TEST_BRIDGE_ID = '0123456789ABCDEF';
 const TEST_BRIDGE_PROPERTIES = {
