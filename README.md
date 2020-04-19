@@ -13,4 +13,4 @@ Here are the things I plan for future versions:
 2.  Link data between different views, like show light names instead of light ids in a room.
 3.  Enable editing of certain data.
 
-If you want to use it without deploying the code, you can visit [https://hueexplorer.app/](https://hueexplorer.app/).
+If you want to use it without deploying the code, you can visit [https://hueexplorer.catchen.app/](https://hueexplorer.catchen.app/).
