@@ -11770,10 +11770,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-versioned-storage@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.1.0.tgz#20fee248bffcdd64bc3412401a1a9c297dbaf4e6"
-  integrity sha512-oS+unMiWJjaVAFCkNJvmHiu6LDb8KrzT8YmfrQpAmn8/yKnW4Roq3lcVMxQofT9Oidqg8oWChbGYl4FGQJyPPg==
+versioned-storage@^1.1.0, versioned-storage@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.2.1.tgz#e26dbf44c4f12e0ebc2d4ec4a88e09712c73b7ab"
+  integrity sha512-IPmRTcXuvG97AgS8//7zNudBGBM0tRTQiolf2As1mxF0j/CaA4ZH6MBzUOMUIM4+h87hDsaj2D4hKm5hTvAqXw==
 
 vm-browserify@^1.0.1:
   version "1.1.2"
