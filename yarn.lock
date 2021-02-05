@@ -3088,12 +3088,12 @@ brorand@^1.0.1:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
-browser-id@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.1.1.tgz#03e32e564447e04cdd1910c73af5c49934cbe7a3"
-  integrity sha512-3KbjHWt2QV5hl7KJtGdNK4bOvQ5dqcZW/Fhri8KMUeGJIsVDFI2bvprQUWr5HgGAjcD7kR7gFIrbkB1M9eGCKQ==
+browser-id@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.2.0.tgz#da37948e33f933c0a0a98954a47599e1cd3dd0e0"
+  integrity sha512-NtmlU15wWI1EVupSK9ko9pfrP6Bs9XxydQGMS0QQ81CJgfhVZqz8JuWrs8wpOKpm7ZJFFZyRjrTLkHX0OwxuSg==
   dependencies:
-    uuid "^7.0.1"
+    uuid "^8.0.0"
     versioned-storage "^1.1.0"
 
 browser-process-hrtime@^0.1.2:
@@ -11728,10 +11728,10 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.1.tgz#95ed6ff3d8c881cbf85f0f05cc3915ef994818ef"
-  integrity sha512-yqjRXZzSJm9Dbl84H2VDHpM3zMjzSJQ+hn6C4zqd5ilW+7P4ZmLEEqwho9LjP+tGuZlF4xrHQXT0h9QZUS/pWA==
+uuid@^8.0.0:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 v8-compile-cache@^2.0.3:
   version "2.1.0"
