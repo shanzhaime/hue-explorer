@@ -18,7 +18,7 @@
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
     "react-script": "^2.0.5",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.2",
     "versioned-storage": "^1.2.5"
   },
   "scripts": {
@@ -54,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "resetMocks": false
   }
 }
