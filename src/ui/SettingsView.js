@@ -5,6 +5,8 @@ import Settings from '../api/Settings';
 import Storage from 'versioned-storage';
 import React, { Component } from 'react';
 
+import type {Node} from "React";
+
 type PropsType = {
   match: {
     params: {
@@ -58,7 +60,7 @@ class SettingsView extends Component<PropsType, StateType> {
     }
   }
 
-  render() {
+  render(): Node {
     const dialog =
       this.props &&
       this.props.match &&
