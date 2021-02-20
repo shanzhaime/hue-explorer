@@ -1,12 +1,14 @@
 // @flow strict
 
-import type { Time } from '../../api/HueTimePattern';
 import React, { Component } from 'react';
+
+import type {Element} from "React";
+import type { Time } from '../../api/HueTimePattern';
 
 class TimeEditor extends Component<{
   time: Time,
 }> {
-  static defaultProps = {
+  static defaultProps: {|time: Time|} = {
     time: {
       hour: 0,
       minute: 0,
@@ -14,7 +16,7 @@ class TimeEditor extends Component<{
     },
   };
 
-  render() {
+  render(): Element<"span"> {
     const time = this.props.time;
     return (
       <span className="text-monospace">
