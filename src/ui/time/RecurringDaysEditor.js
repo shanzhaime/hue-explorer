@@ -1,16 +1,18 @@
 // @flow strict
 
-import type { RecurringDays } from '../../api/HueTimePattern';
 import React, { Component } from 'react';
+
+import type {Element} from "React";
+import type { RecurringDays } from '../../api/HueTimePattern';
 
 class RecurringDaysEditor extends Component<{
   recurringDays: RecurringDays,
 }> {
-  static defaultProps = {
+  static defaultProps: {|recurringDays: RecurringDays|} = {
     recurringDays: [false, false, false, false, false, false, false],
   };
 
-  render() {
+  render(): Element<"span"> {
     const recurringDays = this.props.recurringDays;
     return (
       <span>

@@ -2,14 +2,16 @@
 
 import React, { Component } from 'react';
 
+import type {Element} from "React";
+
 class JsonBoolean extends Component<{
   json: boolean,
 }> {
-  static defaultProps = {
+  static defaultProps: {|json: boolean|} = {
     json: false,
   };
 
-  render() {
+  render(): Element<"span"> {
     return <span>{this.props.json.toString()}</span>;
   }
 }

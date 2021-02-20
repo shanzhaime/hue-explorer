@@ -1,15 +1,19 @@
 // @flow strict
 
-import type { TimePattern } from '../../api/HueTimePattern';
 import DateEditor from './DateEditor';
 import TimeEditor from './TimeEditor';
 import RecurringDaysEditor from './RecurringDaysEditor';
 import React, { Component } from 'react';
 
+import type {Element} from "React";
+import type { TimePattern } from '../../api/HueTimePattern';
+
 class TimePatternEditor extends Component<{
   timePattern: TimePattern,
 }> {
-  static defaultProps = {
+  static defaultProps: {|
+  timePattern: TimePattern,
+|} = {
     timePattern: {
       time: {
         hour: 0,
@@ -20,7 +24,7 @@ class TimePatternEditor extends Component<{
     },
   };
 
-  render() {
+  render(): Element<"span"> {
     const timePattern = this.props.timePattern;
     const startTime = timePattern.time.start
       ? timePattern.time.start

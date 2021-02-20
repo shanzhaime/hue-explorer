@@ -2,14 +2,16 @@
 
 import React, { Component } from 'react';
 
+import type {Element} from "React";
+
 class JsonString extends Component<{
   json: string,
 }> {
-  static defaultProps = {
+  static defaultProps: {|json: string|} = {
     json: '',
   };
 
-  render() {
+  render(): Element<"span"> {
     return <span>{JSON.stringify(this.props.json)}</span>;
   }
 }

@@ -7,6 +7,8 @@ import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
 import React, { Component } from 'react';
 
+import type {Element} from "React";
+
 type PropsType = {
   match: {
     params: {
@@ -38,7 +40,7 @@ class ConsoleView extends Component<PropsType, StateType> {
     };
   }
 
-  getActiveBridge() {
+  getActiveBridge(): ?HueBridge {
     const acitveBridgeId =
       this.props &&
       this.props.match &&
@@ -110,7 +112,7 @@ class ConsoleView extends Component<PropsType, StateType> {
     });
   }
 
-  render() {
+  render(): Element<"div"> {
     return (
       <div>
         <div className="card my-3">

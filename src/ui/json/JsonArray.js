@@ -7,16 +7,18 @@ import JsonString from './JsonString';
 import JsonBoolean from './JsonBoolean';
 import JsonNull from './JsonNull';
 
+import type {Element} from "React";
+
 class JsonArray extends Component<{
   depth: number,
   json: Array<mixed>,
 }> {
-  static defaultProps = {
+  static defaultProps: {|depth: number, json: Array<any>|} = {
     depth: 0,
     json: [],
   };
 
-  render() {
+  render(): Element<"span"> {
     const currentIndentation = (
       <pre
         dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth) }}
