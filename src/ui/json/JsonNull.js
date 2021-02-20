@@ -2,10 +2,12 @@
 
 import React, { Component } from 'react';
 
-class JsonNull extends Component<{}> {
-  static defaultProps = {};
+import type {Element} from "React";
 
-  render() {
+class JsonNull extends Component<{}> {
+  static defaultProps: {} = {};
+
+  render(): Element<"span"> {
     return <span>null</span>;
   }
 }

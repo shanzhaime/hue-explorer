@@ -9,14 +9,16 @@ import JsonString from './JsonString';
 import JsonBoolean from './JsonBoolean';
 import JsonNull from './JsonNull';
 
+import type {Element} from "React";
+
 class JsonEditor extends Component<{
   json: mixed,
 }> {
-  static defaultProps = {
+  static defaultProps: {|json: null|} = {
     json: null,
   };
 
-  render() {
+  render(): Element<"div"> {
     const json = this.props.json;
     let jsonContent;
     switch (typeof json) {
