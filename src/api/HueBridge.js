@@ -6,7 +6,7 @@ import browserId from 'browser-id';
 const STORAGE_NAME_PREFIX = 'bridge:';
 const STORAGE_VERSION = 2;
 
-const bridgePool = new Map();
+const bridgePool: Map<string, HueBridge> = new Map();
 const isLocalSupported = window.location.protocol === 'http:';
 
 type PropertiesType = {
@@ -37,7 +37,7 @@ class HueBridge {
   state: StateType;
   storage: Storage<PropertiesType>;
 
-  constructor(id: string, properties: PropertiesType = {}) {
+  constructor(id: string, properties: PropertiesType = {}): HueBridge {
     const canonicalId = id.toUpperCase();
     const sameHueBridge = bridgePool.get(canonicalId);
     if (sameHueBridge) {
@@ -68,6 +68,7 @@ class HueBridge {
     };
 
     this.store();
+    return this;
   }
 
   store(): void {
