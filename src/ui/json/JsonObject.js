@@ -7,18 +7,18 @@ import JsonString from './JsonString';
 import JsonBoolean from './JsonBoolean';
 import JsonNull from './JsonNull';
 
-import type {Element} from "React";
+import type { Element } from 'React';
 
 class JsonObject extends Component<{
   depth: number,
   json: {},
 }> {
-  static defaultProps: {|depth: number, json: {...}|} = {
+  static defaultProps: {| depth: number, json: { ... } |} = {
     depth: 0,
     json: {},
   };
 
-  render(): Element<"span"> {
+  render(): Element<'span'> {
     const currentIndentation = (
       <pre
         dangerouslySetInnerHTML={{ __html: '  '.repeat(this.props.depth) }}
@@ -67,7 +67,7 @@ class JsonObject extends Component<{
               return (
                 <li key={key}>
                   {nextIndentation}
-                  {`"${key.replace(/"/g, '\\"')}": `}
+                  {`${JSON.stringify(key)}: `}
                   {jsonContent}
                   {index < keys.length - 1 ? ',' : null}
                 </li>
