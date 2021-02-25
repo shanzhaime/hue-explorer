@@ -29,11 +29,6 @@
     "eject": "react-scripts eject",
     "postinstall": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "devDependencies": {
     "codecov": "^3.8.1",
     "enzyme": "^3.11.0",
