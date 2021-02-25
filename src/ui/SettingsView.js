@@ -5,7 +5,7 @@ import Settings from '../api/Settings';
 import Storage from 'versioned-storage';
 import React, { Component } from 'react';
 
-import type {Node} from "React";
+import type { Node } from 'React';
 
 type PropsType = {
   match: {

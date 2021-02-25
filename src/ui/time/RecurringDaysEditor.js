@@ -2,17 +2,17 @@
 
 import React, { Component } from 'react';
 
-import type {Element} from "React";
+import type { Element } from 'React';
 import type { RecurringDays } from '../../api/HueTimePattern';
 
 class RecurringDaysEditor extends Component<{
   recurringDays: RecurringDays,
 }> {
-  static defaultProps: {|recurringDays: RecurringDays|} = {
+  static defaultProps: {| recurringDays: RecurringDays |} = {
     recurringDays: [false, false, false, false, false, false, false],
   };
 
-  render(): Element<"span"> {
+  render(): Element<'span'> {
     const recurringDays = this.props.recurringDays;
     return (
       <span>

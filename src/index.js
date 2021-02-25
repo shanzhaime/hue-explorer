@@ -130,9 +130,7 @@ if (window.location.search) {
                       settings.appId || process.env.REACT_APP_OAUTH_APP_ID,
                   }),
                   headers: {
-                    Authorization: `Bearer ${
-                      bridgeOAuthProperties.accessToken
-                    }`,
+                    Authorization: `Bearer ${bridgeOAuthProperties.accessToken}`,
                     'content-type': 'application/json',
                   },
                 });

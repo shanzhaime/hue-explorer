@@ -22,7 +22,7 @@ const HueColor = {
   MIN_BRIGHTNESS,
   RGB_MAX_VALUE,
 
-  fromRgbToHex: function(rgb: [number, number, number]): string {
+  fromRgbToHex: function (rgb: [number, number, number]): string {
     const [r, g, b] = rgb;
     return `#${padStart(r.toString(16), 2, '0')}${padStart(
       g.toString(16),
@@ -31,7 +31,7 @@ const HueColor = {
     )}${padStart(b.toString(16), 2, '0')}`;
   },
 
-  fromHexToRgb: function(hex: string): [number, number, number] {
+  fromHexToRgb: function (hex: string): [number, number, number] {
     const matches = hex.match(
       /^#(([0-9a-f])([0-9a-f])([0-9a-f])|([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2}))$/i,
     );
@@ -48,14 +48,14 @@ const HueColor = {
     }
   },
 
-  fromColorToGrayscale: function(rgb: [number, number, number]): number {
+  fromColorToGrayscale: function (rgb: [number, number, number]): number {
     // Formula: http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/
     const [r, g, b] = rgb;
     return 0.3 * r + 0.59 * g + 0.11 * b;
   },
 
   // Algorithms: https://developers.meethue.com/documentation/color-conversions-rgb-xy
-  fromXyToRgb: function(
+  fromXyToRgb: function (
     xy: [number, number],
     brightness: number = MAX_BRIGHTNESS,
   ): [number, number, number] {
@@ -63,8 +63,8 @@ const HueColor = {
     const z = 1 - x - y;
 
     const Y = brightness / MAX_BRIGHTNESS;
-    const X = Y / y * x;
-    const Z = Y / y * z;
+    const X = (Y / y) * x;
+    const Z = (Y / y) * z;
 
     let r = X * 1.656492 - Y * 0.354851 - Z * 0.255038;
     let g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
@@ -110,7 +110,7 @@ const HueColor = {
   },
 
   // Algorithms: https://developers.meethue.com/documentation/color-conversions-rgb-xy
-  fromRgbToXy: function(
+  fromRgbToXy: function (
     rgb: [number, number, number],
   ): [number, number, number] {
     const [r, g, b] = rgb;

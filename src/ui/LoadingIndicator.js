@@ -2,10 +2,10 @@
 
 import React, { PureComponent } from 'react';
 
-import type {Element} from "React";
+import type { Element } from 'React';
 
 class LoadingIndicator extends PureComponent<{}> {
-  render(): Element<"div"> {
+  render(): Element<'div'> {
     return (
       <div className="progress">
         <div

@@ -7,7 +7,7 @@ import HueBridgeList from '../api/HueBridgeList';
 import Settings from '../api/Settings';
 import React, { Component } from 'react';
 
-import type {Element} from "React";
+import type { Element } from 'React';
 
 type PropsType = {
   match: {
@@ -112,7 +112,7 @@ class ConsoleView extends Component<PropsType, StateType> {
     });
   }
 
-  render(): Element<"div"> {
+  render(): Element<'div'> {
     return (
       <div>
         <div className="card my-3">

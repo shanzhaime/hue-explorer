@@ -111,7 +111,7 @@ function parseTime(string: string): Time {
 }
 
 const HueTimePattern = {
-  parse: function(string: string): TimePattern {
+  parse: function (string: string): TimePattern {
     const matches = timePatternRegExp.exec(string);
     if (!matches) {
       throw new Error(`Invalid time pattern: ${string}`);

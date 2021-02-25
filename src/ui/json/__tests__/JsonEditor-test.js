@@ -34,6 +34,6 @@ it('should render object', () => {
 
 it('should not render other types', () => {
   expect(() => {
-    shallow(<JsonEditor json={function() {}} />);
+    shallow(<JsonEditor json={function () {}} />);
   }).toThrow();
 });

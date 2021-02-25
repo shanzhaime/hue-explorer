@@ -7,7 +7,7 @@ import browserId from 'browser-id';
 
 class HueBridgeSelector extends Component {
   static defaultProps = {
-    onBridgeAuthorizationFailure: function() {},
+    onBridgeAuthorizationFailure: function () {},
   };
 
   constructor(props) {

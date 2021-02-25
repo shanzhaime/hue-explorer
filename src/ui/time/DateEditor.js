@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 
-import type {Element} from "React";
+import type { Element } from 'React';
 import type { Date } from '../../api/HueTimePattern';
 
 class DateEditor extends Component<{
   date: Date,
 }> {
-  static defaultProps: {|date: Date|} = {
+  static defaultProps: {| date: Date |} = {
     date: {
       year: 1970,
       month: 1,
@@ -16,7 +16,7 @@ class DateEditor extends Component<{
     },
   };
 
-  render(): Element<"span"> {
+  render(): Element<'span'> {
     const date = this.props.date;
     return (
       <span className="text-monospace">

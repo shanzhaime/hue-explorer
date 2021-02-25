@@ -5,24 +5,23 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 14
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
-    - run: yarn install
-    - run: yarn build
-    - run: yarn flow
-    - run: yarn test src/ui --coverage --collectCoverageFrom=src/ui/** && yarn codecov -C -F ui
-    - run: yarn test src/api --coverage --collectCoverageFrom=src/api/** && yarn codecov -C -F api
-    - run: yarn test --testPathIgnorePatterns="src/(ui|api)" --coverage && yarn codecov -C -F app
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: yarn install
+      - run: yarn build
+      - run: yarn flow
+      - run: yarn test src/ui --coverage --collectCoverageFrom=src/ui/** && yarn codecov -C -F ui
+      - run: yarn test src/api --coverage --collectCoverageFrom=src/api/** && yarn codecov -C -F api
+      - run: yarn test --testPathIgnorePatterns="src/(ui|api)" --coverage && yarn codecov -C -F app

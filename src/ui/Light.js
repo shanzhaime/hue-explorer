@@ -57,8 +57,9 @@ class Light extends Component {
               className="list-group-item"
               style={{
                 backgroundColor: hex,
-                backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness *
-                  100}%, black ${brightness * 100}%, black 100%)`,
+                backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${
+                  brightness * 100
+                }%, black ${brightness * 100}%, black 100%)`,
                 color: fontColor,
               }}
             >
@@ -101,8 +102,9 @@ class Light extends Component {
             className="list-group-item"
             style={{
               backgroundColor: hex,
-              backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${brightness *
-                100}%, black ${brightness * 100}%, black 100%)`,
+              backgroundImage: `linear-gradient(90deg, ${hex} 0%, ${hex} ${
+                brightness * 100
+              }%, black ${brightness * 100}%, black 100%)`,
               color: fontColor,
             }}
           >
@@ -117,8 +119,9 @@ class Light extends Component {
                 className="lightCircle"
                 style={{
                   backgroundColor: hex,
-                  backgroundImage: `radial-gradient(circle, ${hex} 0%, ${hex} ${brightness *
-                    100}%, black ${brightness * 100}%, ${hex} 100%)`,
+                  backgroundImage: `radial-gradient(circle, ${hex} 0%, ${hex} ${
+                    brightness * 100
+                  }%, black ${brightness * 100}%, ${hex} 100%)`,
                   color: fontColor,
                 }}
               />

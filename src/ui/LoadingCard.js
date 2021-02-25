@@ -4,7 +4,7 @@ import CenterCard from './CenterCard';
 import LoadingIndicator from './LoadingIndicator';
 import React, { PureComponent } from 'react';
 
-import type {Node} from "React";
+import type { Node } from 'React';
 
 class LoadingCard extends PureComponent<{}> {
   render(): Node {
