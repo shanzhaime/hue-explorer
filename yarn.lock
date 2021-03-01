@@ -2810,10 +2810,10 @@ brorand@^1.0.1, brorand@^1.1.0:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
-browser-id@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.2.1.tgz#b0ebc1876caa7126178e3cac2cd51944f38d0466"
-  integrity sha512-xA9UZ6YXKSpnNNF8ED37lavkTH/uCZwATfy1FIdcFFDNmmlzmAqkCR2OKmuw70Tr45OXRgEFLrKFSWX1Z8Z13A==
+browser-id@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.2.2.tgz#5f261f443af9edf2b6535ee58700408f52c13729"
+  integrity sha512-LktuAxAMHGIpXjQfv+PkXiRHQEFdc8IbCGaN/JEzbutxVP8WaIQluVV6ud6KVQtjYuD5nQi7fs/RUozGWHk54A==
   dependencies:
     uuid "^8.0.0"
     versioned-storage "^1.1.0"
