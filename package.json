@@ -19,7 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-script": "^2.0.5",
     "react-scripts": "4.0.3",
-    "versioned-storage": "^1.2.5"
+    "versioned-storage": "^1.2.9"
   },
   "scripts": {
     "start": "react-scripts start",
