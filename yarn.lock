@@ -2810,13 +2810,13 @@ brorand@^1.0.1, brorand@^1.1.0:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
-browser-id@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.2.2.tgz#5f261f443af9edf2b6535ee58700408f52c13729"
-  integrity sha512-LktuAxAMHGIpXjQfv+PkXiRHQEFdc8IbCGaN/JEzbutxVP8WaIQluVV6ud6KVQtjYuD5nQi7fs/RUozGWHk54A==
+browser-id@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-1.2.3.tgz#51f69bfc4d9710dc69ff5b3db79a5a640aaed52d"
+  integrity sha512-0xFrkkpXT9qG/ogFIwOTwRuB0+ApRRtw/Y8dBHbIT2WPSxIlfnQZbvBJ69qtowqZDUEVHk0DobMHzlqK/5A8Ng==
   dependencies:
     uuid "^8.0.0"
-    versioned-storage "^1.1.0"
+    versioned-storage "1.2.10"
 
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
@@ -11363,7 +11363,7 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-versioned-storage@^1.1.0, versioned-storage@^1.2.10:
+versioned-storage@1.2.10, versioned-storage@^1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.2.10.tgz#ab0f3dca81bee3853baa01d4cd903a040ea73116"
   integrity sha512-AVLNikXXGZKhmShHk/pmk0trzNNva0IBhUeK045SUNe7Bblx459Wdx+XxvHQaXDM7JvV4jmhj6T6srs4Ewu3Ng==
