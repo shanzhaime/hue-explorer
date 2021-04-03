@@ -5,7 +5,6 @@ pull_request_rules:
       - '#approved-reviews-by>=1'
       - 'status-success=LGTM analysis: JavaScript'
       - status-success=build
-      - status-success=codecov/patch
     actions:
       merge:
         method: squash
@@ -17,7 +16,6 @@ pull_request_rules:
       - '#approved-reviews-by>=1'
       - 'status-neutral=LGTM analysis: JavaScript'
       - status-success=build
-      - status-success=codecov/patch
     actions:
       merge:
         method: squash
