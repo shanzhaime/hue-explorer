@@ -35,7 +35,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "flow-bin": "^0.150.1",
     "husky": "6",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "pretty-quick": "^3.1.0"
   },
   "browserslist": {
