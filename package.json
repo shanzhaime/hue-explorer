@@ -33,7 +33,7 @@
     "codecov": "^3.8.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "flow-bin": "^0.152.0",
+    "flow-bin": "^0.155.0",
     "husky": "7",
     "prettier": "^2.3.2",
     "pretty-quick": "^3.1.1"
