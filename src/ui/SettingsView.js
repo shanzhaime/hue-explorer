@@ -31,7 +31,7 @@ class SettingsView extends Component<PropsType, StateType> {
     this.state = Settings.read();
   }
 
-  onSaveClick() {
+  onSaveClick: () => void = () => {
     const appId = (this.appIdInput && this.appIdInput.value) || '';
     const clientId = (this.clientIdInput && this.clientIdInput.value) || '';
     const clientSecret =
@@ -49,16 +49,16 @@ class SettingsView extends Component<PropsType, StateType> {
       clientId,
       clientSecret,
     });
-  }
+  };
 
-  onResetClick() {
+  onResetClick: () => void = () => {
     const resetConfirmed = window.confirm(
       'This will remove all authorized bridges and delete all settings. Are you sure about this?',
     );
     if (resetConfirmed) {
       Storage.reset();
     }
-  }
+  };
 
   render(): Node {
     const dialog =
