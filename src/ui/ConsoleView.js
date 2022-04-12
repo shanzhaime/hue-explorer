@@ -59,16 +59,18 @@ class ConsoleView extends Component<PropsType, StateType> {
     }
   }
 
-  onMethodClick(method: string) {
+  onMethodClick: (method: string) => void = (method: string) => {
     const settings = Settings.read();
     settings.lastConsoleMethod = method;
     Settings.write(settings);
     this.setState({
       method,
     });
-  }
+  };
 
-  onPathChange(event: SyntheticInputEvent<HTMLInputElement>) {
+  onPathChange: (event: SyntheticInputEvent<HTMLInputElement>) => void = (
+    event: SyntheticInputEvent<HTMLInputElement>,
+  ) => {
     const path = event.target.value;
     const settings = Settings.read();
     settings.lastConsolePath = path;
@@ -76,15 +78,17 @@ class ConsoleView extends Component<PropsType, StateType> {
     this.setState({
       path,
     });
-  }
+  };
 
-  onBodyChange(event: SyntheticInputEvent<HTMLInputElement>) {
+  onBodyChange: (event: SyntheticInputEvent<HTMLInputElement>) => void = (
+    event: SyntheticInputEvent<HTMLInputElement>,
+  ) => {
     this.setState({
       body: event.target.value,
     });
-  }
+  };
 
-  onSendClick() {
+  onSendClick: () => void = () => {
     const bridge = this.state.bridge;
     if (bridge) {
       this.setState({
@@ -103,7 +107,7 @@ class ConsoleView extends Component<PropsType, StateType> {
           });
         });
     }
-  }
+  };
 
   componentDidMount() {
     const bridge = this.getActiveBridge();
