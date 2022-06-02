@@ -9764,10 +9764,15 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-versioned-storage@1.2.10, versioned-storage@^1.2.10:
+versioned-storage@1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.2.10.tgz#ab0f3dca81bee3853baa01d4cd903a040ea73116"
   integrity sha512-AVLNikXXGZKhmShHk/pmk0trzNNva0IBhUeK045SUNe7Bblx459Wdx+XxvHQaXDM7JvV4jmhj6T6srs4Ewu3Ng==
+
+versioned-storage@^1.2.15:
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.2.15.tgz#39909252d5040f68ecc213b702ec62c348f9ac86"
+  integrity sha512-P8Lu3S77sy6O++zq69f6L7fCh2Pda0OXropoD8sGs1Cy+qif9Ti4xNhV02f1jpJ1+ci3wFRMMT8jUorfthVNdA==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
