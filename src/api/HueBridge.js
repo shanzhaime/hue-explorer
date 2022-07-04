@@ -213,8 +213,10 @@ class HueBridge {
   async fetch(path: string, options: RequestOptions = {}): Promise<?{}> {
     const urls = this.getUrls();
     if (urls && urls.usernameUrl) {
+      const usernameUrl = urls.usernameUrl;
       if (urls.remote) {
-        if (!this.properties.accessToken) {
+        const accessToken = this.properties.accessToken;
+        if (!accessToken) {
           throw new Error(
             `Bridge has no access token for remote fetching: ${this.id}`,
           );
@@ -223,11 +225,11 @@ class HueBridge {
           options.headers = new Headers(options.headers);
         }
         const headers = options.headers;
-        headers.set('Authorization', `Bearer ${this.properties.accessToken}`);
+        headers.set('Authorization', `Bearer ${accessToken}`);
         headers.set('Content-Type', 'application/json');
       }
 
-      const response = await fetch(urls.usernameUrl + path, options);
+      const response = await fetch(usernameUrl + path, options);
       const json = await response.json();
       if (json.fault) {
         throw new Error(`Fetch failure: ${json.fault.faultstring}`);
