@@ -9,7 +9,7 @@
     "arrowParens": "always"
   },
   "dependencies": {
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^4.6.2",
     "browser-id": "^1.2.6",
     "http-proxy-middleware": "^2.0.6",
     "jquery": "^3.6.0",
