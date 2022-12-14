@@ -12,7 +12,7 @@
     "bootstrap": "^4.6.2",
     "browser-id": "^2.0.2",
     "http-proxy-middleware": "^2.0.6",
-    "jquery": "^3.6.1",
+    "jquery": "^3.6.2",
     "popper.js": "^1.16.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
