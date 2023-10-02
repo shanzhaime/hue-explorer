@@ -9859,10 +9859,17 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-versioned-storage@1.3.1, versioned-storage@^1.2.10:
+versioned-storage@1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.3.1.tgz#5cfa173ad5c48d283af1603e9eec6e364242bf31"
   integrity sha512-mSRTkOfQdUNtyxH9arKqZQBEwnIDQyesrHcswosT8JW/ovAQ10XANMOJ8Ys2pvVyOeLqFFAeXFP3XH04KBQH0A==
+
+versioned-storage@^2.0.44:
+  version "2.0.44"
+  resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-2.0.44.tgz#241fcaf27159bc4ef7cfbce7e3e3ebc47744fdef"
+  integrity sha512-cEJafBoE+KEF1dt6N2dVttEFY9ZUbhyvkJSx5/qRB4CPdk3nwIdX1jstfofjKYw5MVcDTWg8vbeVHA0rJypzLQ==
+  optionalDependencies:
+    husky "8"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
