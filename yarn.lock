@@ -3302,13 +3302,13 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-browser-id@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-2.0.2.tgz#62318ecbf76badd0fb3c2a8becca36cf2833577a"
-  integrity sha512-Br+Tv0I47PUZWVCfDtDY7DwTvFwMLAK0HzKROvYIbmgYw10x3BJHcATNPXr4dcVlxMZUAv8rhJf4ygI4f8lROQ==
+browser-id@^2.0.54:
+  version "2.0.54"
+  resolved "https://registry.yarnpkg.com/browser-id/-/browser-id-2.0.54.tgz#b27b12652b314d8d2472c91470150ed956d606a0"
+  integrity sha512-m13eurUV6XPDY24ORmgMRm6iuStKZJrIdfFe3PJetBB23FK3Is2YDF0zd2UDncu3EvgRjqVNoLMCwtGOj+2QhQ==
   dependencies:
-    uuid "^8.0.0"
-    versioned-storage "1.3.1"
+    uuid "^9.0.0"
+    versioned-storage "2.0.44"
   optionalDependencies:
     husky "8"
 
@@ -9835,6 +9835,11 @@ uuid@^8.0.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
+
 v8-compile-cache@^2.0.3:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.2.0.tgz#9471efa3ef9128d2f7c6a7ca39c4dd6b5055b132"
@@ -9859,7 +9864,14 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-versioned-storage@1.3.1, versioned-storage@^1.2.10:
+versioned-storage@2.0.44:
+  version "2.0.44"
+  resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-2.0.44.tgz#241fcaf27159bc4ef7cfbce7e3e3ebc47744fdef"
+  integrity sha512-cEJafBoE+KEF1dt6N2dVttEFY9ZUbhyvkJSx5/qRB4CPdk3nwIdX1jstfofjKYw5MVcDTWg8vbeVHA0rJypzLQ==
+  optionalDependencies:
+    husky "8"
+
+versioned-storage@^1.2.10:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/versioned-storage/-/versioned-storage-1.3.1.tgz#5cfa173ad5c48d283af1603e9eec6e364242bf31"
   integrity sha512-mSRTkOfQdUNtyxH9arKqZQBEwnIDQyesrHcswosT8JW/ovAQ10XANMOJ8Ys2pvVyOeLqFFAeXFP3XH04KBQH0A==
